@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/scenes/mvp_asset_test.unity
+  isLoaded: 1
+  isActive: 1
