@@ -104,11 +104,13 @@ namespace SurviveTheNight {
 		void BoardSetup() {
 			LoadWorldMap ();
 			boardHolder = new GameObject ("Board").transform;
+			// iterate through each cell of the board
 			for (int x = 0; x < columns; x++) {
 				for (int y = 0; y < rows; y++) {
 					GameObject toInstantiate = floorTiles [worldMapFloorLayer [y, x]];
 					GameObject instance = Instantiate (toInstantiate, new Vector3 (x * scale, y * scale, 0f), Quaternion.identity) as GameObject;
 					instance.transform.SetParent (boardHolder);
+
 					if(worldMapWallLayer [y, x] != (int)wall.NONE) {
 						toInstantiate = wallTiles [worldMapWallLayer [y, x]];
 						instance = Instantiate (toInstantiate, new Vector3 (x * scale, y * scale, 0f), Quaternion.identity) as GameObject;
