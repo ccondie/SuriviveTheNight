@@ -12,7 +12,7 @@ namespace SurviveTheNight {
 		private BoxCollider2D boxCollider;
 		private Rigidbody2D rb2D;
 		private float inverseMoveTime;
-		private float scale = 0.6f;
+		private float scale = 0.1f;
 
 		// Use this for initialization
 		protected virtual void Start () {
