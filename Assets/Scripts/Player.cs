@@ -6,6 +6,9 @@ namespace SurviveTheNight {
 
 	public class Player : MovingObject {
 
+		private int input_lag_def = 5;
+		private int input_lag_count = 0;
+
 		// Use this for initialization
 		protected override void Start () {
 			base.Start ();
@@ -18,12 +21,17 @@ namespace SurviveTheNight {
 			int horizontal = 0;
 			int vertical = 0;
 
-			horizontal = (int)Input.GetAxisRaw ("Horizontal");
-			vertical = (int)Input.GetAxisRaw ("Vertical");
-			if (horizontal != 0)
-				vertical = 0;
-			if (horizontal != 0 || vertical != 0)
+			if (!isMoving && input_lag_count < 0) {
+				horizontal = (int)Input.GetAxisRaw ("Horizontal");
+				vertical = (int)Input.GetAxisRaw ("Vertical");
+				//if (horizontal != 0)
+				//	vertical = 0;
+				//if (horizontal != 0 || vertical != 0)
 				AttemptMove<Wall> (horizontal, vertical);
+				input_lag_count = input_lag_def;
+			} else
+				input_lag_count--;
+			
 		}
 
 		protected override void AttemptMove<T> (int xDir, int yDir) {

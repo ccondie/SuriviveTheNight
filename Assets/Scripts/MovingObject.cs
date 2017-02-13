@@ -9,10 +9,12 @@ namespace SurviveTheNight {
 		public float moveTime = 0.1f;
 		public LayerMask blockingLayer;
 
+		public bool isMoving = false;
+
 		private BoxCollider2D boxCollider;
 		private Rigidbody2D rb2D;
 		private float inverseMoveTime;
-		private float scale = 0.1f;
+		private float scale = 0.6f;
 
 		// Use this for initialization
 		protected virtual void Start () {
@@ -37,11 +39,13 @@ namespace SurviveTheNight {
 		protected IEnumerator SmoothMovement (Vector3 end) {
 			float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
 			while (sqrRemainingDistance > float.Epsilon) {
+				isMoving = true;
 				Vector3 newPosition = Vector3.MoveTowards (rb2D.position, end, inverseMoveTime * Time.deltaTime);
 				rb2D.MovePosition (newPosition);
 				sqrRemainingDistance = (transform.position - end).sqrMagnitude;
 				yield return null;
 			}
+			isMoving = false;
 		}
 
 		protected virtual void AttemptMove <T> (int xDir, int yDir) where T : Component {
