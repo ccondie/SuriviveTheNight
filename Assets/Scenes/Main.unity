@@ -201,7 +201,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1480747888}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 750d20d1ca0194148b57f9e082e6d210, type: 3}
+  m_Script: {fileID: 11500000, guid: ceacc265a4d03d94887be921015650f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2095730161}
@@ -247,7 +247,7 @@ Prefab:
     - target: {fileID: 212725679488373982, guid: 10a6d36ac80a34da8b123cea4e305d1f,
         type: 2}
       propertyPath: m_SortingLayerID
-      value: 429186977
+      value: 1591393131
       objectReference: {fileID: 0}
     - target: {fileID: 114614017563640424, guid: 10a6d36ac80a34da8b123cea4e305d1f,
         type: 2}
