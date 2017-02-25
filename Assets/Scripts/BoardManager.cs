@@ -5,114 +5,84 @@ using Random = UnityEngine.Random;
 
 namespace SurviveTheNight {
 
-	public enum floor { GRASS1, GRASS2, GRASS3, GRASS4, TILES, N, S, E, W, NW, NE, SW, SE } ;
-	public enum wall { WALL, WINDOW, DOORV, DOORH, NONE } ;
+	public enum grass { GRASS1, GRASS2, GRASS3, GRASS4 }
+	public enum floor { 
+		GRASS, TILES, 
+		DIV_N, DIV_W, DIV_E, DIV_S, 
+		DIV_NW, DIV_NE, DIV_SW, DIV_SE, 
+		DIV_INW, DIV_INE, DIV_ISW, DIV_ISE, 
+		DIV_NWSE, DIV_NESW, 
+		SIDEWALK, ROAD,
+		THRESH_N, THRESH_W, THRESH_E, THRESH_S 
+	} ;
+	public enum wall { EMPTY, WALL, WINDOW, DOORH, DOORV, HEDGE } ;
 
 	public class BoardManager : MonoBehaviour {
 
-		[Serializable]
-		public class Count {
-			public int minimum;
-			public int maximum;
-			public Count (int min, int max) {
-				minimum = min;
-				maximum = max;
-			}
-		}
-
-		public static int columns = 16;
-		public static int rows = 12;
+		public int columns = 0;
+		public int rows = 0;
 		public static float scale = 0.6f;
+		public GameObject[] grassTiles;
 		public GameObject[] floorTiles;
 		public GameObject[] wallTiles;
 
 		private Transform boardHolder;
-		private List <Vector3> gridPositions = new List <Vector3> ();
-		private int[,] worldMapFloorLayer = new int[rows, columns];
-		private int[,] worldMapWallLayer = new int[rows, columns];
+		private List <Vector3> gridPositions = null;
+		private int[,] floorMap = null;
+		private int[,] wallMap = null;
 
 		void LoadWorldMap() {
-			for (int r = 0; r < rows; r++) {
-				for (int c = 0; c < columns; c++) {
-					worldMapFloorLayer [r, c] = Random.Range ((int)floor.GRASS1, 4);
-					worldMapWallLayer [r, c] = (int)wall.NONE;
-				}
-			}
-			LoadHouseFloorTiles (new Count (2, 6), new Count (1, 4));
-			worldMapWallLayer [4, 5] = (int)wall.DOORH;
-			worldMapWallLayer [4, 3] = (int)wall.WINDOW;
-			worldMapWallLayer [2, 2] = (int)wall.WINDOW;
-			worldMapWallLayer [3, 6] = (int)wall.WINDOW;
-			worldMapWallLayer [1, 4] = (int)wall.WINDOW;
-			LoadHouseFloorTiles (new Count (3, 7), new Count (7, 10));
-			worldMapWallLayer [7, 4] = (int)wall.DOORH;
-			worldMapWallLayer [7, 6] = (int)wall.WINDOW;
-			worldMapWallLayer [8, 3] = (int)wall.WINDOW;
-			worldMapWallLayer [9, 7] = (int)wall.WINDOW;
-			worldMapWallLayer [10, 5] = (int)wall.WINDOW;
-			LoadHouseFloorTiles (new Count (8, 12), new Count (1, 4));
-			worldMapWallLayer [4, 11] = (int)wall.DOORH;
-			worldMapWallLayer [4, 9] = (int)wall.WINDOW;
-			worldMapWallLayer [2, 8] = (int)wall.WINDOW;
-			worldMapWallLayer [3, 12] = (int)wall.WINDOW;
-			worldMapWallLayer [1, 10] = (int)wall.WINDOW;
-			LoadHouseFloorTiles (new Count (9, 13), new Count (7, 10));
-			worldMapWallLayer [7, 10] = (int)wall.DOORH;
-			worldMapWallLayer [7, 12] = (int)wall.WINDOW;
-			worldMapWallLayer [8, 9] = (int)wall.WINDOW;
-			worldMapWallLayer [9, 13] = (int)wall.WINDOW;
-			worldMapWallLayer [10, 11] = (int)wall.WINDOW;
-		}
 
-		void LoadHouseFloorTiles(Count width, Count depth) {
-			for (int r = depth.minimum; r <= depth.maximum; r++) {
-				for (int c = width.minimum; c <= width.maximum; c++) {
-					worldMapWallLayer [r, c] = (int)wall.WALL;
-					if (r == depth.minimum) {
-						if (c == width.minimum) {
-							worldMapFloorLayer [r, c] = (int)floor.SW;
-						} else if (c == width.maximum) {
-							worldMapFloorLayer [r, c] = (int)floor.SE;
-						} else
-							worldMapFloorLayer [r, c] = (int)floor.S;
-					} else if (r == depth.maximum) {
-						if (c == width.minimum) {
-							worldMapFloorLayer [r, c] = (int)floor.NW;
-						} else if (c == width.maximum) {
-							worldMapFloorLayer [r, c] = (int)floor.NE;
-						} else
-							worldMapFloorLayer [r, c] = (int)floor.N;
-					} else if (c == width.minimum) {
-						worldMapFloorLayer [r, c] = (int)floor.W;
-					} else if (c == width.maximum) {
-						worldMapFloorLayer [r, c] = (int)floor.E;
-					} else {
-						worldMapFloorLayer [r, c] = (int)floor.TILES;
-						worldMapWallLayer [r, c] = (int)wall.NONE;
-					}
-				}
-			}
-		}
+			System.IO.StreamReader file = new System.IO.StreamReader("Assets/Maps/test.map");
+			String floorStr = file.ReadLine ();
+			String wallStr = file.ReadLine ();
+			file.Close();
 
-		void InitializeList() {
+			floorMap = parse2DarrayStr (floorStr);
+			wallMap = parse2DarrayStr (wallStr);
+
+			rows = floorMap.GetLength (0);
+			columns = floorMap.GetLength (1);
+			gridPositions = new List <Vector3> ();
 			gridPositions.Clear ();
 			for(int x = 0; x < columns; x++)
 				for(int y = 0; y < rows; y++)
 					gridPositions.Add(new Vector3(x*scale,y*scale,0f));
 		}
 
+		int[,] parse2DarrayStr(String str) {
+			str = str.Substring (2, str.Length - 4);
+			String[] delim = new String[] {"],["};
+			String[] r = str.Split(delim, StringSplitOptions.RemoveEmptyEntries);
+			delim = new String[] {","};
+			String[] c = r[0].Split(delim, StringSplitOptions.RemoveEmptyEntries);
+			int[,] arr = new int[r.Length, c.Length];
+			for(int i = 0; i < r.Length; i++) {
+				c = r[i].Split(delim, StringSplitOptions.RemoveEmptyEntries);
+				for(int j = 0; j < c.Length; j++)
+					arr[i,j] = Int32.Parse(c[j]);
+			}
+			return arr;
+		}
+
 		void BoardSetup() {
 			LoadWorldMap ();
 			boardHolder = new GameObject ("Board").transform;
+			GameObject toInstantiate = null;
+			GameObject instance = null;
+			int grassCount = Enum.GetNames (typeof(grass)).Length;
 			// iterate through each cell of the board
 			for (int x = 0; x < columns; x++) {
 				for (int y = 0; y < rows; y++) {
-					GameObject toInstantiate = floorTiles [worldMapFloorLayer [y, x]];
-					GameObject instance = Instantiate (toInstantiate, new Vector3 (x * scale, y * scale, 0f), Quaternion.identity) as GameObject;
+					if (floorMap [rows-y-1, x] == (int)floor.GRASS)
+						toInstantiate = grassTiles [Random.Range ((int)grass.GRASS1, grassCount)];
+					else 
+						toInstantiate = floorTiles [floorMap [rows-y-1, x]];
+					instance = Instantiate (toInstantiate, new Vector3 (x * scale, y * scale, 0f), Quaternion.identity) as GameObject;
 					instance.transform.SetParent (boardHolder);
 
-					if(worldMapWallLayer [y, x] != (int)wall.NONE) {
-						toInstantiate = wallTiles [worldMapWallLayer [y, x]];
+					if(wallMap [rows-y-1, x] != (int)wall.EMPTY) {
+						toInstantiate = wallTiles [wallMap [rows-y-1, x]];
 						instance = Instantiate (toInstantiate, new Vector3 (x * scale, y * scale, 0f), Quaternion.identity) as GameObject;
 						instance.transform.SetParent (boardHolder);
 					}
