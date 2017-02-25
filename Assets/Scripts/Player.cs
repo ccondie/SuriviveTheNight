@@ -32,7 +32,9 @@ namespace SurviveTheNight {
                     vertical = (int)Input.GetAxisRaw("Vertical");
                 }
 
-                AttemptMove<Wall>(horizontal, vertical);
+                if (!(0 == horizontal && 0 == vertical)) {
+                    AttemptMove<Wall>(horizontal, vertical);
+                }
             }
 			
 		}
