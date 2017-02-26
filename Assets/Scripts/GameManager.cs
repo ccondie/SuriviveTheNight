@@ -14,6 +14,7 @@ namespace SurviveTheNight {
 
 		// Use this for initialization
 		void Awake () {
+			Application.targetFrameRate = 60;
 			if (instance == null)
 				instance = this;
 			else if (instance != this)

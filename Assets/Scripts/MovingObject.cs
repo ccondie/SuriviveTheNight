@@ -8,6 +8,7 @@ namespace SurviveTheNight {
 
 		public float moveTime = 0.1f;
 		public LayerMask blockingLayer;
+		private Animator animator;
 
 		public bool isMoving = false;
 
@@ -18,6 +19,7 @@ namespace SurviveTheNight {
 
 		// Use this for initialization
 		protected virtual void Start () {
+			animator = GetComponent<Animator>();
 			boxCollider = GetComponent<BoxCollider2D> ();
 			rb2D = GetComponent<Rigidbody2D> ();
 			inverseMoveTime = 1f / moveTime;
@@ -46,10 +48,29 @@ namespace SurviveTheNight {
 				yield return null;
 			}
 			isMoving = false;
+			animator.SetTrigger ("stop");
 		}
 
 		protected virtual void AttemptMove <T> (int xDir, int yDir) where T : Component {
 			RaycastHit2D hit;
+			int absX = Mathf.Abs (xDir);
+			int absY = Mathf.Abs (yDir);
+			if(yDir > 0 && yDir > absX<<1)
+				animator.SetTrigger ("walk_north");
+			else if(yDir < 0 && absY > absX<<1)
+				animator.SetTrigger ("walk_south");
+			else if(xDir < 0 && absX > absY<<1)
+				animator.SetTrigger ("walk_west");
+			else if(xDir > 0 && xDir > absY<<1)
+				animator.SetTrigger ("walk_east");
+			else if(xDir < 0 && yDir > 0)
+				animator.SetTrigger ("walk_northwest");
+			else if(xDir > 0 && yDir > 0)
+				animator.SetTrigger ("walk_northeast");
+			else if(xDir < 0 && yDir < 0)
+				animator.SetTrigger ("walk_southwest");
+			else if(xDir > 0 && yDir < 0)
+				animator.SetTrigger ("walk_southeast");
 			bool canMove = Move (xDir, yDir, out hit);
 			if (hit.transform == null)
 				return;
