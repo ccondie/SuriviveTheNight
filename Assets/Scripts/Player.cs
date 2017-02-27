@@ -6,11 +6,8 @@ namespace SurviveTheNight {
 
 	public class Player : MovingObject {
 
-		private Animator animator; 
-
 		// Use this for initialization
 		protected override void Start () {
-			animator = GetComponent<Animator>();
 			base.Start ();
 		}
 
@@ -26,7 +23,6 @@ namespace SurviveTheNight {
 			int vertical = 0;
 
             if (!isMoving) {
-				animator.SetTrigger ("stop");
                 if (Input.GetMouseButtonDown(0)) {
                     Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     horizontal = worldToTile(mousePosition.x) - worldToTile(this.transform.position.x);
@@ -44,22 +40,20 @@ namespace SurviveTheNight {
 		}
 
 		protected override void AttemptMove<T> (int xDir, int yDir) {
-			Debug.Log ("AttemptMove: xdir: " + xDir + "yDir: " + yDir);
-			if(yDir < 0 && Mathf.Abs(yDir) > Mathf.Abs(xDir)<<1)
-				animator.SetTrigger ("walk_south");
+			//Debug.Log ("AttemptMove: xdir: " + xDir + "yDir: " + yDir);
 			base.AttemptMove<T> (xDir, yDir);
 			RaycastHit2D hit;
 		}
 
 		private void OnTriggerEnter2D(Collider2D other) {
 			// Do something if you collide with something
-			Debug.Log("OnTriggerEnter2D");
+			//Debug.Log("OnTriggerEnter2D");
 		}
 
 		protected override void OnCantMove<T>(T component) {
 			Wall hitWall = component as Wall;
 			// Do something to the wall
-			Debug.Log("OnCantMove");
+			//Debug.Log("OnCantMove");
 		}
 	}
 
