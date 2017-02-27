@@ -6,7 +6,8 @@ namespace SurviveTheNight {
 
 	public abstract class MovingObject : MonoBehaviour {
 
-		public float moveTime = 0.1f;
+        // Dictates player move speed ... 0.5f WALK - 0.25f RUN
+		public float moveTime = 0.5f;
 		public LayerMask blockingLayer;
 		private Animator animator;
 
@@ -15,7 +16,7 @@ namespace SurviveTheNight {
 		private BoxCollider2D boxCollider;
 		private Rigidbody2D rb2D;
 		private float inverseMoveTime;
-		private float scale = 0.6f;
+		public float scale = 0.6f;
 
 		// Use this for initialization
 		protected virtual void Start () {
@@ -55,6 +56,8 @@ namespace SurviveTheNight {
 			RaycastHit2D hit;
 			int absX = Mathf.Abs (xDir);
 			int absY = Mathf.Abs (yDir);
+
+			// Define animation state
 			if(yDir > 0 && yDir > absX<<1)
 				animator.SetTrigger ("walk_north");
 			else if(yDir < 0 && absY > absX<<1)
@@ -71,9 +74,12 @@ namespace SurviveTheNight {
 				animator.SetTrigger ("walk_southwest");
 			else if(xDir > 0 && yDir < 0)
 				animator.SetTrigger ("walk_southeast");
+			
 			bool canMove = Move (xDir, yDir, out hit);
+
 			if (hit.transform == null)
 				return;
+			
 			T hitComponent = hit.transform.GetComponent <T> ();
 			if (!canMove && hitComponent != null)
 				OnCantMove (hitComponent);
