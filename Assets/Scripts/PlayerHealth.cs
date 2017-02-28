@@ -18,14 +18,12 @@ public class PlayerHealth : MonoBehaviour {
 
 	//Animator anim;
 	//AudioSource playerAudio;
-	//PlayerMovement playerMovement
 	bool isDead;
 	bool damaged;
 
 	void Awake() {
 		//anim = GetComponent <Animator> ();
 		//playerAudio = GetComponent <AudioSource> ();
-		//playerMovement = GetComponent <PlayerMovement> ();
 		currentHealth = startingHealth;
 		currentStamina = startingStamina;
 	}
@@ -62,6 +60,5 @@ public class PlayerHealth : MonoBehaviour {
 
 		//playerAudio.clip = deathClip;
 		//playerAudio.Play ();
-		//playerMovement.enabled = false;
 	}
 }
