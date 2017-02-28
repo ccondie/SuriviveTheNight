@@ -33,7 +33,13 @@ namespace SurviveTheNight {
 
 		void LoadWorldMap() {
 
-			System.IO.StreamReader file = new System.IO.StreamReader("Assets/Maps/4player.map");
+			String mapPath = "Assets/Maps/";
+			String[] worldMaps = { 
+				"4player.map",
+				"suburbs.map"
+			};
+
+			System.IO.StreamReader file = new System.IO.StreamReader(mapPath + worldMaps[Random.Range (0, 2)]);
 			String floorStr = file.ReadLine ();
 			String wallStr = file.ReadLine ();
 			file.Close();
