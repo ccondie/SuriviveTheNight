@@ -100,3 +100,4 @@ MonoBehaviour:
   - {fileID: 1214159921039502, guid: 53d13c3dd2c204aa787a5586ba667b9a, type: 2}
   - {fileID: 1637914463834936, guid: 43faea5f157e743969574dc1232124be, type: 2}
   - {fileID: 1404310106008232, guid: a9a9c51d62fe64c1688dad8adc637f6b, type: 2}
+  edgeTile: {fileID: 1519635341088026, guid: 44e49a4cb8f9341cfa046f58526db152, type: 2}

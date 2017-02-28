@@ -25,6 +25,7 @@ namespace SurviveTheNight {
 		public GameObject[] grassTiles;
 		public GameObject[] floorTiles;
 		public GameObject[] wallTiles;
+		public GameObject edgeTile;
 
 		private Transform boardHolder;
 		private List <Vector3> gridPositions = null;
@@ -78,8 +79,14 @@ namespace SurviveTheNight {
 			GameObject instance = null;
 			int grassCount = Enum.GetNames (typeof(grass)).Length;
 			// iterate through each cell of the board
-			for (int x = 0; x < columns; x++) {
-				for (int y = 0; y < rows; y++) {
+			for (int x = -1; x <= columns; x++) {
+				for (int y = -1; y <= rows; y++) {
+					if(x == -1 || y == -1 || x == columns || y == rows) {
+						toInstantiate = edgeTile;
+						instance = Instantiate (toInstantiate, new Vector3 (x * scale, y * scale, 0f), Quaternion.identity) as GameObject;
+						instance.transform.SetParent (boardHolder);
+						continue;
+					}
 					if (floorMap [rows-y-1, x] == (int)floor.GRASS)
 						toInstantiate = grassTiles [Random.Range ((int)grass.GRASS1, grassCount)];
 					else 
