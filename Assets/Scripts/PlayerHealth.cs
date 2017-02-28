@@ -8,6 +8,9 @@ public class PlayerHealth : MonoBehaviour {
 	public int startingHealth = 100;
 	public int currentHealth;
 	public Slider healthSlider;
+	public int startingStamina = 100;
+	public int currentStamina;
+	public Slider staminaSlider;
 	public Image damageImage;
 	//public AudioClip deathClip;
 	public float flashSpeed = 5f;
@@ -24,6 +27,7 @@ public class PlayerHealth : MonoBehaviour {
 		//playerAudio = GetComponent <AudioSource> ();
 		//playerMovement = GetComponent <PlayerMovement> ();
 		currentHealth = startingHealth;
+		currentStamina = startingStamina;
 	}
 		
 	// Update is called once per frame
@@ -44,6 +48,11 @@ public class PlayerHealth : MonoBehaviour {
 		if (currentHealth <= 0 && !isDead) {
 			Death ();
 		}
+	}
+
+	public void DecreaseStamina (int amount) {
+		currentStamina -= amount;
+		staminaSlider.value = currentStamina;
 	}
 
 	void Death () {
