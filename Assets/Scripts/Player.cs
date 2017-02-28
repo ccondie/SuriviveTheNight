@@ -40,20 +40,20 @@ namespace SurviveTheNight {
 		}
 
 		protected override void AttemptMove<T> (int xDir, int yDir) {
-			Debug.Log ("AttemptMove: xdir: " + xDir + "yDir: " + yDir);
+			//Debug.Log ("AttemptMove: xdir: " + xDir + "yDir: " + yDir);
 			base.AttemptMove<T> (xDir, yDir);
 			RaycastHit2D hit;
 		}
 
 		private void OnTriggerEnter2D(Collider2D other) {
 			// Do something if you collide with something
-			Debug.Log("OnTriggerEnter2D");
+			//Debug.Log("OnTriggerEnter2D");
 		}
 
 		protected override void OnCantMove<T>(T component) {
 			Wall hitWall = component as Wall;
 			// Do something to the wall
-			Debug.Log("OnCantMove");
+			//Debug.Log("OnCantMove");
 		}
 	}
 

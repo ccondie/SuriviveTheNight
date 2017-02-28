@@ -9,9 +9,9 @@ namespace SurviveTheNight {
 
 		void Awake () {
 			if (GameManager.instance == null)
-
 				//Instantiate gameManager prefab
 				Instantiate(gameManager);
+
 		}
 	}
 

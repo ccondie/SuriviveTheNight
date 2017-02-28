@@ -14,7 +14,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - BlockingLayer
   - 
   - 
   - 
@@ -53,4 +53,7 @@ TagManager:
     locked: 0
   - name: EnemyLayer
     uniqueID: 429186977
+    locked: 0
+  - name: EdgeLayer
+    uniqueID: 1174767833
     locked: 0

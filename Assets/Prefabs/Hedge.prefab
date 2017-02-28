@@ -20,7 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4971140340938088}
   - component: {fileID: 212080712996401830}
-  m_Layer: 10
+  - component: {fileID: 61087387260004068}
+  m_Layer: 8
   m_Name: Hedge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,6 +41,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &61087387260004068
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1404310106008232}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 0.6, y: 0.6}
 --- !u!212 &212080712996401830
 SpriteRenderer:
   m_ObjectHideFlags: 1

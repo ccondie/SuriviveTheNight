@@ -10,10 +10,12 @@ namespace SurviveTheNight {
 	public class GameManager : MonoBehaviour {
 
 		public static GameManager instance = null;
-		private BoardManager boardScript;
+        private BoardManager boardScript;
+
 
 		// Use this for initialization
 		void Awake () {
+			Application.targetFrameRate = 60;
 			if (instance == null)
 				instance = this;
 			else if (instance != this)
