@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TimeManager : MonoBehaviour {
 
 	public Text timeUI = null;
-	private static int time_count = 0;
+	public static int frame_count = 0;
 
 
 	// Use this for initialization
@@ -18,7 +18,7 @@ public class TimeManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
 	{
-		time_count += 1;
-		timeUI.text = "[" + time_count.ToString("D8") + "]";
+		frame_count += 1;
+		timeUI.text = "[" + frame_count.ToString("D8") + "]";
 	}
 }
