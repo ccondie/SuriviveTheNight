@@ -1296,7 +1296,7 @@ MonoBehaviour:
   staminaSlider: {fileID: 392923100}
   staminaBlue: {r: 0, g: 0.44705883, b: 0.7372549, a: 1}
   staminaRed: {r: 0.61960787, g: 0.043137256, b: 0.05882353, a: 1}
-  timeToStaminaGain: 0.1
-  staminaGainPerBlock: 1.5
+  staminaGain: 0.4
+  staminaGainDelay: 0.03
   flashSpeed: 5
   flashColor: {r: 1, g: 0, b: 0, a: 0.1}

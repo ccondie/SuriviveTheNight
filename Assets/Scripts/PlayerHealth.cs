@@ -19,8 +19,8 @@ public class PlayerHealth : MonoBehaviour {
     public Color staminaBlue = new Color((0f / 255f), (114f / 255f), (188f / 255f), 1.0f);
     public Color staminaRed = new Color((158f / 255f), (11f / 255), (15f / 255f), 1.0f);
 
-    private float staminaGain = 0.67f;
-    private float staminaGainDelay = 0.1f;
+    public float staminaGain = 0.4f;       
+    public float staminaGainDelay = 0.03f;   // should update about 10 times a second
     private float staminaGainDelay_Cur;
     
 

@@ -8,8 +8,8 @@ namespace SurviveTheNight {
 
 		private PlayerHealth myHealth;
 
-        public float walkStaminaLoss = 0.67f;
-        private float walkStaminaDelay = 0.1f;
+        public float walkStaminaLoss = 0.72f;
+        public float walkStaminaDelay = 0.03f;
         private float walkStaminaDelay_Cur;
 
         // 
@@ -62,8 +62,11 @@ namespace SurviveTheNight {
 
             if(isMoving) {
                 if(walkStaminaDelay_Cur < 0)
-				    myHealth.DecreaseStamina (walkStaminaLoss);
-			}
+                {
+                    myHealth.DecreaseStamina(walkStaminaLoss);
+                    walkStaminaDelay_Cur = walkStaminaDelay;
+                }
+            }
 			
 		}
 

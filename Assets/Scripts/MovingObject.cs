@@ -6,7 +6,7 @@ namespace SurviveTheNight {
 
 	public abstract class MovingObject : MonoBehaviour {
 
-        // moveTime - the amount of time in seconds that the system should use to move a specific distance
+        // moveTime - smaller is slower, larger is faster
         public float moveTime = 2.0f;
 		public LayerMask blockingLayer;
 		private Animator animator;
