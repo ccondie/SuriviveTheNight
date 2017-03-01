@@ -6,8 +6,8 @@ namespace SurviveTheNight {
 
 	public abstract class MovingObject : MonoBehaviour {
 
-        // Dictates player move speed ... 0.5f WALK - 0.25f RUN
-		public float moveTime = 0.5f;
+        // moveTime - the amount of time in seconds that the system should use to move a specific distance
+        public float moveTime = 2.0f;
 		public LayerMask blockingLayer;
 		private Animator animator;
 
@@ -15,7 +15,6 @@ namespace SurviveTheNight {
 
 		private BoxCollider2D boxCollider;
 		private Rigidbody2D rb2D;
-		private float inverseMoveTime;
 		public float scale = 0.6f;
 
 		// Use this for initialization
@@ -23,7 +22,6 @@ namespace SurviveTheNight {
 			animator = GetComponent<Animator>();
 			boxCollider = GetComponent<BoxCollider2D> ();
 			rb2D = GetComponent<Rigidbody2D> ();
-			inverseMoveTime = 1f / moveTime;
 		}
 
 		protected bool Move(int xDir, int yDir, out RaycastHit2D hit) {
@@ -43,7 +41,7 @@ namespace SurviveTheNight {
 			float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
 			while (sqrRemainingDistance > float.Epsilon) {
 				isMoving = true;
-				Vector3 newPosition = Vector3.MoveTowards (rb2D.position, end, inverseMoveTime * Time.deltaTime);
+				Vector3 newPosition = Vector3.MoveTowards (rb2D.position, end, moveTime * Time.deltaTime);
 				rb2D.MovePosition (newPosition);
 				sqrRemainingDistance = (transform.position - end).sqrMagnitude;
 				yield return null;

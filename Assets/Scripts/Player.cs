@@ -8,11 +8,21 @@ namespace SurviveTheNight {
 
 		private PlayerHealth myHealth;
 
+        public float walkStaminaLoss = 0.67f;
+        private float walkStaminaDelay = 0.1f;
+        private float walkStaminaDelay_Cur;
+
+        // 
+        private float walkSpeed = 2.8f;
+        private float runSpeed = 4.5f;
+        private float slugSpeed = 1.35f;
+
 		// Use this for initialization
 		protected override void Start () {
 			base.Start ();
 			myHealth = GetComponent <PlayerHealth> ();
-		}
+            walkStaminaDelay_Cur = walkStaminaDelay;
+        }
 
 		private void OnDisable() {}
 
@@ -25,21 +35,34 @@ namespace SurviveTheNight {
 			int horizontal = 0;
 			int vertical = 0;
 
+            // for tracking stamina drain off of time, not frames
+            walkStaminaDelay_Cur -= Time.deltaTime;
+
+            // set movement speed based on current stamina
+            if ((float)myHealth.currentStamina / myHealth.startingStamina < 0.2)
+            {
+                this.moveTime = slugSpeed;
+            }
+            else
+            {
+                this.moveTime = walkSpeed;
+            }
+
 			if (!isMoving) {
 				if (Input.GetMouseButtonDown (0)) {
 					Vector2 mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 					horizontal = worldToTile (mousePosition.x) - worldToTile (this.transform.position.x);
 					vertical = worldToTile (mousePosition.y) - worldToTile (this.transform.position.y);
-				} else {
-					horizontal = (int)Input.GetAxisRaw ("Horizontal");
-					vertical = (int)Input.GetAxisRaw ("Vertical");
-				}
+				} 
 
 				if (!(0 == horizontal && 0 == vertical)) {
 					AttemptMove<Wall> (horizontal, vertical);
 				}
-			} else {
-				myHealth.DecreaseStamina (1);
+			}
+
+            if(isMoving) {
+                if(walkStaminaDelay_Cur < 0)
+				    myHealth.DecreaseStamina (walkStaminaLoss);
 			}
 			
 		}

@@ -45,7 +45,7 @@ namespace SurviveTheNight {
                 "suburbs.map"
             };
 
-            System.IO.StreamReader file = new System.IO.StreamReader(mapPath + worldMaps[Random.Range (0, 2)]);
+            System.IO.StreamReader file = new System.IO.StreamReader(mapPath + worldMaps[Random.Range (0, worldMaps.Length)]);
 			String floorStr = file.ReadLine ();
 			String wallStr = file.ReadLine ();
 			file.Close();

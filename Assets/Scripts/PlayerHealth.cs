@@ -5,16 +5,26 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour {
 
-	public int startingHealth = 100;
-	public int currentHealth;
+	public float startingHealth = 100f;
+	public float currentHealth;
 	public Slider healthSlider;
 
-	public int startingStamina = 100;
-	public int currentStamina;
+    // *******************************************************************************************************
+    //      STAMINA RELATED VARIABLES - maybe move to "player" or some new Stamina exclusive bar object
+    // *******************************************************************************************************
+    public float startingStamina = 100f;
+	public float currentStamina;
 	public Slider staminaSlider;
-    public int staminaFramesPerRegenOne = 3;
+    private Image staminaFill;
+    public Color staminaBlue = new Color((0f / 255f), (114f / 255f), (188f / 255f), 1.0f);
+    public Color staminaRed = new Color((158f / 255f), (11f / 255), (15f / 255f), 1.0f);
 
-	public Image damageImage;
+    private float staminaGain = 0.67f;
+    private float staminaGainDelay = 0.1f;
+    private float staminaGainDelay_Cur;
+    
+
+    //public Image damageImage;
 	//public AudioClip deathClip;
 	public float flashSpeed = 5f;
 	public Color flashColor = new Color(1f, 0f, 0f, 0.1f); //RED
@@ -29,29 +39,38 @@ public class PlayerHealth : MonoBehaviour {
 		//playerAudio = GetComponent <AudioSource> ();
 		currentHealth = startingHealth;
 		currentStamina = startingStamina;
-	}
+        staminaFill = staminaSlider.GetComponentsInChildren<Image>()[1];
+        staminaGainDelay_Cur = staminaGainDelay;
+    }
 		
 	// Update is called once per frame
 	void Update () {
-
-		if (damaged) {
-			damageImage.color = flashColor;
-		} else {
-			damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
-		}
-		damaged = false;
+        //if (damaged) {
+        //	damageImage.color = flashColor;
+        //} else {
+        //	damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+        //}
+        //damaged = false;
 
         // update current stamina on slider
-        staminaSlider.value = currentStamina;
 
-        if (TimeManager.frame_count % staminaFramesPerRegenOne == 0)
+
+        // if enough time has past (fractions of a second) to increase the stamina, increase it
+        staminaGainDelay_Cur -= Time.deltaTime;
+        if (staminaGainDelay_Cur < 0)
         {
-            IncreaseStamina(1);
+            IncreaseStamina(staminaGain);
+            staminaGainDelay_Cur = staminaGainDelay;
         }
 
-	}
+        staminaSlider.value = currentStamina;
+        if (currentStamina / startingStamina < 0.2f)
+            staminaFill.color = staminaRed;
+        else
+            staminaFill.color = staminaBlue;
+    }
 
-	public void TakeDamage (int amount) {
+	public void TakeDamage (float amount) {
 		damaged = true;
 		currentHealth -= amount;
 		healthSlider.value = currentHealth;
@@ -61,14 +80,21 @@ public class PlayerHealth : MonoBehaviour {
 		}
 	}
 
-	public void DecreaseStamina (int amount) {
-		currentStamina -= amount;
-	}
+	public void DecreaseStamina (float amount) {
+        if(amount > currentStamina)
+        {
+            currentStamina = 0;
+        }
+        else
+        {
+            currentStamina -= amount;
+        }
+    }
 
-    private void IncreaseStamina(int amount)
+    private void IncreaseStamina(float amount)
     {
         // only increase stamina if the stamina if it won't push the stamina above max
-        int missingStamina = startingStamina - currentStamina;
+        float missingStamina = startingStamina - currentStamina;
         if(amount > missingStamina)
         {
             // if the amount would overflow to maxStamina, set to max stamina
