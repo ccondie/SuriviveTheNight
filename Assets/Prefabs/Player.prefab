@@ -113,6 +113,8 @@ MonoBehaviour:
     m_Bits: 256
   isMoving: 0
   scale: 0.6
+  walkStaminaLoss: 0.72
+  walkStaminaDelay: 0.03
 --- !u!114 &114657813997769422
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -127,7 +129,13 @@ MonoBehaviour:
   startingHealth: 100
   currentHealth: 0
   healthSlider: {fileID: 0}
-  damageImage: {fileID: 0}
+  startingStamina: 100
+  currentStamina: 0
+  staminaSlider: {fileID: 0}
+  staminaBlue: {r: 0, g: 0.44705883, b: 0.7372549, a: 1}
+  staminaRed: {r: 0.61960787, g: 0.043137256, b: 0.05882353, a: 1}
+  staminaGain: 0.4
+  staminaGainDelay: 0.03
   flashSpeed: 5
   flashColor: {r: 1, g: 0, b: 0, a: 0.1}
 --- !u!212 &212013440908223118
@@ -143,7 +151,7 @@ SpriteRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 763aaa8717bab4eff8128097346c9ce1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
