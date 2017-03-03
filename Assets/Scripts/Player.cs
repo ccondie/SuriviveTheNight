@@ -99,6 +99,7 @@ namespace SurviveTheNight {
                     if (path != null)
                     {
                         ContinueAStar();
+                        return;
                     }
                     else
                     {
@@ -116,22 +117,21 @@ namespace SurviveTheNight {
                     if (!(0 == horizontal && 0 == vertical))
                     {
                         AttemptMoveAStar<Wall>(mousePosition);
+                        return;
                     }
-                }
-            }
-
-            if (isMoving)
-            {
-                if (walkStaminaDelay_Cur < 0)
-                {
-                    DecreaseStamina(walkStaminaLoss);
-                    walkStaminaDelay_Cur = walkStaminaDelay;
                 }
             }
         }
 
         void UpdateStamina()
         {
+            if (isMoving) {
+                if (walkStaminaDelay_Cur < 0) {
+                    DecreaseStamina(walkStaminaLoss);
+                    walkStaminaDelay_Cur = walkStaminaDelay;
+                }
+            }
+
             // if enough time has past (fractions of a second) to increase the stamina, increase it
             staminaGainDelay_Cur -= Time.deltaTime;
             if (staminaGainDelay_Cur < 0)

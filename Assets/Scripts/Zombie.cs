@@ -30,6 +30,7 @@ namespace SurviveTheNight
         // MOVEMENT VARIABLES
         // *******************************************************************************************************
         private float moveSpeed = 1.35f;
+        private int updateTargetCounter = 15;
 
         public float walkStaminaLoss = 0.72f;
         public float walkStaminaDelay = 0.03f;
@@ -61,23 +62,23 @@ namespace SurviveTheNight
         {
             walkStaminaDelay_Cur -= Time.deltaTime;
             moveTime = moveSpeed;
+            updateTargetCounter--;
 
-            if (!isMoving)
-            {
-                if (navigatingPath)
-                {
-                    if (path != null)
-                    {
+            if (!isMoving) {
+                if (navigatingPath && updateTargetCounter > 0) {
+                    if (path != null) {
                         ContinueAStar();
-                    }
-                    else
-                    {
+                    } else {
                         navigatingPath = false;
                     }
+                } else {
+                    path = null;
+                    navigatingPath = false;
+                    isMoving = false;
+                    Vector2 playerPosition = new Vector2(player.transform.position.x, player.transform.position.y);
+                    AttemptMoveAStar<Wall>(playerPosition);
+                    updateTargetCounter = 15;
                 }
-
-                Vector2 playerPosition = new Vector2(player.transform.position.x, player.transform.position.y);
-                AttemptMoveAStar<Wall>(playerPosition);
             }
 
             if (isMoving)
