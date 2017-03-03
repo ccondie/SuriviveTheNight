@@ -12,6 +12,7 @@ namespace SurviveTheNight {
 		public static GameManager instance = null;
         private BoardManager boardScript;
 		private EnemyManager enemyScript;
+		private TimeManager timeScript;
 
 
 		// Use this for initialization
@@ -24,6 +25,7 @@ namespace SurviveTheNight {
 			DontDestroyOnLoad(gameObject);
 			boardScript = GetComponent<BoardManager> ();
 			enemyScript = GetComponent<EnemyManager> ();
+			timeScript = GetComponent<TimeManager> ();
 			InitGame ();
 		}
 
