@@ -9,14 +9,14 @@ namespace SurviveTheNight {
         // moveTime - smaller is slower, larger is faster
         public float moveTime = 2.0f;
 		public LayerMask blockingLayer;
-		private Animator animator;
+		protected Animator animator;
 
 		public bool isMoving = false;
         protected bool navigatingPath = false;
         protected Path path;
 
 		private BoxCollider2D boxCollider;
-		private Rigidbody2D rb2D;
+		protected Rigidbody2D rb2D;
 		public float scale = 0.6f;
 
 		// Use this for initialization
@@ -78,6 +78,7 @@ namespace SurviveTheNight {
 
             if (hit.transform == null) {
                 //there's a straight path
+                Debug.Log("Straight path found to target");
                 defineAnimationState(target);
                 StartCoroutine(SmoothMovement(target));
             } else {
@@ -125,6 +126,23 @@ namespace SurviveTheNight {
                 animator.SetTrigger("walk_southwest");
             else if (xDir > 0 && yDir < 0)
                 animator.SetTrigger("walk_southeast");
+        }
+
+        protected bool hasLineOfSight(Vector2 target) {
+            RaycastHit2D hit;
+
+            Vector2 start = transform.position;
+            boxCollider.enabled = false;
+            hit = Physics2D.Linecast(start, target, blockingLayer);
+            boxCollider.enabled = true;
+
+            if (hit.transform == null) {
+                //there's a straight path
+                return true;
+            } else {
+                //no
+                return false;
+            }
         }
 
         protected abstract void OnCantMove<T>(T component)

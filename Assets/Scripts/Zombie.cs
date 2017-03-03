@@ -63,20 +63,24 @@ namespace SurviveTheNight
             moveTime = moveSpeed;
 
             if (!isMoving) {
-                Vector2 playerPosition = new Vector2(player.transform.position.x, player.transform.position.y);
-                if (navigatingPath && (!path.playerHasMoved(playerPosition))) {
+                
+                if (navigatingPath && (!path.targetHasMoved(player.transform.position))) {
                     if (path != null) {
                         ContinueAStar();
                     } else {
                         navigatingPath = false;
                     }
                 } else {
-                    path = null;
-                    navigatingPath = false;
-                    isMoving = false;
-                    //abortMovement = true;
-                    
-                    AttemptMoveAStar<Wall>(playerPosition);
+                    Vector2 target = targetClosestToPlayer(player.transform.position);
+                    if (hasLineOfSight(target)) {
+                       StartCoroutine(directlyTrackPlayer());
+                    } else {
+                        path = null;
+                        navigatingPath = false;
+                        isMoving = false;
+
+                        AttemptMoveAStar<Wall>(player.transform.position);
+                    }
                 }
             }
 
@@ -123,10 +127,73 @@ namespace SurviveTheNight
             }
         }
 
-    protected override void OnCantMove<T>(T component)
-        {
-            throw new NotImplementedException();
+        private IEnumerator directlyTrackPlayer() {
+            //Debug.Log("Directly tracking player");
+            Vector3 target = targetClosestToPlayer(player.transform.position);
+            float sqrRemainingDistance = (transform.position - target).sqrMagnitude;
+            while (sqrRemainingDistance > float.Epsilon && hasLineOfSight(target)) {
+                isMoving = true;
+                Vector3 newPosition = Vector3.MoveTowards(rb2D.position, target, moveTime * Time.deltaTime);
+                rb2D.MovePosition(newPosition);
+                target = targetClosestToPlayer(player.transform.position);
+                sqrRemainingDistance = (transform.position - target).sqrMagnitude;
+                yield return null;
+                
+            }
+            isMoving = false;
+            animator.SetTrigger("stop");
+            //Debug.Log("No longer tracking player");
         }
-    }
+
+        private Vector2 targetClosestToPlayer(Vector2 playerLocation) {
+            int xDir = worldToTile(playerLocation.x) - worldToTile(transform.position.x);
+            int yDir = worldToTile(playerLocation.y) - worldToTile(transform.position.y);
+
+            int absX = Mathf.Abs(xDir);
+            int absY = Mathf.Abs(yDir);
+
+            float deltaTargetX = 0f;
+            float deltaTargetY = 0f;
+
+            // Define animation state
+            if (yDir > 0 && yDir > absX << 1) {
+                //animator.SetTrigger("walk_north");
+                deltaTargetY -= 0.6f;
+            } else if (yDir < 0 && absY > absX << 1) {
+                //animator.SetTrigger("walk_south");
+                deltaTargetY += 0.6f;
+            } else if (xDir < 0 && absX > absY << 1) {
+                //animator.SetTrigger("walk_west");
+                deltaTargetX += 0.6f;
+            } else if (xDir > 0 && xDir > absY << 1) {
+                //animator.SetTrigger("walk_east");
+                deltaTargetX -= 0.6f;
+            } else if (xDir < 0 && yDir > 0) {
+                //animator.SetTrigger("walk_northwest");
+                deltaTargetY -= 0.6f;
+                deltaTargetX += 0.6f;
+            } else if (xDir > 0 && yDir > 0) {
+                //animator.SetTrigger("walk_northeast");
+                deltaTargetY -= 0.6f;
+                deltaTargetX -= 0.6f;
+            } else if (xDir < 0 && yDir < 0) {
+                //animator.SetTrigger("walk_southwest");
+                deltaTargetY += 0.6f;
+                deltaTargetX += 0.6f;
+            } else if (xDir > 0 && yDir < 0) {
+                //animator.SetTrigger("walk_southeast");
+                deltaTargetY += 0.6f;
+                deltaTargetX -= 0.6f;
+            }
+            Debug.Assert(!(deltaTargetY == 0 && deltaTargetX == 0));
+
+            return new Vector2(playerLocation.x + deltaTargetX, playerLocation.y + deltaTargetY);
+        }
+
+        protected override void OnCantMove<T>(T component)
+            {
+                throw new NotImplementedException();
+            }
+        }
 }
 
