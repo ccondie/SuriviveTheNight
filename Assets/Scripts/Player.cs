@@ -1,41 +1,93 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SurviveTheNight {
 
 	public class Player : MovingObject {
 
-		private PlayerHealth myHealth;
+		//private PlayerHealth myHealth;
+
+        // *******************************************************************************************************
+        // HEALTH RELATED VARIABLES
+        // *******************************************************************************************************
+        public float startingHealth = 100f;
+        public float currentHealth;
+        public Slider healthSlider;
+
+        // *******************************************************************************************************
+        //      STAMINA RELATED VARIABLES - maybe move to "player" or some new Stamina exclusive bar object
+        // *******************************************************************************************************
+        public float startingStamina = 100f;
+        public float currentStamina;
+        public Slider staminaSlider;
+        private Image staminaFill;
+        public Color staminaBlue = new Color((0f / 255f), (114f / 255f), (188f / 255f), 1.0f);
+        public Color staminaRed = new Color((158f / 255f), (11f / 255), (15f / 255f), 1.0f);
+
+        public float staminaGain = 0.4f;
+        public float staminaGainDelay = 0.03f;   // should update about 10 times a second
+        private float staminaGainDelay_Cur;
+
+        // *******************************************************************************************************
+        // MOVEMENT VARIABLES
+        // *******************************************************************************************************
+        private float walkSpeed = 2.8f;
+        private float runSpeed = 4.5f;
+        private float slugSpeed = 1.35f;
 
         public float walkStaminaLoss = 0.72f;
         public float walkStaminaDelay = 0.03f;
         private float walkStaminaDelay_Cur;
 
-        // 
-        private float walkSpeed = 2.8f;
-        private float runSpeed = 4.5f;
-        private float slugSpeed = 1.35f;
+        // *******************************************************************************************************
+        // OTHER
+        // *******************************************************************************************************
+        bool isDead;
+
+        void Awake()
+        {
+            currentHealth = startingHealth;
+            currentStamina = startingStamina;
+            staminaFill = staminaSlider.GetComponentsInChildren<Image>()[1];
+            staminaGainDelay_Cur = staminaGainDelay;
+            walkStaminaDelay_Cur = walkStaminaDelay;
+        }
 
         // Use this for initialization
         protected override void Start () {
+            // Initialize the MoveableObject components
 			base.Start ();
-			myHealth = GetComponent <PlayerHealth> ();
-            walkStaminaDelay_Cur = walkStaminaDelay;
+			//myHealth = GetComponent <PlayerHealth> ();
         }
 
 		private void OnDisable() {}
 
         // Update is called once per frame
         void Update () {
-			int horizontal = 0;
-			int vertical = 0;
+
+            UpdateMovement();
+            UpdateStamina();
+            
+			
+		}
+
+        protected override void AttemptMoveAStar<T> (Vector2 target) {
+            base.AttemptMoveAStar<T> (target);
+        }
+
+        // A subroutine of the Update function that handles player movement per update
+        void UpdateMovement()
+        {
+            int horizontal = 0;
+            int vertical = 0;
 
             // for tracking stamina drain off of time, not frames
             walkStaminaDelay_Cur -= Time.deltaTime;
 
             // set movement speed based on current stamina
-            if ((float)myHealth.currentStamina / myHealth.startingStamina < 0.2)
+            if (currentStamina / startingStamina < 0.2)
             {
                 this.moveTime = slugSpeed;
             }
@@ -44,47 +96,60 @@ namespace SurviveTheNight {
                 this.moveTime = walkSpeed;
             }
 
-			if (!isMoving) {
-                if(navigatingPath) {
-                    if (path != null) {
+            if (!isMoving)
+            {
+                if (navigatingPath)
+                {
+                    if (path != null)
+                    {
                         ContinueAStar();
-                    } else {
+                    }
+                    else
+                    {
                         navigatingPath = false;
                     }
                 }
 
-                if (Input.GetMouseButtonDown (0)) {
-                    Vector2 mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-					horizontal = worldToTile (mousePosition.x) - worldToTile (this.transform.position.x);
-					vertical = worldToTile (mousePosition.y) - worldToTile (this.transform.position.y);
+                    horizontal = worldToTile(mousePosition.x) - worldToTile(this.transform.position.x);
+                    vertical = worldToTile(mousePosition.y) - worldToTile(this.transform.position.y);
 
-                    if (!(0 == horizontal && 0 == vertical)) {
+                    if (!(0 == horizontal && 0 == vertical))
+                    {
                         AttemptMoveAStar<Wall>(mousePosition);
                     }
-                } 
-			}
+                }
+            }
 
-            if(isMoving) {
-                if(walkStaminaDelay_Cur < 0)
+            if (isMoving)
+            {
+                if (walkStaminaDelay_Cur < 0)
                 {
-                    myHealth.DecreaseStamina(walkStaminaLoss);
+                    DecreaseStamina(walkStaminaLoss);
                     walkStaminaDelay_Cur = walkStaminaDelay;
                 }
             }
-			
-		}
-
-        protected override void AttemptMoveAStar<T> (Vector2 target) {
-            base.AttemptMoveAStar<T> (target);
         }
 
+        void UpdateStamina()
+        {
+            // if enough time has past (fractions of a second) to increase the stamina, increase it
+            staminaGainDelay_Cur -= Time.deltaTime;
+            if (staminaGainDelay_Cur < 0)
+            {
+                IncreaseStamina(staminaGain);
+                staminaGainDelay_Cur = staminaGainDelay;
+            }
 
-        /*protected override void AttemptMove<T> (int xDir, int yDir) {
-			//Debug.Log ("AttemptMove: xdir: " + xDir + "yDir: " + yDir);
-			base.AttemptMove<T> (xDir, yDir);
-			//RaycastHit2D hit;
-		}*/
+            staminaSlider.value = currentStamina;
+            if (currentStamina / startingStamina < 0.2f)
+                staminaFill.color = staminaRed;
+            else
+                staminaFill.color = staminaBlue;
+        }
 
 		private void OnTriggerEnter2D(Collider2D other) {
 			// Do something if you collide with something
@@ -97,6 +162,52 @@ namespace SurviveTheNight {
             // HERE BE DRAGONS
 			//Debug.Log("OnCantMove");
 		}
-	}
+
+
+        private void TakeDamage(float amount)
+        {
+            currentHealth -= amount;
+            healthSlider.value = currentHealth;
+            //playerAudio.Play ();
+            if (currentHealth <= 0 && !isDead)
+            {
+                Death();
+            }
+        }
+
+        void Death()
+        {
+            isDead = true;
+        }
+
+        private void DecreaseStamina(float amount)
+        {
+            if (amount > currentStamina)
+            {
+                currentStamina = 0;
+            }
+            else
+            {
+                currentStamina -= amount;
+            }
+        }
+
+        private void IncreaseStamina(float amount)
+        {
+            // only increase stamina if the stamina if it won't push the stamina above max
+            float missingStamina = startingStamina - currentStamina;
+            if (amount > missingStamina)
+            {
+                // if the amount would overflow to maxStamina, set to max stamina
+                currentStamina = startingStamina;
+            }
+            else
+            {
+                // otherwise add the amount of stamina to the current stamina
+                currentStamina += amount;
+            }
+
+        }
+    }
 
 }
