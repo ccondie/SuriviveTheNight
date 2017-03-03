@@ -112,6 +112,10 @@ namespace SurviveTheNight {
 			BoardSetup ();
 			// TO DO: generate walls, enemies
 		}
+
+        public int[,] getWallMap() {
+            return wallMap;
+        }
 	}
 
 }

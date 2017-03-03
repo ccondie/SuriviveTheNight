@@ -12,6 +12,8 @@ namespace SurviveTheNight {
 		private Animator animator;
 
 		public bool isMoving = false;
+        protected bool navigatingPath = false;
+        protected Path path;
 
 		private BoxCollider2D boxCollider;
 		private Rigidbody2D rb2D;
@@ -24,7 +26,11 @@ namespace SurviveTheNight {
 			rb2D = GetComponent<Rigidbody2D> ();
 		}
 
-		protected bool Move(int xDir, int yDir, out RaycastHit2D hit) {
+        protected int worldToTile(float position) {
+            return (int)((position + (scale / 2)) / scale);
+        }
+
+        protected bool Move(int xDir, int yDir, out RaycastHit2D hit) {
 			Vector2 start = transform.position;
 			Vector2 end = start + new Vector2 (xDir*scale, yDir*scale);
 			boxCollider.enabled = false;
@@ -82,8 +88,49 @@ namespace SurviveTheNight {
 			if (!canMove && hitComponent != null)
 				OnCantMove (hitComponent);
 		}
-		
-		protected abstract void OnCantMove<T>(T component)
+
+        protected void ContinueAStar() {
+            Vector2 nextStep = path.calcFirstStep(transform.position, boxCollider, blockingLayer);
+            StartCoroutine(SmoothMovement(nextStep));
+
+            if (nextStep == path.steps[0]) {
+                navigatingPath = false;
+            } else {
+                navigatingPath = true;
+            }
+        }
+
+        protected virtual void AttemptAStar<T>(Vector2 target) {
+            RaycastHit2D hit;
+
+            Vector2 start = transform.position;
+            boxCollider.enabled = false;
+            hit = Physics2D.Linecast(start, target, blockingLayer);
+            boxCollider.enabled = true;
+
+            if (hit.transform == null) {
+                //there's a straight path
+                StartCoroutine(SmoothMovement(target));
+            } else {
+                //try A* magic
+                AStar(target);
+            }
+        }
+
+        private void AStar(Vector2 target) {
+            AStar algorithm = new SurviveTheNight.AStar(transform.position, target, scale);
+            path = algorithm.calculatePath();
+            Vector2 firstStep = path.calcFirstStep(transform.position, boxCollider, blockingLayer);
+            StartCoroutine(SmoothMovement(firstStep));
+
+            if (firstStep == path.steps[0]) {
+                navigatingPath = false;
+            } else {
+                navigatingPath = true;
+            }
+        }
+
+        protected abstract void OnCantMove<T>(T component)
 			where T : Component;
 	}
 

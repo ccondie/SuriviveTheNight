@@ -33,5 +33,9 @@ namespace SurviveTheNight {
 		void Update () {
 			
 		}
-	}
+
+        public int[,] getWallMap() {
+            return boardScript.getWallMap();
+        }
+    }
 }

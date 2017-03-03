@@ -17,18 +17,14 @@ namespace SurviveTheNight {
         private float runSpeed = 4.5f;
         private float slugSpeed = 1.35f;
 
-		// Use this for initialization
-		protected override void Start () {
+        // Use this for initialization
+        protected override void Start () {
 			base.Start ();
 			myHealth = GetComponent <PlayerHealth> ();
             walkStaminaDelay_Cur = walkStaminaDelay;
         }
 
 		private void OnDisable() {}
-
-        private int worldToTile(float position) {
-            return (int)((position + 0.3) / 0.6);
-        }
 
         // Update is called once per frame
         void Update () {
@@ -49,15 +45,25 @@ namespace SurviveTheNight {
             }
 
 			if (!isMoving) {
-				if (Input.GetMouseButtonDown (0)) {
-					Vector2 mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+                if(navigatingPath) {
+                    if (path != null) {
+                        ContinueAStar();
+                    } else {
+                        navigatingPath = false;
+                    }
+                }
+
+                if (Input.GetMouseButtonDown (0)) {
+                    Vector2 mousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+
 					horizontal = worldToTile (mousePosition.x) - worldToTile (this.transform.position.x);
 					vertical = worldToTile (mousePosition.y) - worldToTile (this.transform.position.y);
-				} 
 
-				if (!(0 == horizontal && 0 == vertical)) {
-					AttemptMove<Wall> (horizontal, vertical);
-				}
+                    if (!(0 == horizontal && 0 == vertical)) {
+                        //AttemptMove<Wall>(horizontal, vertical);
+                        AttemptAStar<Wall>(mousePosition);
+                    }
+                } 
 			}
 
             if(isMoving) {
@@ -70,10 +76,15 @@ namespace SurviveTheNight {
 			
 		}
 
-		protected override void AttemptMove<T> (int xDir, int yDir) {
+        protected override void AttemptAStar<T> (Vector2 target) {
+            base.AttemptAStar<T> (target);
+        }
+
+
+        protected override void AttemptMove<T> (int xDir, int yDir) {
 			//Debug.Log ("AttemptMove: xdir: " + xDir + "yDir: " + yDir);
 			base.AttemptMove<T> (xDir, yDir);
-			RaycastHit2D hit;
+			//RaycastHit2D hit;
 		}
 
 		private void OnTriggerEnter2D(Collider2D other) {
@@ -84,6 +95,7 @@ namespace SurviveTheNight {
 		protected override void OnCantMove<T>(T component) {
 			Wall hitWall = component as Wall;
 			// Do something to the wall
+            // HERE BE DRAGONS
 			//Debug.Log("OnCantMove");
 		}
 	}
