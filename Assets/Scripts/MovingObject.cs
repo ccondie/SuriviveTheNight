@@ -56,7 +56,7 @@ namespace SurviveTheNight {
 			animator.SetTrigger ("stop");
 		}
 
-		protected virtual void AttemptMove <T> (int xDir, int yDir) where T : Component {
+		/*protected virtual void AttemptMove <T> (int xDir, int yDir) where T : Component {
 			RaycastHit2D hit;
 			int absX = Mathf.Abs (xDir);
 			int absY = Mathf.Abs (yDir);
@@ -87,10 +87,11 @@ namespace SurviveTheNight {
 			T hitComponent = hit.transform.GetComponent <T> ();
 			if (!canMove && hitComponent != null)
 				OnCantMove (hitComponent);
-		}
+		}*/
 
         protected void ContinueAStar() {
             Vector2 nextStep = path.calcFirstStep(transform.position, boxCollider, blockingLayer);
+            defineAnimationState(nextStep);
             StartCoroutine(SmoothMovement(nextStep));
 
             if (nextStep == path.steps[0]) {
@@ -100,7 +101,7 @@ namespace SurviveTheNight {
             }
         }
 
-        protected virtual void AttemptAStar<T>(Vector2 target) {
+        protected virtual void AttemptMoveAStar<T>(Vector2 target) {
             RaycastHit2D hit;
 
             Vector2 start = transform.position;
@@ -110,17 +111,19 @@ namespace SurviveTheNight {
 
             if (hit.transform == null) {
                 //there's a straight path
+                defineAnimationState(target);
                 StartCoroutine(SmoothMovement(target));
             } else {
                 //try A* magic
-                AStar(target);
+                CalculatePathAStar(target);
             }
         }
 
-        private void AStar(Vector2 target) {
+        private void CalculatePathAStar(Vector2 target) {
             AStar algorithm = new SurviveTheNight.AStar(transform.position, target, scale);
             path = algorithm.calculatePath();
             Vector2 firstStep = path.calcFirstStep(transform.position, boxCollider, blockingLayer);
+            defineAnimationState(firstStep);
             StartCoroutine(SmoothMovement(firstStep));
 
             if (firstStep == path.steps[0]) {
@@ -128,6 +131,33 @@ namespace SurviveTheNight {
             } else {
                 navigatingPath = true;
             }
+        }
+        
+        private void defineAnimationState(Vector2 target) {
+
+            int xDir = worldToTile(target.x) - worldToTile(this.transform.position.x);
+            int yDir = worldToTile(target.y) - worldToTile(this.transform.position.y);
+
+            int absX = Mathf.Abs(xDir);
+            int absY = Mathf.Abs(yDir);
+
+            // Define animation state
+            if (yDir > 0 && yDir > absX << 1)
+                animator.SetTrigger("walk_north");
+            else if (yDir < 0 && absY > absX << 1)
+                animator.SetTrigger("walk_south");
+            else if (xDir < 0 && absX > absY << 1)
+                animator.SetTrigger("walk_west");
+            else if (xDir > 0 && xDir > absY << 1)
+                animator.SetTrigger("walk_east");
+            else if (xDir < 0 && yDir > 0)
+                animator.SetTrigger("walk_northwest");
+            else if (xDir > 0 && yDir > 0)
+                animator.SetTrigger("walk_northeast");
+            else if (xDir < 0 && yDir < 0)
+                animator.SetTrigger("walk_southwest");
+            else if (xDir > 0 && yDir < 0)
+                animator.SetTrigger("walk_southeast");
         }
 
         protected abstract void OnCantMove<T>(T component)

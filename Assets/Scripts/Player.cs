@@ -60,8 +60,7 @@ namespace SurviveTheNight {
 					vertical = worldToTile (mousePosition.y) - worldToTile (this.transform.position.y);
 
                     if (!(0 == horizontal && 0 == vertical)) {
-                        //AttemptMove<Wall>(horizontal, vertical);
-                        AttemptAStar<Wall>(mousePosition);
+                        AttemptMoveAStar<Wall>(mousePosition);
                     }
                 } 
 			}
@@ -76,16 +75,16 @@ namespace SurviveTheNight {
 			
 		}
 
-        protected override void AttemptAStar<T> (Vector2 target) {
-            base.AttemptAStar<T> (target);
+        protected override void AttemptMoveAStar<T> (Vector2 target) {
+            base.AttemptMoveAStar<T> (target);
         }
 
 
-        protected override void AttemptMove<T> (int xDir, int yDir) {
+        /*protected override void AttemptMove<T> (int xDir, int yDir) {
 			//Debug.Log ("AttemptMove: xdir: " + xDir + "yDir: " + yDir);
 			base.AttemptMove<T> (xDir, yDir);
 			//RaycastHit2D hit;
-		}
+		}*/
 
 		private void OnTriggerEnter2D(Collider2D other) {
 			// Do something if you collide with something

@@ -49,10 +49,10 @@ namespace SurviveTheNight{
             yStart = worldToTile(start.y);
             xTarget = worldToTile(target.x);
             yTarget = worldToTile(target.y);
-            Debug.Log("Start tile: " + xStart + ", " + yStart);
+            /*Debug.Log("Start tile: " + xStart + ", " + yStart);
             Debug.Log("Target tile: " + xTarget + ", " + yTarget);
             Debug.Log("Start coord: " + start);
-            Debug.Log("Target coord: " + target);
+            Debug.Log("Target coord: " + target);*/
             /*xStart = 0;
             yStart = 2;
             xTarget = 0;
@@ -110,8 +110,8 @@ namespace SurviveTheNight{
             Tile current = tiles[xTarget, yTarget];
             while(true) {
                 path.steps.Add(tileToVector(current));
-                Debug.Log("Step tile: " + current.x + ", " + current.y);
-                Debug.Log("Step coord: " + tileToVector(current));
+                //Debug.Log("Step tile: " + current.x + ", " + current.y);
+                //Debug.Log("Step coord: " + tileToVector(current));
 
                 if (current.x == xStart && current.y == yStart) {
                     break;
