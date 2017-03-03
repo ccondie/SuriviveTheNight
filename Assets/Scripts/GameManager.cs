@@ -11,6 +11,7 @@ namespace SurviveTheNight {
 
 		public static GameManager instance = null;
         private BoardManager boardScript;
+		private EnemyManager enemyScript;
 
 
 		// Use this for initialization
@@ -22,6 +23,7 @@ namespace SurviveTheNight {
 				Destroy(gameObject);	
 			DontDestroyOnLoad(gameObject);
 			boardScript = GetComponent<BoardManager> ();
+			enemyScript = GetComponent<EnemyManager> ();
 			InitGame ();
 		}
 
@@ -36,6 +38,14 @@ namespace SurviveTheNight {
 
         public int[,] getWallMap() {
             return boardScript.getWallMap();
-        }
+		}
+
+		public Vector3 getRandomSpawnPosition() {
+			return boardScript.getRandomSpawnPosition();
+		}
+
+		public Vector3 getRandomIndoorPosition() {
+			return boardScript.getRandomIndoorPosition();
+		}
     }
 }

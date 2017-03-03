@@ -2,33 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour {
+namespace SurviveTheNight {
 
-	public GameObject enemy;
+	public class EnemyManager : MonoBehaviour {
 
-	public float MinX = 0;
-	public float MaxX = 60;
-	public float MinY = 0;
-	public float MaxY = 60;
+		public GameObject enemy;
 
-	// Use this for initialization
-	void Start () {
-		for (int i = 0; i < 20; i++) {
-			Spawn ();
+		public float MinX = 0;
+		public float MaxX = 60;
+		public float MinY = 0;
+		public float MaxY = 60;
+
+		// Use this for initialization
+		void Start () {
+			for (int i = 0; i < 20; i++) {
+				Spawn ();
+			}
+		}
+
+		void Spawn() {
+			//float x = Random.Range(MinX,MaxX);
+			//float y = Random.Range(MinY,MaxY);
+			//float z = 0;
+			Instantiate (enemy, GameManager.instance.getRandomSpawnPosition(), Quaternion.identity);
+		}
+
+
+		
+		// Update is called once per frame
+		void Update () {
+			
 		}
 	}
 
-	void Spawn() {
-		float x = Random.Range(MinX,MaxX);
-		float y = Random.Range(MinY,MaxY);
-		float z = 0;
-		Instantiate (enemy, new Vector3(x,y,z), Quaternion.identity);
-	}
-
-
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

@@ -28,9 +28,10 @@ namespace SurviveTheNight {
 		public GameObject edgeTile;
 
 		private Transform boardHolder;
-		private List <Vector3> gridPositions = null;
 		private int[,] floorMap = null;
 		private int[,] wallMap = null;
+		private List <Vector3> spawnPositions = new List <Vector3>();
+		private List <Vector3> indoorPositions = new List <Vector3>();
 
 		void LoadWorldMap() {
 
@@ -55,11 +56,6 @@ namespace SurviveTheNight {
 
 			rows = floorMap.GetLength (0);
 			columns = floorMap.GetLength (1);
-			gridPositions = new List <Vector3> ();
-			gridPositions.Clear ();
-			for(int x = 0; x < columns; x++)
-				for(int y = 0; y < rows; y++)
-					gridPositions.Add(new Vector3(x*scale,y*scale,0f));
 		}
 
 		int[,] parse2DarrayStr(String str) {
@@ -92,18 +88,24 @@ namespace SurviveTheNight {
 						instance.transform.SetParent (boardHolder);
 						continue;
 					}
-					if (floorMap [rows-y-1, x] == (int)floor.GRASS)
+					if (floorMap [rows - y - 1, x] == (int)floor.GRASS)
 						toInstantiate = grassTiles [Random.Range ((int)grass.GRASS1, grassCount)];
-					else 
-						toInstantiate = floorTiles [floorMap [rows-y-1, x]];
+					else
+						toInstantiate = floorTiles [floorMap [rows - y - 1, x]];
 					instance = Instantiate (toInstantiate, new Vector3 (x * scale, y * scale, 0f), Quaternion.identity) as GameObject;
 					instance.transform.SetParent (boardHolder);
 
-					if(wallMap [rows-y-1, x] != (int)wall.EMPTY) {
-						toInstantiate = wallTiles [wallMap [rows-y-1, x]];
+					if (wallMap [rows - y - 1, x] != (int)wall.EMPTY) {
+						toInstantiate = wallTiles [wallMap [rows - y - 1, x]];
 						instance = Instantiate (toInstantiate, new Vector3 (x * scale, y * scale, 0f), Quaternion.identity) as GameObject;
 						instance.transform.SetParent (boardHolder);
-					}
+					} 
+					else if (floorMap [rows - y - 1, x] == (int)floor.GRASS
+						|| floorMap [rows - y - 1, x] == (int)floor.SIDEWALK 
+						|| floorMap [rows - y - 1, x] == (int)floor.ROAD)
+						spawnPositions.Add (new Vector3 (x * scale, y * scale, 0f));
+					else if(floorMap [rows - y - 1, x] == (int)floor.TILES)
+						indoorPositions.Add(new Vector3(x * scale, y * scale, 0f));
 				}
 			}
 		}
@@ -115,7 +117,15 @@ namespace SurviveTheNight {
 
         public int[,] getWallMap() {
             return wallMap;
-        }
+		}
+
+		public Vector3 getRandomSpawnPosition() {
+			return spawnPositions[Random.Range (0, spawnPositions.Count)];
+		}
+
+		public Vector3 getRandomIndoorPosition() {
+			return indoorPositions[Random.Range (0, indoorPositions.Count)];
+		}
 	}
 
 }
