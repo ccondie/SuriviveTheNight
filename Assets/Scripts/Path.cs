@@ -30,14 +30,22 @@ namespace SurviveTheNight {
                 }
             }
 
-            Debug.Log("Didn't match any of the intermediate steps");
+            //Debug.Log("Didn't match any of the intermediate steps");
             return steps[steps.Count - 1];
         }
 
-        public bool playerHasMoved(Vector2 newPlayerLocation) {
-            if (newPlayerLocation.x != steps[steps.Count-1].x) {
+        public bool targetHasMoved(Vector2 newTargetLocation) {
+            if (newTargetLocation.x < steps[0].x - .3) {
+                Debug.Log("Player moved");
                 return true;
-            } else if (newPlayerLocation.y != steps[steps.Count - 1].y) {
+            } else if (newTargetLocation.x > steps[0].x + .3) {
+                Debug.Log("Player moved");
+                return true;
+            } else if (newTargetLocation.y < steps[0].y - .3) {
+                Debug.Log("Player moved");
+                return true;
+            } else if (newTargetLocation.y > steps[0].y + .3) {
+                Debug.Log("Player moved");
                 return true;
             }
             return false;
