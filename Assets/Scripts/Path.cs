@@ -7,7 +7,6 @@ namespace SurviveTheNight {
     public class Path {
         //first step (0) is the target - last step (size-1) is current
         public List<Vector2> steps { get; set; }
-        public int intermediateTarget { get; set; }
 
         public Path() {
             steps = new List<Vector2>();
@@ -33,6 +32,15 @@ namespace SurviveTheNight {
 
             Debug.Log("Didn't match any of the intermediate steps");
             return steps[steps.Count - 1];
+        }
+
+        public bool playerHasMoved(Vector2 newPlayerLocation) {
+            if (newPlayerLocation.x != steps[steps.Count-1].x) {
+                return true;
+            } else if (newPlayerLocation.y != steps[steps.Count - 1].y) {
+                return true;
+            }
+            return false;
         }
     }
 

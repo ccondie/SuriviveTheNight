@@ -52,7 +52,7 @@ namespace SurviveTheNight {
 				sqrRemainingDistance = (transform.position - end).sqrMagnitude;
 				yield return null;
 			}
-			isMoving = false;
+            isMoving = false;
 			animator.SetTrigger ("stop");
 		}
 
