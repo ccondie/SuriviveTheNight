@@ -64,7 +64,9 @@ namespace SurviveTheNight
 
             if (!isMoving) {
                 
-                if (navigatingPath && (!path.targetHasMoved(player.transform.position))) {
+                if (stayPut()) {
+                    //do nothing
+                } else if (navigatingPath && (!path.targetHasMoved(player.transform.position))) {
                     if (path != null) {
                         ContinueAStar();
                     } else {
@@ -92,6 +94,20 @@ namespace SurviveTheNight
                     walkStaminaDelay_Cur = walkStaminaDelay;
                 }
             }
+        }
+
+        private bool stayPut() {
+            //if the zombie is adjacent to the player
+            if (Math.Abs(worldToTile(player.transform.position.x) - worldToTile(transform.position.x)) <= 1) {
+                if (Math.Abs(worldToTile(player.transform.position.y) - worldToTile(transform.position.y)) <= 1) {
+                    return true;
+                }
+            }
+            //if the zombie is trapped on all sides
+            if (surrounded()) {
+                return true;
+            }
+            return false;
         }
 
         protected override void AttemptMoveAStar<T>(Vector2 target)
@@ -185,7 +201,7 @@ namespace SurviveTheNight
                 deltaTargetY += 0.6f;
                 deltaTargetX -= 0.6f;
             }
-            Debug.Assert(!(deltaTargetY == 0 && deltaTargetX == 0));
+            //Debug.Assert(!(deltaTargetY == 0 && deltaTargetX == 0));
 
             return new Vector2(playerLocation.x + deltaTargetX, playerLocation.y + deltaTargetY);
         }

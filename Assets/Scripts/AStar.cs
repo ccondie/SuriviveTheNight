@@ -14,9 +14,11 @@ namespace SurviveTheNight{
         private int xTarget;
         private int yTarget;
         private int[,] wallMap;
+        private int[,] characterMap;
         private int mapWidth;
         private int mapHeight;
         private Tile[,] tiles;
+        private bool adjustedTarget = false;
         HeapPriorityQueue<Tile> q;
 
         private float scale;
@@ -25,23 +27,14 @@ namespace SurviveTheNight{
             this.start  = start;
             this.target = target;
             wallMap     = GameManager.instance.getWallMap();
-            /*wallMap = new int[5, 5];
-            wallMap[1, 1] = 1;
-            //wallMap[2, 1] = 1;
-            wallMap[3, 1] = 1;
-            wallMap[3, 2] = 1;
-            wallMap[3, 3] = 1;
-            //wallMap[2, 3] = 1;
-            wallMap[1, 3] = 1;
-            wallMap[1, 2] = 1;
-
-            wallMap[0, 3] = 1;*/
             mapWidth    =  wallMap.GetLength(0);
             mapHeight   = wallMap.GetLength(1);
+            characterMap = new int[mapWidth, mapHeight];
             this.scale  = scale;
             q = new HeapPriorityQueue<Tile>(mapHeight * mapWidth);
             tiles = initTileArray(mapWidth, mapHeight);
             initTileVals();
+            establishCharacterLocations();
         }
 
         private void initTileVals() {
@@ -49,14 +42,13 @@ namespace SurviveTheNight{
             yStart = worldToTile(start.y);
             xTarget = worldToTile(target.x);
             yTarget = worldToTile(target.y);
-            /*Debug.Log("Start tile: " + xStart + ", " + yStart);
-            Debug.Log("Target tile: " + xTarget + ", " + yTarget);
-            Debug.Log("Start coord: " + start);
-            Debug.Log("Target coord: " + target);*/
-            /*xStart = 0;
-            yStart = 2;
-            xTarget = 0;
-            yTarget = 4;*/
+        }
+
+        private void establishCharacterLocations() {
+            List<GameObject> enemies = GameManager.instance.getEnemies();
+            foreach(GameObject e in enemies) {
+                characterMap[worldToTile(e.transform.position.x), worldToTile(e.transform.position.y)] = (int) character.ENEMY;
+            }
         }
 
         private Tile[,] initTileArray(int height, int width) {
@@ -74,7 +66,98 @@ namespace SurviveTheNight{
             return arr;
         }
 
+        private bool targetEnclosed(int depth) {
+            Tile start = new Tile(xStart, yStart);
+            tiles[xStart, yStart] = start;
+            start.openSet = true;
+            start.gScore = 0;
+            start.fScore = heuristic(start);
+            q.Enqueue(start, start.fScore);
+
+            while (q.Count > 0) {
+                Tile current = q.Dequeue();
+                current.openSet = false;
+                current.closedSet = true;
+
+                if (current.x == xTarget && current.y == yTarget) {
+                    return false;
+                } else if (depth < 0) {
+                    return false;
+                }
+
+                //check y+1
+                checkNeighbor(current, current.x, current.y + 1);
+                //check y-1
+                checkNeighbor(current, current.x, current.y - 1);
+                //check x+1
+                checkNeighbor(current, current.x + 1, current.y);
+                //check x-1
+                checkNeighbor(current, current.x - 1, current.y);
+                depth--;
+            }
+            return true;
+        }
+
+        private void chooseBetterTarget() {
+            adjustedTarget = true;
+            Queue<Tile> tileQueue = new Queue<Tile>();
+            tileQueue.Enqueue(tiles[xTarget, yTarget]);
+            while(tileQueue.Count != 0) {
+                Tile current = tileQueue.Dequeue();
+                current.checkedForBetterTarget = true;
+
+                //check y+1
+                if (!tiles[current.x, current.y + 1].checkedForBetterTarget) {
+                    if (!tileObstructed(tiles[current.x, current.y + 1])) {
+                        xTarget = current.x;
+                        yTarget = current.y + 1;
+                        return;
+                    } else if (!tileObstructedByMap(tiles[current.x, current.y + 1])){
+                        tileQueue.Enqueue(tiles[current.x, current.y + 1]);
+                    }
+                }
+                //check y-1
+                if (!tiles[current.x, current.y - 1].checkedForBetterTarget) {
+                    if (!tileObstructed(tiles[current.x, current.y - 1])) {
+                        xTarget = current.x;
+                        yTarget = current.y - 1;
+                        return;
+                    } else if (!tileObstructedByMap(tiles[current.x, current.y - 1])) {
+                        tileQueue.Enqueue(tiles[current.x, current.y - 1]);
+                    }
+                }
+                //check x+1
+                if (!tiles[current.x + 1, current.y].checkedForBetterTarget) {
+                    if (!tileObstructed(tiles[current.x + 1, current.y])) {
+                        xTarget = current.x + 1;
+                        yTarget = current.y;
+                        return;
+                    } else if (!tileObstructedByMap(tiles[current.x + 1, current.y])) {
+                        tileQueue.Enqueue(tiles[current.x + 1, current.y]);
+                    }
+                }
+                //check x-1
+                if (!tiles[current.x - 1, current.y].checkedForBetterTarget) {
+                    if (!tileObstructed(tiles[current.x - 1, current.y])) {
+                        xTarget = current.x - 1;
+                        yTarget = current.y;
+                        return;
+                    } else if (!tileObstructedByMap(tiles[current.x - 1, current.y])) {
+                        tileQueue.Enqueue(tiles[current.x - 1, current.y]);
+                    }
+                }
+            }
+        }
+
         public Path calculatePath() {
+
+            AStar a = new AStar(target, this.start, scale);
+            if (a.targetEnclosed(100)) {
+                Debug.Log("target enclosed");
+                Debug.Log("\t old target: " + xTarget + "," + yTarget);
+                chooseBetterTarget();
+                Debug.Log("\t new target: " + xTarget + "," + yTarget);
+            }
 
             Tile start = new Tile(xStart, yStart);
             tiles[xStart, yStart] = start;
@@ -108,7 +191,7 @@ namespace SurviveTheNight{
         private Path reconstructPath() {
             Path path = new SurviveTheNight.Path();
             Tile current = tiles[xTarget, yTarget];
-            while(true) {
+            while(current.cameFrom != null) {
                 path.steps.Add(tileToVector(current));
                 //Debug.Log("Step tile: " + current.x + ", " + current.y);
                 //Debug.Log("Step coord: " + tileToVector(current));
@@ -119,6 +202,7 @@ namespace SurviveTheNight{
 
                 current = current.cameFrom;
             }
+            path.adjustedTarget = this.adjustedTarget;
             return path;
         }
 
@@ -146,18 +230,34 @@ namespace SurviveTheNight{
         }
 
         private bool tileObstructed(Tile t) {
+            if (tileObstructedByMap(t)) {
+                return true;
+            } else if (tileObstructedByEnemy(t)) {
+                return true;
+            }
+            return false;
+        }
+
+        private bool tileObstructedByMap(Tile t) {
             //wallMap[i,j] is indexed from top left corner
             //and i,j corresponds to row,col
             //as opposed to Unity coordinates which are indexed from bottom left corner
             //and x,y in this code corresponds to col,row
-            if (wallMap[mapHeight - 1 - t.y, t.x] == 0) {
-                return false;
-            } else if (wallMap[mapHeight - 1 - t.y, t.x] == 3) {
-                return false;
-            } else if (wallMap[mapHeight - 1 - t.y, t.x] == 4) {
-                return false;
+            if (wallMap[mapHeight - 1 - t.y, t.x] == (int) wall.HEDGE) {
+                return true;
+            } else if (wallMap[mapHeight - 1 - t.y, t.x] == (int) wall.WALL) {
+                return true;
+            } else if (wallMap[mapHeight - 1 - t.y, t.x] == (int) wall.WINDOW) {
+                return true;
+            } else
+            return false;
+        }
+
+        private bool tileObstructedByEnemy(Tile t) {
+            if (characterMap[t.x, t.y] == (int)character.ENEMY) {
+                return true;
             }
-            return true;
+            return false;
         }
 
         private int worldToTile(float position) {
@@ -193,6 +293,7 @@ namespace SurviveTheNight{
         public bool openSet { get; set; }
         public int gScore { get; set; }
         public double fScore { get; set; }
+        public bool checkedForBetterTarget { get; set; }
 
         public Tile() {
             x = int.MaxValue;
@@ -211,6 +312,7 @@ namespace SurviveTheNight{
             openSet = false;
             gScore = int.MaxValue;
             fScore = double.MaxValue;
+            checkedForBetterTarget = false;
         }
     }
 }

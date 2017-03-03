@@ -7,6 +7,7 @@ namespace SurviveTheNight {
 	public class EnemyManager : MonoBehaviour {
 
 		public GameObject enemy;
+        public List<GameObject> enemies = new List<GameObject>();
 
 		public float MinX = 0;
 		public float MaxX = 60;
@@ -24,7 +25,7 @@ namespace SurviveTheNight {
 			//float x = Random.Range(MinX,MaxX);
 			//float y = Random.Range(MinY,MaxY);
 			//float z = 0;
-			Instantiate (enemy, GameManager.instance.getRandomSpawnPosition(), Quaternion.identity);
+			enemies.Add(Instantiate (enemy, GameManager.instance.getRandomSpawnPosition(), Quaternion.identity));
 		}
 
 

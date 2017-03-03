@@ -49,5 +49,9 @@ namespace SurviveTheNight {
 		public Vector3 getRandomIndoorPosition() {
 			return boardScript.getRandomIndoorPosition();
 		}
+
+        public List<GameObject> getEnemies() {
+            return enemyScript.enemies;
+        }
     }
 }

@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 namespace SurviveTheNight {
 
-	public enum grass { GRASS1, GRASS2, GRASS3, GRASS4 }
+	public enum grass { GRASS1, GRASS2, GRASS3, GRASS4 };
 	public enum floor { 
 		GRASS, TILES, 
 		DIV_N, DIV_W, DIV_E, DIV_S, 
@@ -16,6 +16,7 @@ namespace SurviveTheNight {
 		THRESH_N, THRESH_W, THRESH_E, THRESH_S 
 	} ;
 	public enum wall { EMPTY, WALL, WINDOW, DOORH, DOORV, HEDGE } ;
+    public enum character { EMPTY, PLAYER, ENEMY } ;
 
 	public class BoardManager : MonoBehaviour {
 

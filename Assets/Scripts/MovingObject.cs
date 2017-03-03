@@ -45,7 +45,8 @@ namespace SurviveTheNight {
 
 		protected IEnumerator SmoothMovement (Vector3 end) {
 			float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
-			while (sqrRemainingDistance > float.Epsilon) {
+            isMoving = true;
+			while (sqrRemainingDistance > float.Epsilon && hasLineOfSight(end)) {
 				isMoving = true;
 				Vector3 newPosition = Vector3.MoveTowards (rb2D.position, end, moveTime * Time.deltaTime);
 				rb2D.MovePosition (newPosition);
@@ -57,14 +58,23 @@ namespace SurviveTheNight {
 		}
 
         protected void ContinueAStar() {
-            Vector2 nextStep = path.calcFirstStep(transform.position, boxCollider, blockingLayer);
-            defineAnimationState(nextStep);
-            StartCoroutine(SmoothMovement(nextStep));
-
-            if (nextStep == path.steps[0]) {
+            Vector2 nextStep = path.calcNextStep(transform.position, boxCollider, blockingLayer);
+            if (path.blocked) {
                 navigatingPath = false;
+                path = null;
+                isMoving = false;
+                return;
             } else {
                 navigatingPath = true;
+                defineAnimationState(nextStep);
+                StartCoroutine(SmoothMovement(nextStep));
+            }
+
+            if (nextStep == path.steps[0]) {
+                //arrived!
+                navigatingPath = false;
+                path = null;
+                isMoving = false;
             }
         }
 
@@ -78,7 +88,7 @@ namespace SurviveTheNight {
 
             if (hit.transform == null) {
                 //there's a straight path
-                Debug.Log("Straight path found to target");
+                //Debug.Log("Straight path found to target");
                 defineAnimationState(target);
                 StartCoroutine(SmoothMovement(target));
             } else {
@@ -90,14 +100,23 @@ namespace SurviveTheNight {
         private void CalculatePathAStar(Vector2 target) {
             AStar algorithm = new SurviveTheNight.AStar(transform.position, target, scale);
             path = algorithm.calculatePath();
-            Vector2 firstStep = path.calcFirstStep(transform.position, boxCollider, blockingLayer);
-            defineAnimationState(firstStep);
-            StartCoroutine(SmoothMovement(firstStep));
-
-            if (firstStep == path.steps[0]) {
+            Vector2 firstStep = path.calcNextStep(transform.position, boxCollider, blockingLayer);
+            if (path.blocked) {
                 navigatingPath = false;
+                path = null;
+                isMoving = false;
+                return;
             } else {
                 navigatingPath = true;
+                defineAnimationState(firstStep);
+                StartCoroutine(SmoothMovement(firstStep));
+            }
+
+            if (firstStep == path.steps[0]) {
+                //arrived!
+                navigatingPath = false;
+                path = null;
+                isMoving = false;
             }
         }
         
@@ -126,6 +145,49 @@ namespace SurviveTheNight {
                 animator.SetTrigger("walk_southwest");
             else if (xDir > 0 && yDir < 0)
                 animator.SetTrigger("walk_southeast");
+        }
+
+        protected bool surrounded() {
+            RaycastHit2D hit;
+
+            Vector2 start = transform.position;
+            Vector2 target = new Vector2(start.x, start.y + scale);
+            boxCollider.enabled = false;
+            hit = Physics2D.Linecast(start, target, blockingLayer);
+            boxCollider.enabled = true;
+            if (hit.transform == null) {
+                //there's a straight path
+                return false;
+            }
+
+            target = new Vector2(start.x, start.y - scale);
+            boxCollider.enabled = false;
+            hit = Physics2D.Linecast(start, target, blockingLayer);
+            boxCollider.enabled = true;
+            if (hit.transform == null) {
+                //there's a straight path
+                return false;
+            }
+
+            target = new Vector2(start.x + scale, start.y);
+            boxCollider.enabled = false;
+            hit = Physics2D.Linecast(start, target, blockingLayer);
+            boxCollider.enabled = true;
+            if (hit.transform == null) {
+                //there's a straight path
+                return false;
+            }
+
+            target = new Vector2(start.x - scale, start.y);
+            boxCollider.enabled = false;
+            hit = Physics2D.Linecast(start, target, blockingLayer);
+            boxCollider.enabled = true;
+            if (hit.transform == null) {
+                //there's a straight path
+                return false;
+            }
+
+            return true;
         }
 
         protected bool hasLineOfSight(Vector2 target) {
