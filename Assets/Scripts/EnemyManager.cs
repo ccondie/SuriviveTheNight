@@ -7,13 +7,13 @@ public class EnemyManager : MonoBehaviour {
 	public GameObject enemy;
 
 	public float MinX = 0;
-	public float MaxX = 1;
+	public float MaxX = 60;
 	public float MinY = 0;
-	public float MaxY = 1;
+	public float MaxY = 60;
 
 	// Use this for initialization
 	void Start () {
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 20; i++) {
 			Spawn ();
 		}
 	}

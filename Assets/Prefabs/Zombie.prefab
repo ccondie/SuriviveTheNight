@@ -23,7 +23,8 @@ GameObject:
   - component: {fileID: 61840005040417234}
   - component: {fileID: 50807169509557116}
   - component: {fileID: 95809643312064816}
-  m_Layer: 9
+  - component: {fileID: 114837035872647316}
+  m_Layer: 8
   m_Name: Zombie
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -94,6 +95,31 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114837035872647316
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1095380027492598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 117ac33c8c709c448859187deff382ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveTime: 2
+  blockingLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  isMoving: 0
+  scale: 0.6
+  startingHealth: 100
+  currentHealth: 0
+  startingStamina: 100
+  currentStamina: 0
+  staminaGain: 0.4
+  staminaGainDelay: 0.03
+  walkStaminaLoss: 0.72
+  walkStaminaDelay: 0.03
 --- !u!212 &212174581817048728
 SpriteRenderer:
   m_ObjectHideFlags: 1

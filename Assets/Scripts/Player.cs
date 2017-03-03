@@ -17,7 +17,7 @@ namespace SurviveTheNight {
         public Slider healthSlider;
 
         // *******************************************************************************************************
-        //      STAMINA RELATED VARIABLES - maybe move to "player" or some new Stamina exclusive bar object
+        //      STAMINA RELATED VARIABLES 
         // *******************************************************************************************************
         public float startingStamina = 100f;
         public float currentStamina;
@@ -59,18 +59,14 @@ namespace SurviveTheNight {
         protected override void Start () {
             // Initialize the MoveableObject components
 			base.Start ();
-			//myHealth = GetComponent <PlayerHealth> ();
         }
 
 		private void OnDisable() {}
 
         // Update is called once per frame
         void Update () {
-
             UpdateMovement();
             UpdateStamina();
-            
-			
 		}
 
         protected override void AttemptMoveAStar<T> (Vector2 target) {
@@ -206,7 +202,6 @@ namespace SurviveTheNight {
                 // otherwise add the amount of stamina to the current stamina
                 currentStamina += amount;
             }
-
         }
     }
 

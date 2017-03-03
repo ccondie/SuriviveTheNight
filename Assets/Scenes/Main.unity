@@ -167,9 +167,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 1095380027492598, guid: 6bafa327a61924feb92cf741c9573b49, type: 2}
   MinX: 0
-  MaxX: 20
+  MaxX: 60
   MinY: 0
-  MaxY: 20
+  MaxY: 60
 --- !u!1 &366651691
 GameObject:
   m_ObjectHideFlags: 0
