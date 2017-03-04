@@ -15,6 +15,7 @@ namespace SurviveTheNight {
         public float startingHealth = 100f;
         public float currentHealth;
         public Slider healthSlider;
+		public GameObject moveRing;
 
         // *******************************************************************************************************
         //      STAMINA RELATED VARIABLES 
@@ -110,6 +111,8 @@ namespace SurviveTheNight {
                 if (Input.GetMouseButtonDown(0))
                 {
                     Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+					moveRing.transform.position = mousePosition;
+					moveRing.GetComponent<Renderer> ().enabled = true;
 
                     horizontal = worldToTile(mousePosition.x) - worldToTile(this.transform.position.x);
                     vertical = worldToTile(mousePosition.y) - worldToTile(this.transform.position.y);
@@ -149,6 +152,8 @@ namespace SurviveTheNight {
 
 		private void OnTriggerEnter2D(Collider2D other) {
 			// Do something if you collide with something
+			if (other.gameObject.tag == "MoveRing")
+				moveRing.GetComponent<Renderer> ().enabled = false;
 			//Debug.Log("OnTriggerEnter2D");
 		}
 
