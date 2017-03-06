@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,6 +42,9 @@ namespace SurviveTheNight {
         public float walkStaminaLoss = 0.72f;
         public float walkStaminaDelay = 0.03f;
         private float walkStaminaDelay_Cur;
+
+        private DateTime previousClick = DateTime.UtcNow;
+        private bool doubleClick = false;
 
         // *******************************************************************************************************
         // OTHER
@@ -88,8 +92,9 @@ namespace SurviveTheNight {
             {
                 this.moveTime = slugSpeed;
             }
-            else
-            {
+            else if (doubleClick) {
+                this.moveTime = runSpeed;
+            } else {
                 this.moveTime = walkSpeed;
             }
 
@@ -110,6 +115,8 @@ namespace SurviveTheNight {
 
                 if (Input.GetMouseButtonDown(0))
                 {
+                    previousClick = DateTime.UtcNow;
+                    doubleClick = false;
                     Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 					moveRing.transform.position = mousePosition;
 					moveRing.GetComponent<Renderer> ().enabled = true;
@@ -121,6 +128,13 @@ namespace SurviveTheNight {
                     {
                         AttemptMoveAStar<Wall>(mousePosition);
                         return;
+                    }
+                }
+            } else {
+                if (Input.GetMouseButtonDown(0)) {
+                    //check for double click
+                    if(DateTime.UtcNow.Subtract(previousClick).TotalMilliseconds < 300) {
+                        doubleClick = true;
                     }
                 }
             }
