@@ -74,16 +74,23 @@ namespace SurviveTheNight {
             UpdateStamina();
 		}
 
+        public void moveTo(Vector2 target) {
+            AttemptMoveAStar<Wall>(target);
+        }
+
+        public void setRun(bool run) {
+            doubleClick = run;
+        }
+
         protected override void AttemptMoveAStar<T> (Vector2 target) {
+            moveRing.transform.position = target;
+            moveRing.GetComponent<Renderer>().enabled = true;
             base.AttemptMoveAStar<T> (target);
         }
 
         // A subroutine of the Update function that handles player movement per update
         void UpdateMovement()
         {
-            int horizontal = 0;
-            int vertical = 0;
-
             // for tracking stamina drain off of time, not frames
             walkStaminaDelay_Cur -= Time.deltaTime;
 
@@ -110,31 +117,6 @@ namespace SurviveTheNight {
                     else
                     {
                         navigatingPath = false;
-                    }
-                }
-
-                if (Input.GetMouseButtonDown(0))
-                {
-                    previousClick = DateTime.UtcNow;
-                    doubleClick = false;
-                    Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-					moveRing.transform.position = mousePosition;
-					moveRing.GetComponent<Renderer> ().enabled = true;
-
-                    horizontal = worldToTile(mousePosition.x) - worldToTile(this.transform.position.x);
-                    vertical = worldToTile(mousePosition.y) - worldToTile(this.transform.position.y);
-
-                    if (!(0 == horizontal && 0 == vertical))
-                    {
-                        AttemptMoveAStar<Wall>(mousePosition);
-                        return;
-                    }
-                }
-            } else {
-                if (Input.GetMouseButtonDown(0)) {
-                    //check for double click
-                    if(DateTime.UtcNow.Subtract(previousClick).TotalMilliseconds < 300) {
-                        doubleClick = true;
                     }
                 }
             }

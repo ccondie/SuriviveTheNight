@@ -461,6 +461,10 @@ PlayerSettings:
   XboxOnePersistentLocalStorageSize: 0
   vrEditorSettings: {}
   cloudServicesEnabled:
+    Build: 0
+    Collab: 0
+    ErrorHub: 0
+    Hub: 0
     UNet: 1
   cloudProjectId: f4c41ba5-80c6-47c1-8f33-cc90cb24efbd
   projectName: SurviveTheNight
