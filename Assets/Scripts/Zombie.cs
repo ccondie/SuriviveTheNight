@@ -64,29 +64,28 @@ namespace SurviveTheNight
             walkStaminaDelay_Cur -= Time.deltaTime;
             moveTime = moveSpeed;
 
-            /*if (!isMoving) {
-                
-                if (stayPut()) {
-                    //do nothing
-                } else if (navigatingPath && (!path.targetHasMoved(player.transform.position))) {
-                    if (path != null) {
-                        ContinueAStar();
+            if (!isMoving) {
+                if (distToPlayer() < 15 * scale) {
+                    if (navigatingPath && (!path.targetHasMoved(player.transform.position))) {
+                        if (path != null) {
+                            ContinueAStar();
+                        } else {
+                            navigatingPath = false;
+                        }
                     } else {
-                        navigatingPath = false;
-                    }
-                } else {
-                    Vector2 target = targetClosestToPlayer(player.transform.position);
-                    if (hasLineOfSight(target)) {
-                       StartCoroutine(directlyTrackPlayer());
-                    } else {
-                        path = null;
-                        navigatingPath = false;
-                        isMoving = false;
+                        Vector2 target = targetClosestToPlayer(player.transform.position);
+                        if (hasLineOfSight(target)) {
+                            StartCoroutine(directlyTrackPlayer());
+                        } else {
+                            path = null;
+                            navigatingPath = false;
+                            isMoving = false;
 
-                        AttemptMoveAStar<Wall>(player.transform.position);
+                            AttemptMoveAStar<Wall>(player.transform.position);
+                        }
                     }
                 }
-            }*/
+            }
 
             if (isMoving)
             {
@@ -135,9 +134,10 @@ namespace SurviveTheNight
                 return;
             }
 
-            Vector2 target = targetClosestToPlayer(player.transform.position);
+            
             if (distToPlayer() < 15*scale) {
-                Debug.Log("within range of player");
+                //Debug.Log("within range of player");
+                Vector2 target = targetClosestToPlayer(player.transform.position);
                 if (hasLineOfSight(target)) {
                     //Debug.Log("\tdirectly tracking player");
                     StartCoroutine(directlyTrackPlayer());
@@ -148,7 +148,7 @@ namespace SurviveTheNight
             } else {
                 //otherwise, a* to random location
                 //Debug.Log("\tcalculating random target");
-                AttemptMoveAStar<Wall>(randomTarget(3*scale));
+                AttemptMoveAStar<Wall>(randomTarget(5*scale));
                 //Debug.Log("\tmoving to random target");
             }
 
