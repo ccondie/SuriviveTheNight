@@ -37,6 +37,7 @@ namespace SurviveTheNight {
                 }
             } else {
                 //ATTACK
+				playerScript.fireWeapon (Camera.main.ScreenToWorldPoint(Input.mousePosition));
             }
         }
     }

@@ -1,8 +1,8 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Player.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Input/UserInputController.cs">
     <Files>
-      <File FileName="Assets/Scripts/Zombie.cs" Line="188" Column="1" />
+      <File FileName="Assets/Scripts/Zombie.cs" Line="27" Column="1" />
       <File FileName="Assets/Scripts/Loader.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/BoardManager.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/GameManager.cs" Line="1" Column="1" />
@@ -10,6 +10,7 @@
       <File FileName="Assets/Scripts/FPSDisplay.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/TimeManager.cs" Line="16" Column="36" />
       <File FileName="Assets/Scripts/Player.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Input/UserInputController.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

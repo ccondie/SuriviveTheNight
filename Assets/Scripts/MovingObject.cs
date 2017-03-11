@@ -14,8 +14,9 @@ namespace SurviveTheNight {
 		public bool isMoving = false;
         protected bool navigatingPath = false;
         protected Path path;
+		protected Vector2 dest;
 
-		private BoxCollider2D boxCollider;
+		protected BoxCollider2D boxCollider;
 		protected Rigidbody2D rb2D;
 		public float scale = 0.6f;
 
@@ -37,6 +38,7 @@ namespace SurviveTheNight {
 			hit = Physics2D.Linecast (start, end, blockingLayer);
 			boxCollider.enabled = true;
 			if (hit.transform == null) {
+				dest = end;
 				StartCoroutine (SmoothMovement (end));
 				return true;
 			}
@@ -67,6 +69,7 @@ namespace SurviveTheNight {
             } else {
                 navigatingPath = true;
                 defineAnimationState(nextStep);
+				dest = nextStep;
                 StartCoroutine(SmoothMovement(nextStep));
             }
 
@@ -90,6 +93,7 @@ namespace SurviveTheNight {
                 //there's a straight path
                 //Debug.Log("Straight path found to target");
                 defineAnimationState(target);
+				dest = target;
                 StartCoroutine(SmoothMovement(target));
             } else {
                 //try A* magic
@@ -109,6 +113,7 @@ namespace SurviveTheNight {
             } else {
                 navigatingPath = true;
                 defineAnimationState(firstStep);
+				dest = firstStep;
                 StartCoroutine(SmoothMovement(firstStep));
             }
 
@@ -120,7 +125,7 @@ namespace SurviveTheNight {
             }
         }
         
-        private void defineAnimationState(Vector2 target) {
+        protected void defineAnimationState(Vector2 target) {
 
             int xDir = worldToTile(target.x) - worldToTile(this.transform.position.x);
             int yDir = worldToTile(target.y) - worldToTile(this.transform.position.y);

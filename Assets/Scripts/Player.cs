@@ -17,7 +17,6 @@ namespace SurviveTheNight {
         public float startingHealth = 100f;
         public float currentHealth;
         public Slider healthSlider;
-		public GameObject moveRing;
 
         // *******************************************************************************************************
         //      STAMINA RELATED VARIABLES 
@@ -35,10 +34,12 @@ namespace SurviveTheNight {
 
         // *******************************************************************************************************
         // MOVEMENT VARIABLES
-        // *******************************************************************************************************
+		// *******************************************************************************************************
+		public GameObject moveRing;
+
         private float walkSpeed = 2.8f;
         private float runSpeed = 4.5f;
-        private float slugSpeed = 1.35f;
+		private float slugSpeed = 1.35f;
 
         public float walkStaminaLoss = 0.72f;
         public float walkStaminaDelay = 0.03f;
@@ -52,6 +53,9 @@ namespace SurviveTheNight {
         // *******************************************************************************************************
         bool isDead;
 
+		// This should be moved to the player's belt or inventory at some point
+		Gun gun;
+
         void Awake()
         {
             currentHealth = startingHealth;
@@ -59,6 +63,7 @@ namespace SurviveTheNight {
             staminaFill = staminaSlider.GetComponentsInChildren<Image>()[1];
             staminaGainDelay_Cur = staminaGainDelay;
             walkStaminaDelay_Cur = walkStaminaDelay;
+			gun = new Handgun ();
         }
 
         // Use this for initialization
@@ -106,21 +111,28 @@ namespace SurviveTheNight {
                 this.moveTime = walkSpeed;
             }
 
-            if (!isMoving)
-            {
-                if (navigatingPath)
-                {
-                    if (path != null)
-                    {
-                        ContinueAStar();
-                        return;
-                    }
-                    else
-                    {
-                        navigatingPath = false;
-                    }
-                }
-            }
+			if (!isMoving) {
+				if (navigatingPath) {
+					if (path != null) {
+						ContinueAStar ();
+						return;
+					} else {
+						navigatingPath = false;
+					}
+				}
+			} else {
+				AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo (0);
+				if (stateInfo.IsName ("pm_face_north") || 
+					stateInfo.IsName ("pm_face_south") || 
+					stateInfo.IsName ("pm_face_west") || 
+					stateInfo.IsName ("pm_face_east") || 
+					stateInfo.IsName ("pm_face_northwest") || 
+					stateInfo.IsName ("pm_face_northeast") || 
+					stateInfo.IsName ("pm_face_southwest") || 
+					stateInfo.IsName ("pm_face_southeast")) {
+					defineAnimationState(dest);
+				}
+			}
         }
 
         void UpdateStamina()
@@ -205,6 +217,38 @@ namespace SurviveTheNight {
                 currentStamina += amount;
             }
         }
+
+		public void fireWeapon(Vector2 target) {
+			playFireAnimation(target);
+			gun.Fire(target);
+		}
+
+		private void playFireAnimation(Vector2 target) {
+
+			int xDir = worldToTile(target.x) - worldToTile(this.transform.position.x);
+			int yDir = worldToTile(target.y) - worldToTile(this.transform.position.y);
+
+			int absX = Mathf.Abs(xDir);
+			int absY = Mathf.Abs(yDir);
+
+			// choose animation state
+			if (yDir > 0 && yDir > absX << 1)
+				animator.SetTrigger("fire_north");
+			else if (yDir < 0 && absY > absX << 1)
+				animator.SetTrigger("fire_south");
+			else if (xDir < 0 && absX > absY << 1)
+				animator.SetTrigger("fire_west");
+			else if (xDir > 0 && xDir > absY << 1)
+				animator.SetTrigger("fire_east");
+			else if (xDir < 0 && yDir > 0)
+				animator.SetTrigger("fire_northwest");
+			else if (xDir > 0 && yDir > 0)
+				animator.SetTrigger("fire_northeast");
+			else if (xDir < 0 && yDir < 0)
+				animator.SetTrigger("fire_southwest");
+			else if (xDir > 0 && yDir < 0)
+				animator.SetTrigger("fire_southeast");
+		}
     }
 
 }
