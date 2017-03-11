@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Timers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -42,6 +43,7 @@ namespace SurviveTheNight
             currentStamina = startingStamina;
             staminaGainDelay_Cur = staminaGainDelay;
             walkStaminaDelay_Cur = walkStaminaDelay;
+            InvokeRepeating("DecideNextAction", 0f, 4f);
         }
 
         // Use this for initialization
@@ -62,7 +64,7 @@ namespace SurviveTheNight
             walkStaminaDelay_Cur -= Time.deltaTime;
             moveTime = moveSpeed;
 
-            if (!isMoving) {
+            /*if (!isMoving) {
                 
                 if (stayPut()) {
                     //do nothing
@@ -84,7 +86,7 @@ namespace SurviveTheNight
                         AttemptMoveAStar<Wall>(player.transform.position);
                     }
                 }
-            }
+            }*/
 
             if (isMoving)
             {
@@ -94,6 +96,50 @@ namespace SurviveTheNight
                     walkStaminaDelay_Cur = walkStaminaDelay;
                 }
             }
+        }
+
+        private bool playerNear(double threshold) {
+            //TODO: implement
+            return false;
+        }
+
+        private Vector2 randomTarget(float distance) {
+            Vector2 target;
+            do {
+                target = new Vector2(
+                    UnityEngine.Random.Range(
+                        transform.position.x - distance,
+                        transform.position.x + distance
+                    ),
+                    UnityEngine.Random.Range(
+                        transform.position.y - distance,
+                        transform.position.y + distance
+                    )
+                );
+            } while (!hasLineOfSight(target));
+            return target;
+        }
+
+        void DecideNextAction() {
+
+            //Debug.Log("deciding next action");
+            if (isMoving) {
+                //if moving, don't interrupt
+                //Debug.Log("\tmoving, don't interrupt");
+                return;
+            } else if (stayPut()) {
+                //Debug.Log("\tstay put");
+                return;
+            } else if (playerNear(15*scale)) {
+                //if player near, a* to player
+                //Debug.Log("\tgo to player");
+            } else {
+                //otherwise, a* to random location
+                //Debug.Log("\tcalculating random target");
+                AttemptMoveAStar<Wall>(randomTarget(3*scale));
+                //Debug.Log("\tmoving to random target");
+            }
+
         }
 
         private bool stayPut() {
