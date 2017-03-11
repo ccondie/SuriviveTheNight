@@ -44,6 +44,8 @@ namespace SurviveTheNight {
                         assignClickToController(Click.LEFT_DOUBLE);
                     }
                 }
+            } else if (leftClickHolding && Input.GetMouseButton(0)) {
+                assignClickToController(Click.LEFT_HOLD);
             } else if (Input.GetMouseButtonUp(0)) {
                 //left click up
                 if (leftClickHolding) {
