@@ -98,9 +98,12 @@ namespace SurviveTheNight
             }
         }
 
-        private bool playerNear(double threshold) {
-            //TODO: implement
-            return false;
+        private double distToPlayer() {
+            return Math.Sqrt(
+                Math.Pow((double) player.transform.position.x - (double) transform.position.x, 2)
+                +
+                Math.Pow((double) player.transform.position.y - (double) transform.position.y, 2)
+            );
         }
 
         private Vector2 randomTarget(float distance) {
@@ -130,9 +133,18 @@ namespace SurviveTheNight
             } else if (stayPut()) {
                 //Debug.Log("\tstay put");
                 return;
-            } else if (playerNear(15*scale)) {
-                //if player near, a* to player
-                //Debug.Log("\tgo to player");
+            }
+
+            Vector2 target = targetClosestToPlayer(player.transform.position);
+            if (distToPlayer() < 15*scale) {
+                Debug.Log("within range of player");
+                if (hasLineOfSight(target)) {
+                    //Debug.Log("\tdirectly tracking player");
+                    StartCoroutine(directlyTrackPlayer());
+                } else {
+                    //Debug.Log("\tgo to player");
+                    AttemptMoveAStar<Wall>(target);
+                }
             } else {
                 //otherwise, a* to random location
                 //Debug.Log("\tcalculating random target");
