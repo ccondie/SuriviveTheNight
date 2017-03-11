@@ -99,7 +99,6 @@ namespace SurviveTheNight {
         }
 
         private void assignClickToController(Click c) {
-            Debug.Log("Click type: " + c);
             if (mc.clickHit()) {
                 mc.processClick(c);
             } else if (ic.clickHit()) {
