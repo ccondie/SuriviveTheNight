@@ -27,8 +27,10 @@ namespace SurviveTheNight {
         }
 
         public void processClick(UserInputController.Click c) {
-            playerScript.setRun(c == UserInputController.Click.LEFT_DOUBLE);
-            playerScript.moveTo(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            playerScript.setRun(c == UserInputController.Click.RIGHT_DOUBLE);
+            if (c == UserInputController.Click.RIGHT_DOWN || c == UserInputController.Click.RIGHT_DOUBLE) {
+                playerScript.moveTo(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            }
         }
     }
 }
