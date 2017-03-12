@@ -47,6 +47,8 @@ namespace SurviveTheNight{
         private void establishCharacterLocations() {
             List<GameObject> enemies = GameManager.instance.getEnemies();
             foreach(GameObject e in enemies) {
+				if (e == null)
+					continue;
                 characterMap[worldToTile(e.transform.position.x), worldToTile(e.transform.position.y)] = (int) character.ENEMY;
             }
         }
@@ -153,10 +155,10 @@ namespace SurviveTheNight{
 
             AStar a = new AStar(target, this.start, scale);
             if (a.targetEnclosed(100)) {
-                Debug.Log("target enclosed");
-                Debug.Log("\t old target: " + xTarget + "," + yTarget);
+                //Debug.Log("target enclosed");
+                //Debug.Log("\t old target: " + xTarget + "," + yTarget);
                 chooseBetterTarget();
-                Debug.Log("\t new target: " + xTarget + "," + yTarget);
+                //Debug.Log("\t new target: " + xTarget + "," + yTarget);
             }
 
             Tile start = new Tile(xStart, yStart);

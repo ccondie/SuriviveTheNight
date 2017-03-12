@@ -17,13 +17,13 @@ TagManager:
   - UI
   - 
   - 
-  - BlockingLayer
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - PlayerLayer
+  - EnemyLayer
+  - WallLayer
+  - WindowLayer
+  - DoorLayer
+  - HedgeLayer
+  - WeaponLayer
   - 
   - 
   - 

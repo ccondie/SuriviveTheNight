@@ -17,7 +17,7 @@ namespace SurviveTheNight {
             adjustedTarget = false;
         }
 
-        public Vector2 calcNextStep(Vector3 current, BoxCollider2D boxCollider, LayerMask blockingLayer) {
+        public Vector2 calcNextStep(Vector3 current, BoxCollider2D boxCollider, LayerMask[] blockingLayer) {
             RaycastHit2D hit;
             Vector2 start = current;
 
@@ -25,9 +25,7 @@ namespace SurviveTheNight {
             for (int i = 0; i < steps.Count; i++) {
                 target = steps[i];
 
-                boxCollider.enabled = false;
-                hit = Physics2D.Linecast(start, target, blockingLayer);
-                boxCollider.enabled = true;
+				hit = LineCastCheck(start, target, boxCollider, blockingLayer);
 
                 if (hit.transform == null) {
                     //nothing stopping you - go for it!
@@ -42,7 +40,16 @@ namespace SurviveTheNight {
             //Debug.Log("Didn't match any of the intermediate steps");
             blocked = true;
             return new Vector2();
-        }
+		}
+
+		private RaycastHit2D LineCastCheck(Vector3 start, Vector3 end, BoxCollider2D boxCollider, LayerMask[] blockingLayer) {
+			RaycastHit2D hit = new RaycastHit2D();
+			boxCollider.enabled = false;
+			for(int i = 0; i < blockingLayer.Length && hit.transform == null; i++)
+				hit = Physics2D.Linecast (start, end, blockingLayer[i]);
+			boxCollider.enabled = true;
+			return hit;
+		}
 
         public bool targetHasMoved(Vector2 newTargetLocation) {
             if(adjustedTarget) {
