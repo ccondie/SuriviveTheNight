@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class Prefabs : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    public GameObject BULLET;
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
