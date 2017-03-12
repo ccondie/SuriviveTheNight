@@ -51,10 +51,9 @@ namespace SurviveTheNight {
         // *******************************************************************************************************
         // OTHER
         // *******************************************************************************************************
-        bool isDead;
 
 		// This should be moved to the player's belt or inventory at some point
-		Gun gun;
+		public Gun gun;
 
         void Awake()
         {
@@ -63,7 +62,7 @@ namespace SurviveTheNight {
             staminaFill = staminaSlider.GetComponentsInChildren<Image>()[1];
             staminaGainDelay_Cur = staminaGainDelay;
             walkStaminaDelay_Cur = walkStaminaDelay;
-			gun = new Handgun ();
+			//gun = new Handgun ();
         }
 
         // Use this for initialization
@@ -97,6 +96,8 @@ namespace SurviveTheNight {
         // A subroutine of the Update function that handles player movement per update
         void UpdateMovement()
         {
+			gun.transform.position = this.transform.position;
+
             // for tracking stamina drain off of time, not frames
             walkStaminaDelay_Cur -= Time.deltaTime;
 

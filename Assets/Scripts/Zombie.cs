@@ -268,10 +268,16 @@ namespace SurviveTheNight
             return new Vector2(playerLocation.x + deltaTargetX, playerLocation.y + deltaTargetY);
         }
 
+		void OnTriggerEnter2D(Collider2D collider) {
+			Debug.Log ("Zombie defeated!");
+			Destroy (gameObject);
+		}
+
         protected override void OnCantMove<T>(T component)
-            {
+        {
                 throw new NotImplementedException();
-            }
         }
+    }
+
 }
 

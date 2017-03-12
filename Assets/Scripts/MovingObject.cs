@@ -8,7 +8,7 @@ namespace SurviveTheNight {
 
         // moveTime - smaller is slower, larger is faster
         public float moveTime = 2.0f;
-		public LayerMask blockingLayer;
+		public LayerMask[] blockingLayer;
 		protected Animator animator;
 
 		public bool isMoving = false;
@@ -20,8 +20,11 @@ namespace SurviveTheNight {
 		protected Rigidbody2D rb2D;
 		public float scale = 0.6f;
 
+		protected bool isDead;
+
 		// Use this for initialization
 		protected virtual void Start () {
+			isDead = false;
 			animator = GetComponent<Animator>();
 			boxCollider = GetComponent<BoxCollider2D> ();
 			rb2D = GetComponent<Rigidbody2D> ();
@@ -31,12 +34,19 @@ namespace SurviveTheNight {
             return (int)((position + (scale / 2)) / scale);
         }
 
-        protected bool Move(int xDir, int yDir, out RaycastHit2D hit) {
+		private RaycastHit2D LineCastCheck(Vector3 end) {
+			RaycastHit2D hit = new RaycastHit2D();
 			Vector2 start = transform.position;
-			Vector2 end = start + new Vector2 (xDir*scale, yDir*scale);
 			boxCollider.enabled = false;
-			hit = Physics2D.Linecast (start, end, blockingLayer);
+			for(int i = 0; i < blockingLayer.Length && hit.transform == null; i++)
+				hit = Physics2D.Linecast (start, end, blockingLayer[i]);
 			boxCollider.enabled = true;
+			return hit;
+		}
+
+        protected bool Move(int xDir, int yDir, out RaycastHit2D hit) {
+			Vector2 end = (Vector2)transform.position + new Vector2 (xDir*scale, yDir*scale);
+			hit = LineCastCheck (end);
 			if (hit.transform == null) {
 				dest = end;
 				StartCoroutine (SmoothMovement (end));
@@ -83,12 +93,7 @@ namespace SurviveTheNight {
         }
 
         protected virtual void AttemptMoveAStar<T>(Vector2 target) {
-            RaycastHit2D hit;
-
-            Vector2 start = transform.position;
-            boxCollider.enabled = false;
-            hit = Physics2D.Linecast(start, target, blockingLayer);
-            boxCollider.enabled = true;
+            RaycastHit2D hit = LineCastCheck (target);
 
             if (hit.transform == null) {
                 //there's a straight path
@@ -160,36 +165,28 @@ namespace SurviveTheNight {
 
             Vector2 start = transform.position;
             Vector2 target = new Vector2(start.x, start.y + scale);
-            boxCollider.enabled = false;
-            hit = Physics2D.Linecast(start, target, blockingLayer);
-            boxCollider.enabled = true;
+			hit = LineCastCheck (target);
             if (hit.transform == null) {
                 //there's a straight path
                 return false;
             }
 
             target = new Vector2(start.x, start.y - scale);
-            boxCollider.enabled = false;
-            hit = Physics2D.Linecast(start, target, blockingLayer);
-            boxCollider.enabled = true;
+			hit = LineCastCheck (target);
             if (hit.transform == null) {
                 //there's a straight path
                 return false;
             }
 
             target = new Vector2(start.x + scale, start.y);
-            boxCollider.enabled = false;
-            hit = Physics2D.Linecast(start, target, blockingLayer);
-            boxCollider.enabled = true;
+			hit = LineCastCheck (target);
             if (hit.transform == null) {
                 //there's a straight path
                 return false;
             }
 
             target = new Vector2(start.x - scale, start.y);
-            boxCollider.enabled = false;
-            hit = Physics2D.Linecast(start, target, blockingLayer);
-            boxCollider.enabled = true;
+			hit = LineCastCheck (target);
             if (hit.transform == null) {
                 //there's a straight path
                 return false;
@@ -199,12 +196,7 @@ namespace SurviveTheNight {
         }
 
         protected bool hasLineOfSight(Vector2 target) {
-            RaycastHit2D hit;
-
-            Vector2 start = transform.position;
-            boxCollider.enabled = false;
-            hit = Physics2D.Linecast(start, target, blockingLayer);
-            boxCollider.enabled = true;
+            RaycastHit2D hit = LineCastCheck (target);
 
             if (hit.transform == null) {
                 //there's a straight path
