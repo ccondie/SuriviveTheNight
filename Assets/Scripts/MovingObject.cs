@@ -51,6 +51,7 @@ namespace SurviveTheNight {
 			while (sqrRemainingDistance > float.Epsilon && hasLineOfSight(end)) {
 				isMoving = true;
 				Vector3 newPosition = Vector3.MoveTowards (rb2D.position, end, moveTime * Time.deltaTime);
+				defineAnimationState (newPosition);
 				rb2D.MovePosition (newPosition);
 				sqrRemainingDistance = (transform.position - end).sqrMagnitude;
 				yield return null;
@@ -126,6 +127,8 @@ namespace SurviveTheNight {
         }
         
         protected void defineAnimationState(Vector2 target) {
+
+			//Debug.Log (this.GetType() is SurviveTheNight.Player);
 
             int xDir = worldToTile(target.x) - worldToTile(this.transform.position.x);
             int yDir = worldToTile(target.y) - worldToTile(this.transform.position.y);

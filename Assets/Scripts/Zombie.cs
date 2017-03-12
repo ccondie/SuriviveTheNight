@@ -43,7 +43,7 @@ namespace SurviveTheNight
             currentStamina = startingStamina;
             staminaGainDelay_Cur = staminaGainDelay;
             walkStaminaDelay_Cur = walkStaminaDelay;
-            InvokeRepeating("DecideNextAction", 0f, 4f);
+            InvokeRepeating("DecideNextAction", 0.0f, 4f);
         }
 
         // Use this for initialization
@@ -65,7 +65,7 @@ namespace SurviveTheNight
             moveTime = moveSpeed;
 
             if (!isMoving) {
-                if (distToPlayer() < 15 * scale) {
+				if (squareDistToPlayer() < 225f*scale*scale) {
                     if (navigatingPath && (!path.targetHasMoved(player.transform.position))) {
                         if (path != null) {
                             ContinueAStar();
@@ -85,17 +85,14 @@ namespace SurviveTheNight
                         }
                     }
                 }
-            }
-
-            if (isMoving)
-            {
+			} else {
                 if (walkStaminaDelay_Cur < 0)
                 {
                     DecreaseStamina(walkStaminaLoss);
                     walkStaminaDelay_Cur = walkStaminaDelay;
                 }
             }
-        }
+		}
 
         private double distToPlayer() {
             return Math.Sqrt(
@@ -103,7 +100,13 @@ namespace SurviveTheNight
                 +
                 Math.Pow((double) player.transform.position.y - (double) transform.position.y, 2)
             );
-        }
+		}
+
+		private double squareDistToPlayer() {
+			float xDist = player.transform.position.x - transform.position.x;
+			float yDist = player.transform.position.y - transform.position.y;
+			return xDist * xDist + yDist * yDist;
+		}
 
         private Vector2 randomTarget(float distance) {
             Vector2 target;
@@ -135,7 +138,7 @@ namespace SurviveTheNight
             }
 
             
-            if (distToPlayer() < 15*scale) {
+			if (squareDistToPlayer() < 225f*scale*scale) {
                 //Debug.Log("within range of player");
                 Vector2 target = targetClosestToPlayer(player.transform.position);
                 if (hasLineOfSight(target)) {
@@ -156,8 +159,8 @@ namespace SurviveTheNight
 
         private bool stayPut() {
             //if the zombie is adjacent to the player
-            if (Math.Abs(worldToTile(player.transform.position.x) - worldToTile(transform.position.x)) <= 1) {
-                if (Math.Abs(worldToTile(player.transform.position.y) - worldToTile(transform.position.y)) <= 1) {
+            if (Math.Abs(worldToTile(player.transform.position.x) - worldToTile(transform.position.x)) <= 1.1) {
+                if (Math.Abs(worldToTile(player.transform.position.y) - worldToTile(transform.position.y)) <= 1.1) {
                     return true;
                 }
             }
@@ -210,6 +213,7 @@ namespace SurviveTheNight
                 Vector3 newPosition = Vector3.MoveTowards(rb2D.position, target, moveTime * Time.deltaTime);
                 rb2D.MovePosition(newPosition);
                 target = targetClosestToPlayer(player.transform.position);
+				defineAnimationState (target);
                 sqrRemainingDistance = (transform.position - target).sqrMagnitude;
                 yield return null;
                 

@@ -120,20 +120,22 @@ namespace SurviveTheNight {
 						navigatingPath = false;
 					}
 				}
-			} else {
-				AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo (0);
-				if (stateInfo.IsName ("pm_face_north") || 
-					stateInfo.IsName ("pm_face_south") || 
-					stateInfo.IsName ("pm_face_west") || 
-					stateInfo.IsName ("pm_face_east") || 
-					stateInfo.IsName ("pm_face_northwest") || 
-					stateInfo.IsName ("pm_face_northeast") || 
-					stateInfo.IsName ("pm_face_southwest") || 
-					stateInfo.IsName ("pm_face_southeast")) {
-					defineAnimationState(dest);
-				}
+			} else if (isPlayerStanding()) {
+				defineAnimationState(dest);
 			}
         }
+
+		private bool isPlayerStanding() {
+			AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo (0);
+			return stateInfo.IsName ("pm_face_north") ||
+				stateInfo.IsName ("pm_face_south") ||
+				stateInfo.IsName ("pm_face_west") ||
+				stateInfo.IsName ("pm_face_east") ||
+				stateInfo.IsName ("pm_face_northwest") ||
+				stateInfo.IsName ("pm_face_northeast") ||
+				stateInfo.IsName ("pm_face_southwest") ||
+				stateInfo.IsName ("pm_face_southeast");
+		}
 
         void UpdateStamina()
         {

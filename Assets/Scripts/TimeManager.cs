@@ -13,7 +13,7 @@ namespace SurviveTheNight {
 		private GameObject sun;
 		private Light lantern_light;
 		private Light sun_light;
-		private int frames_per_day = 1000;
+		private int frames_per_day = 10000;
 		private float time_rate;
 		private float sun_position = 0;
 
