@@ -83,7 +83,7 @@ namespace SurviveTheNight {
                 //arrived!
                 navigatingPath = false;
                 path = null;
-                isMoving = false;
+                //isMoving = false;
             }
         }
 
@@ -120,7 +120,7 @@ namespace SurviveTheNight {
                 //arrived!
                 navigatingPath = false;
                 path = null;
-                isMoving = false;
+                //isMoving = false;
             }
         }
         

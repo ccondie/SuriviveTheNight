@@ -114,13 +114,15 @@ namespace SurviveTheNight {
 
 			if (!isMoving) {
 				if (navigatingPath) {
-					if (path != null) {
+                    if (path != null) {
 						ContinueAStar ();
 						return;
 					} else {
 						navigatingPath = false;
 					}
-				}
+				} else {
+                    moveRing.GetComponent<Renderer>().enabled = false;
+                }
 			} else if (isPlayerStanding()) {
 				defineAnimationState(dest);
 			}
