@@ -228,8 +228,8 @@ namespace SurviveTheNight {
 
 		private void playFireAnimation(Vector2 target) {
 
-			int xDir = worldToTile(target.x) - worldToTile(this.transform.position.x);
-			int yDir = worldToTile(target.y) - worldToTile(this.transform.position.y);
+			int xDir = BoardManager.worldToTile(target.x) - BoardManager.worldToTile(this.transform.position.x);
+			int yDir = BoardManager.worldToTile(target.y) - BoardManager.worldToTile(this.transform.position.y);
 
 			int absX = Mathf.Abs(xDir);
 			int absY = Mathf.Abs(yDir);

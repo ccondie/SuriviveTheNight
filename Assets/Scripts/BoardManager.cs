@@ -127,6 +127,10 @@ namespace SurviveTheNight {
 		public Vector3 getRandomIndoorPosition() {
 			return indoorPositions[Random.Range (0, indoorPositions.Count)];
 		}
-	}
+
+        public static int worldToTile(float position) {
+            return (int)((position + (scale / 2)) / scale);
+        }
+    }
 
 }

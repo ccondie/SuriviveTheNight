@@ -30,10 +30,6 @@ namespace SurviveTheNight {
 			rb2D = GetComponent<Rigidbody2D> ();
 		}
 
-        protected int worldToTile(float position) {
-            return (int)((position + (scale / 2)) / scale);
-        }
-
 		private RaycastHit2D LineCastCheck(Vector3 end) {
 			RaycastHit2D hit = new RaycastHit2D();
 			Vector2 start = transform.position;
@@ -132,8 +128,8 @@ namespace SurviveTheNight {
 
 			//Debug.Log (this.GetType() is SurviveTheNight.Player);
 
-            int xDir = worldToTile(target.x) - worldToTile(this.transform.position.x);
-            int yDir = worldToTile(target.y) - worldToTile(this.transform.position.y);
+            int xDir = BoardManager.worldToTile(target.x) - BoardManager.worldToTile(this.transform.position.x);
+            int yDir = BoardManager.worldToTile(target.y) - BoardManager.worldToTile(this.transform.position.y);
 
             int absX = Mathf.Abs(xDir);
             int absY = Mathf.Abs(yDir);

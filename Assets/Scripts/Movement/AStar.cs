@@ -38,10 +38,10 @@ namespace SurviveTheNight{
         }
 
         private void initTileVals() {
-            xStart = worldToTile(start.x);
-            yStart = worldToTile(start.y);
-            xTarget = worldToTile(target.x);
-            yTarget = worldToTile(target.y);
+            xStart = BoardManager.worldToTile(start.x);
+            yStart = BoardManager.worldToTile(start.y);
+            xTarget = BoardManager.worldToTile(target.x);
+            yTarget = BoardManager.worldToTile(target.y);
         }
 
         private void establishCharacterLocations() {
@@ -49,7 +49,7 @@ namespace SurviveTheNight{
             foreach(GameObject e in enemies) {
 				if (e == null)
 					continue;
-                characterMap[worldToTile(e.transform.position.x), worldToTile(e.transform.position.y)] = (int) character.ENEMY;
+                characterMap[BoardManager.worldToTile(e.transform.position.x), BoardManager.worldToTile(e.transform.position.y)] = (int) character.ENEMY;
             }
         }
 
@@ -260,10 +260,6 @@ namespace SurviveTheNight{
                 return true;
             }
             return false;
-        }
-
-        private int worldToTile(float position) {
-            return (int)((position + (scale / 2)) / scale);
         }
 
         private float tileToWorld(int position) {

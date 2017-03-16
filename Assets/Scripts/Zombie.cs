@@ -159,8 +159,8 @@ namespace SurviveTheNight
 
         private bool stayPut() {
             //if the zombie is adjacent to the player
-            if (Math.Abs(worldToTile(player.transform.position.x) - worldToTile(transform.position.x)) <= 1.1) {
-                if (Math.Abs(worldToTile(player.transform.position.y) - worldToTile(transform.position.y)) <= 1.1) {
+            if (Math.Abs(BoardManager.worldToTile(player.transform.position.x) - BoardManager.worldToTile(transform.position.x)) <= 1.1) {
+                if (Math.Abs(BoardManager.worldToTile(player.transform.position.y) - BoardManager.worldToTile(transform.position.y)) <= 1.1) {
                     return true;
                 }
             }
@@ -224,8 +224,8 @@ namespace SurviveTheNight
         }
 
         private Vector2 targetClosestToPlayer(Vector2 playerLocation) {
-            int xDir = worldToTile(playerLocation.x) - worldToTile(transform.position.x);
-            int yDir = worldToTile(playerLocation.y) - worldToTile(transform.position.y);
+            int xDir = BoardManager.worldToTile(playerLocation.x) - BoardManager.worldToTile(transform.position.x);
+            int yDir = BoardManager.worldToTile(playerLocation.y) - BoardManager.worldToTile(transform.position.y);
 
             int absX = Mathf.Abs(xDir);
             int absY = Mathf.Abs(yDir);
