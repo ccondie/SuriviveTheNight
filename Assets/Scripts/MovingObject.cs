@@ -49,7 +49,7 @@ namespace SurviveTheNight {
 			hit = LineCastCheck (end);
 			if (hit.transform == null) {
 				dest = end;
-				StartCoroutine (SmoothMovement (end));
+                StartCoroutine(SmoothMovement (end));
 				return true;
 			}
 			return false;
@@ -58,10 +58,10 @@ namespace SurviveTheNight {
 		protected IEnumerator SmoothMovement (Vector3 end) {
 			float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
             isMoving = true;
+            defineAnimationState(end);
 			while (sqrRemainingDistance > float.Epsilon && hasLineOfSight(end)) {
 				isMoving = true;
 				Vector3 newPosition = Vector3.MoveTowards (rb2D.position, end, moveTime * Time.deltaTime);
-				defineAnimationState (newPosition);
 				rb2D.MovePosition (newPosition);
 				sqrRemainingDistance = (transform.position - end).sqrMagnitude;
 				yield return null;
@@ -79,7 +79,6 @@ namespace SurviveTheNight {
                 return;
             } else {
                 navigatingPath = true;
-                defineAnimationState(nextStep);
 				dest = nextStep;
                 StartCoroutine(SmoothMovement(nextStep));
             }
@@ -98,7 +97,6 @@ namespace SurviveTheNight {
             if (hit.transform == null) {
                 //there's a straight path
                 //Debug.Log("Straight path found to target");
-                defineAnimationState(target);
 				dest = target;
                 StartCoroutine(SmoothMovement(target));
             } else {
@@ -118,7 +116,6 @@ namespace SurviveTheNight {
                 return;
             } else {
                 navigatingPath = true;
-                defineAnimationState(firstStep);
 				dest = firstStep;
                 StartCoroutine(SmoothMovement(firstStep));
             }
@@ -142,22 +139,30 @@ namespace SurviveTheNight {
             int absY = Mathf.Abs(yDir);
 
             // Define animation state
+            string state = null;
             if (yDir > 0 && yDir > absX << 1)
-                animator.SetTrigger("walk_north");
+                state = "walk_north";
             else if (yDir < 0 && absY > absX << 1)
-                animator.SetTrigger("walk_south");
+                state = "walk_south";
             else if (xDir < 0 && absX > absY << 1)
-                animator.SetTrigger("walk_west");
+                state = "walk_west";
             else if (xDir > 0 && xDir > absY << 1)
-                animator.SetTrigger("walk_east");
+                state = "walk_east";
             else if (xDir < 0 && yDir > 0)
-                animator.SetTrigger("walk_northwest");
+                state = "walk_northwest";
             else if (xDir > 0 && yDir > 0)
-                animator.SetTrigger("walk_northeast");
+                state = "walk_northeast";
             else if (xDir < 0 && yDir < 0)
-                animator.SetTrigger("walk_southwest");
+                state = "walk_southwest";
             else if (xDir > 0 && yDir < 0)
-                animator.SetTrigger("walk_southeast");
+                state = "walk_southeast";
+
+            if (state != null) {                
+                if (!(animator.GetCurrentAnimatorStateInfo(0).IsName("pm_" + state) || (animator.GetCurrentAnimatorStateInfo(0).IsName("z_" + state)))) {
+                    animator.SetTrigger(state);
+                }
+                //else if the moving object already has that animation state, don't just reset it
+            }
         }
 
         protected bool surrounded() {
