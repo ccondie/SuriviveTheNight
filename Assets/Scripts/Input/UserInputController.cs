@@ -63,7 +63,7 @@ namespace SurviveTheNight {
                         leftClickHolding = true;
                         assignClickToController(Click.LEFT_HOLD, Input.mousePosition);
                     } else {
-                        assignClickToController(Click.LEFT_DOWN, Input.mousePosition);
+                        assignClickToController(Click.LEFT_DOWN, previousClickLeftLocation);
                     }
                 }
             }
@@ -96,7 +96,7 @@ namespace SurviveTheNight {
                         rightClickHolding = true;
                         assignClickToController(Click.RIGHT_HOLD, Input.mousePosition);
                     } else {
-                        assignClickToController(Click.RIGHT_DOWN, Input.mousePosition);
+                        assignClickToController(Click.RIGHT_DOWN, previousClickRightLocation);
                     }
                 }
             }

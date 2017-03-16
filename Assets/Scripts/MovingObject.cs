@@ -15,6 +15,7 @@ namespace SurviveTheNight {
         protected bool navigatingPath = false;
         protected Path path;
 		protected Vector2 dest;
+        protected IEnumerator coroutine;
 
 		protected BoxCollider2D boxCollider;
 		protected Rigidbody2D rb2D;
@@ -45,7 +46,8 @@ namespace SurviveTheNight {
 			hit = LineCastCheck (end);
 			if (hit.transform == null) {
 				dest = end;
-                StartCoroutine(SmoothMovement (end));
+                coroutine = SmoothMovement(end);
+                StartCoroutine(coroutine);
 				return true;
 			}
 			return false;
@@ -76,7 +78,8 @@ namespace SurviveTheNight {
             } else {
                 navigatingPath = true;
 				dest = nextStep;
-                StartCoroutine(SmoothMovement(nextStep));
+                coroutine = SmoothMovement(nextStep);
+                StartCoroutine(coroutine);
             }
 
             if (nextStep == path.steps[0]) {
@@ -94,7 +97,8 @@ namespace SurviveTheNight {
                 //there's a straight path
                 //Debug.Log("Straight path found to target");
 				dest = target;
-                StartCoroutine(SmoothMovement(target));
+                coroutine = SmoothMovement(target);
+                StartCoroutine(coroutine);
             } else {
                 //try A* magic
                 CalculatePathAStar(target);
@@ -113,7 +117,8 @@ namespace SurviveTheNight {
             } else {
                 navigatingPath = true;
 				dest = firstStep;
-                StartCoroutine(SmoothMovement(firstStep));
+                coroutine = SmoothMovement(firstStep);
+                StartCoroutine(coroutine);
             }
 
             if (firstStep == path.steps[0]) {

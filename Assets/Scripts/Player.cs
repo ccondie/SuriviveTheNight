@@ -80,6 +80,10 @@ namespace SurviveTheNight {
 		}
 
         public void moveTo(Vector2 target) {
+            if (coroutine != null)
+                StopCoroutine(coroutine);
+            //path = null;
+            //navigatingPath = false;
             AttemptMoveAStar<Wall>(target);
         }
 
