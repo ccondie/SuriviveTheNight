@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
-	float maxSpeed = 5f;
+	float maxSpeed = 7f;
+    public float damage = 34f;
 	
 	// Update is called once per frame
 	void Update () {

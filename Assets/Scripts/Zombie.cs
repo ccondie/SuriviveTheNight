@@ -269,9 +269,25 @@ namespace SurviveTheNight
         }
 
 		void OnTriggerEnter2D(Collider2D collider) {
-			Debug.Log ("Zombie defeated!");
-			Destroy (gameObject);
+            if (collider.name == "Bullet(Clone)") {
+                Debug.Log("Zombie hit by bullet");
+                Bullet b = collider.GetComponent<Bullet>();
+                receiveDamage(b.damage);
+            } else {
+                Debug.Log("Zombie hit by unknown object");
+                receiveDamage(currentHealth);
+            }
 		}
+
+        public void receiveDamage(float damage) {
+            currentHealth -= damage;
+            if (currentHealth <= 0) {
+                Debug.Log("Zombie defeated!");
+                Destroy(gameObject);
+            } else {
+                Debug.Log("Zombie health: " + currentHealth + " (" + damage + " damage)");
+            }
+        }
 
         protected override void OnCantMove<T>(T component)
         {
