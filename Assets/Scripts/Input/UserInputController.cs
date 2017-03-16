@@ -11,9 +11,11 @@ namespace SurviveTheNight {
         public enum Click { NONE, LEFT_DOWN, LEFT_HOLD, LEFT_UP, LEFT_DOUBLE, RIGHT_DOWN, RIGHT_HOLD, RIGHT_UP, RIGHT_DOUBLE };
         private int doubleClickThreshold = 300;
         private DateTime previousClickLeft = DateTime.UtcNow;
+        private Vector2 previousClickLeftLocation;
         private bool waitingOnClickTypeLeft = false;
         private bool leftClickHolding = false;
         private DateTime previousClickRight = DateTime.UtcNow;
+        private Vector2 previousClickRightLocation;
         private bool waitingOnClickTypeRight = false;
         private bool rightClickHolding = false;
 
@@ -37,20 +39,21 @@ namespace SurviveTheNight {
                 if (!waitingOnClickTypeLeft) {
                     waitingOnClickTypeLeft = true;
                     previousClickLeft = DateTime.UtcNow;
+                    previousClickLeftLocation = Input.mousePosition;
                 } else {
                     double gap = DateTime.UtcNow.Subtract(previousClickLeft).TotalMilliseconds;
                     if (gap <= doubleClickThreshold) {
                         waitingOnClickTypeLeft = false;
-                        assignClickToController(Click.LEFT_DOUBLE);
+                        assignClickToController(Click.LEFT_DOUBLE, previousClickLeftLocation);
                     }
                 }
             } else if (leftClickHolding && Input.GetMouseButton(0)) {
-                assignClickToController(Click.LEFT_HOLD);
+                assignClickToController(Click.LEFT_HOLD, Input.mousePosition);
             } else if (Input.GetMouseButtonUp(0)) {
                 //left click up
                 if (leftClickHolding) {
                     leftClickHolding = false;
-                    assignClickToController(Click.LEFT_UP);
+                    assignClickToController(Click.LEFT_UP, Input.mousePosition);
                 }
             } else if (waitingOnClickTypeLeft) {
                 double gap = DateTime.UtcNow.Subtract(previousClickLeft).TotalMilliseconds;
@@ -58,9 +61,9 @@ namespace SurviveTheNight {
                     waitingOnClickTypeLeft = false;
                     if (Input.GetMouseButton(0)) {
                         leftClickHolding = true;
-                        assignClickToController(Click.LEFT_HOLD);
+                        assignClickToController(Click.LEFT_HOLD, Input.mousePosition);
                     } else {
-                        assignClickToController(Click.LEFT_DOWN);
+                        assignClickToController(Click.LEFT_DOWN, Input.mousePosition);
                     }
                 }
             }
@@ -71,18 +74,19 @@ namespace SurviveTheNight {
                 if (!waitingOnClickTypeRight) {
                     waitingOnClickTypeRight = true;
                     previousClickRight = DateTime.UtcNow;
+                    previousClickRightLocation = Input.mousePosition;
                 } else {
                     double gap = DateTime.UtcNow.Subtract(previousClickRight).TotalMilliseconds;
                     if (gap <= doubleClickThreshold) {
                         waitingOnClickTypeRight = false;
-                        assignClickToController(Click.RIGHT_DOUBLE);
+                        assignClickToController(Click.RIGHT_DOUBLE, previousClickRightLocation);
                     }
                 }
             } else if (Input.GetMouseButtonUp(1)) {
                 //left click up
                 if (rightClickHolding) {
                     rightClickHolding = false;
-                    assignClickToController(Click.RIGHT_UP);
+                    assignClickToController(Click.RIGHT_UP, Input.mousePosition);
                 }
             } else if (waitingOnClickTypeRight) {
                 double gap = DateTime.UtcNow.Subtract(previousClickRight).TotalMilliseconds;
@@ -90,9 +94,9 @@ namespace SurviveTheNight {
                     waitingOnClickTypeRight = false;
                     if (Input.GetMouseButton(1)) {
                         rightClickHolding = true;
-                        assignClickToController(Click.RIGHT_HOLD);
+                        assignClickToController(Click.RIGHT_HOLD, Input.mousePosition);
                     } else {
-                        assignClickToController(Click.RIGHT_DOWN);
+                        assignClickToController(Click.RIGHT_DOWN, Input.mousePosition);
                     }
                 }
             }
@@ -100,13 +104,13 @@ namespace SurviveTheNight {
             //TODO: checking key presses (as far as I know, only used for cycling through belt)
         }
 
-        private void assignClickToController(Click c) {
+        private void assignClickToController(Click c, Vector2 position) {
             if (mc.clickHit()) {
-                mc.processClick(c);
+                mc.processClick(c, position);
             } else if (ic.clickHit()) {
-                ic.processClick(c);
+                ic.processClick(c, position);
             } else if (mmc.clickHit()) {
-                mmc.processClick(c);
+                mmc.processClick(c, position);
             } 
         }
     }

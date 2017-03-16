@@ -26,18 +26,18 @@ namespace SurviveTheNight {
             return true;
         }
 
-        public void processClick(UserInputController.Click c) {
+        public void processClick(UserInputController.Click c, Vector2 position) {
             if (c >= UserInputController.Click.RIGHT_DOWN) {
                 //MOVEMENT
                 playerScript.setRun(c == UserInputController.Click.RIGHT_DOUBLE);
                 if (c == UserInputController.Click.RIGHT_DOWN || c == UserInputController.Click.RIGHT_DOUBLE) {
-                    playerScript.moveTo(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                    playerScript.moveTo(Camera.main.ScreenToWorldPoint(position));
                 } else if (c == UserInputController.Click.RIGHT_HOLD) {
                     //make a pop up menu appear
                 }
             } else {
                 //ATTACK
-				playerScript.fireWeapon (Camera.main.ScreenToWorldPoint(Input.mousePosition));
+				playerScript.fireWeapon (Camera.main.ScreenToWorldPoint(position));
             }
         }
     }

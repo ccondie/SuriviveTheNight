@@ -21,7 +21,7 @@ namespace SurviveTheNight {
             return false;
         }
 
-        public void processClick(UserInputController.Click c) {
+        public void processClick(UserInputController.Click c, Vector2 position) {
         }
     }
 }
