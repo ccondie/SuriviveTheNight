@@ -36,6 +36,8 @@ namespace SurviveTheNight
         public float walkStaminaDelay = 0.03f;
         private float walkStaminaDelay_Cur;
 
+        private float damage = 20f;
+
         void Awake()
         {
             player = GameObject.FindGameObjectWithTag("Player");
@@ -44,6 +46,7 @@ namespace SurviveTheNight
             staminaGainDelay_Cur = staminaGainDelay;
             walkStaminaDelay_Cur = walkStaminaDelay;
             InvokeRepeating("DecideNextAction", 0.0f, 4f);
+            InvokeRepeating("TryAttackPlayer", 0.0f, 2f);
         }
 
         // Use this for initialization
@@ -93,6 +96,13 @@ namespace SurviveTheNight
                 }
             }
 		}
+
+        private void TryAttackPlayer() {
+            if (squareDistToPlayer() < 2 * scale * scale) {
+                Player playerScript = (Player)player.GetComponent("Player");
+                playerScript.TakeDamage(damage);
+            }
+        }
 
         private double distToPlayer() {
             return Math.Sqrt(

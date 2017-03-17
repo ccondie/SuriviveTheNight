@@ -183,7 +183,7 @@ namespace SurviveTheNight {
 		}
 
 
-        private void TakeDamage(float amount)
+        public void TakeDamage(float amount)
         {
             currentHealth -= amount;
             healthSlider.value = currentHealth;
