@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\CameraMovement.cs" />
      <Compile Include="Assets\Scripts\Door.cs" />
      <Compile Include="Assets\Scripts\FPSDisplay.cs" />
+     <Compile Include="Assets\Scripts\GameOverScreen.cs" />
      <Compile Include="Assets\Scripts\Input\InventoryController.cs" />
      <Compile Include="Assets\Scripts\Input\MainMenuController.cs" />
      <Compile Include="Assets\Scripts\Input\MapController.cs" />
@@ -64,6 +65,7 @@
      <Compile Include="Assets\Scripts\Movement\Path.cs" />
      <Compile Include="Assets\Scripts\Movement\PriorityQueueNode.cs" />
      <Compile Include="Assets\Scripts\MovingObject.cs" />
+     <Compile Include="Assets\Scripts\PlayAgainButton.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\Prefabs.cs" />
      <Compile Include="Assets\Scripts\Roof.cs" />
