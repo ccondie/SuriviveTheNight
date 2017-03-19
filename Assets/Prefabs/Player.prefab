@@ -74,7 +74,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
@@ -109,12 +109,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveTime: 0.25
   blockingLayer:
-    serializedVersion: 2
-    m_Bits: 256
+  - serializedVersion: 2
+    m_Bits: 0
+  - serializedVersion: 2
+    m_Bits: 0
   isMoving: 0
   scale: 0.6
+  startingHealth: 100
+  currentHealth: 0
+  healthSlider: {fileID: 0}
+  startingStamina: 100
+  currentStamina: 0
+  staminaSlider: {fileID: 0}
+  staminaBlue: {r: 0, g: 0.44705883, b: 0.7372549, a: 1}
+  staminaRed: {r: 0.61960787, g: 0.043137256, b: 0.05882353, a: 1}
+  staminaGain: 0.4
+  staminaGainDelay: 0.03
+  moveRing: {fileID: 0}
   walkStaminaLoss: 0.72
   walkStaminaDelay: 0.03
+  gun: {fileID: 0}
 --- !u!114 &114657813997769422
 MonoBehaviour:
   m_ObjectHideFlags: 1

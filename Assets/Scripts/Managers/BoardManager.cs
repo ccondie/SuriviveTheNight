@@ -18,7 +18,7 @@ namespace SurviveTheNight {
 	public enum wall { EMPTY, WALL, WINDOW, DOORH, DOORV, HEDGE } ;
     public enum character { EMPTY, PLAYER, ENEMY } ;
 
-	public class BoardManager : MonoBehaviour {
+	public class BoardManager : Singleton<BoardManager> {
 
 		public int columns = 0;
 		public int rows = 0;
@@ -26,6 +26,7 @@ namespace SurviveTheNight {
 		public GameObject[] grassTiles;
 		public GameObject[] floorTiles;
 		public GameObject[] wallTiles;
+		public GameObject[] roofTiles;
 		public GameObject edgeTile;
 
 		private Transform boardHolder;
@@ -33,6 +34,9 @@ namespace SurviveTheNight {
 		private int[,] wallMap = null;
 		private List <Vector3> spawnPositions = new List <Vector3>();
 		private List <Vector3> indoorPositions = new List <Vector3>();
+		private GameObject[,] roofs;
+
+		protected BoardManager () {}
 
 		void LoadWorldMap() {
 
@@ -57,6 +61,7 @@ namespace SurviveTheNight {
 
 			rows = floorMap.GetLength (0);
 			columns = floorMap.GetLength (1);
+			roofs = new GameObject[rows, columns];
 		}
 
 		int[,] parse2DarrayStr(String str) {
@@ -96,6 +101,18 @@ namespace SurviveTheNight {
 					instance = Instantiate (toInstantiate, new Vector3 (x * scale, y * scale, 0f), Quaternion.identity) as GameObject;
 					instance.transform.SetParent (boardHolder);
 
+					if (floorMap [rows - y - 1, x] >= (int)floor.TILES
+					    && floorMap [rows - y - 1, x] <= (int)floor.DIV_NESW) {
+						toInstantiate = roofTiles [floorMap [rows - y - 1, x]];
+						roofs [rows - y - 1, x] = Instantiate (toInstantiate, new Vector3 (x * scale, y * scale, 0f), Quaternion.identity) as GameObject;
+						roofs [rows - y - 1, x].transform.SetParent (boardHolder);
+					} else if (floorMap [rows - y - 1, x] >= (int)floor.THRESH_N
+						&& floorMap [rows - y - 1, x] <= (int)floor.THRESH_S) {
+						toInstantiate = roofTiles [floorMap [rows - y - 1, x] - (int)floor.THRESH_N + (int)floor.DIV_N];
+						roofs [rows - y - 1, x] = Instantiate (toInstantiate, new Vector3 (x * scale, y * scale, 0f), Quaternion.identity) as GameObject;
+						roofs [rows - y - 1, x].transform.SetParent (boardHolder);
+					}
+
 					if (wallMap [rows - y - 1, x] != (int)wall.EMPTY) {
 						toInstantiate = wallTiles [wallMap [rows - y - 1, x]];
 						instance = Instantiate (toInstantiate, new Vector3 (x * scale, y * scale, 0f), Quaternion.identity) as GameObject;
@@ -105,7 +122,7 @@ namespace SurviveTheNight {
 						|| floorMap [rows - y - 1, x] == (int)floor.SIDEWALK 
 						|| floorMap [rows - y - 1, x] == (int)floor.ROAD)
 						spawnPositions.Add (new Vector3 (x * scale, y * scale, 0f));
-					else if(floorMap [rows - y - 1, x] == (int)floor.TILES)
+					else if(floorMap [rows - y - 1, x] == (int)floor.TILES) 
 						indoorPositions.Add(new Vector3(x * scale, y * scale, 0f));
 				}
 			}
@@ -113,7 +130,6 @@ namespace SurviveTheNight {
 					
 		public void SetupScene() {
 			BoardSetup ();
-			// TO DO: generate walls, enemies
 		}
 
         public int[,] getWallMap() {
@@ -126,6 +142,17 @@ namespace SurviveTheNight {
 
 		public Vector3 getRandomIndoorPosition() {
 			return indoorPositions[Random.Range (0, indoorPositions.Count)];
+		}
+
+		public GameObject[] getRoofNeighbors(Vector3 position) {
+			int x = worldToTile (position.x);
+			int y = rows - worldToTile (position.y) - 1;
+			GameObject[] neighbors = new GameObject[4];
+			neighbors[0] = x>-1&&x<columns&&y+1>-1&&y+1<rows?roofs[y+1,x]:null;
+			neighbors[1] = x+1>-1&&x+1<columns&&y>-1&&y<rows?roofs[y,x+1]:null;
+			neighbors[2] = x>-1&&x<columns&&y-1>-1&&y-1<rows?roofs[y-1,x]:null;
+			neighbors[3] = x-1>-1&&x-1<columns&&y>-1&&y<rows?roofs[y,x-1]:null;
+			return neighbors;
 		}
 
         public static int worldToTile(float position) {

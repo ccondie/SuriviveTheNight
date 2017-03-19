@@ -55,6 +55,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 1095380027492598, guid: 6bafa327a61924feb92cf741c9573b49, type: 2}
+  enemies: []
   MinX: 0
   MaxX: 60
   MinY: 0
@@ -118,6 +119,23 @@ MonoBehaviour:
   - {fileID: 1214159921039502, guid: 53d13c3dd2c204aa787a5586ba667b9a, type: 2}
   - {fileID: 1637914463834936, guid: 43faea5f157e743969574dc1232124be, type: 2}
   - {fileID: 1404310106008232, guid: a9a9c51d62fe64c1688dad8adc637f6b, type: 2}
+  roofTiles:
+  - {fileID: 0}
+  - {fileID: 1665038219087784, guid: 736dd9eec7b97452da66c050d5193348, type: 2}
+  - {fileID: 1019136656867428, guid: ab02bc256b8394ba28706ded2391b023, type: 2}
+  - {fileID: 1289876121596710, guid: 9879d6e5978084ebbaf6fe2b45bb6fb5, type: 2}
+  - {fileID: 1391402534865578, guid: bd2cee0f54bfe470da475702743c6337, type: 2}
+  - {fileID: 1272965734028348, guid: 7cde84340053a4c1ea94aa8281be22b2, type: 2}
+  - {fileID: 1394285592544010, guid: 2a27cd493c83b4102b2ff6bfad84d6a8, type: 2}
+  - {fileID: 1424359871295390, guid: 8df1262783c9943d1a7ffa5b83774168, type: 2}
+  - {fileID: 1808750919649678, guid: 0517fdf9c8d2e4684994402b4303dc44, type: 2}
+  - {fileID: 1638504636991572, guid: e33d7d3bad2194ade82ff306e47dcbd2, type: 2}
+  - {fileID: 1364066624989012, guid: 56e997cbff3894bb4833284d16af243c, type: 2}
+  - {fileID: 1690271594809394, guid: e6225d32e7d7447e78a8b139c312b014, type: 2}
+  - {fileID: 1470046408806690, guid: e861f3e24ecad4e38b52f4391b2606ae, type: 2}
+  - {fileID: 1898473632870438, guid: a58ce5ce342d64138aa973c6cf85ad3f, type: 2}
+  - {fileID: 1215154799269990, guid: dfa9835fd55ad40fcbb40dd0f14e7473, type: 2}
+  - {fileID: 1842661642295300, guid: fb8228eafac5d41f7ab597a23cab2fba, type: 2}
   edgeTile: {fileID: 1519635341088026, guid: 44e49a4cb8f9341cfa046f58526db152, type: 2}
 --- !u!114 &114747387612546210
 MonoBehaviour:

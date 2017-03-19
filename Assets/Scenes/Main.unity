@@ -1482,6 +1482,24 @@ Prefab:
       propertyPath: blockingLayer.Array.data[4].m_Bits
       value: 8192
       objectReference: {fileID: 0}
+    - target: {fileID: 4972021952038602, guid: 10a6d36ac80a34da8b123cea4e305d1f, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4972021952038602, guid: 10a6d36ac80a34da8b123cea4e305d1f, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 61593004041272140, guid: 10a6d36ac80a34da8b123cea4e305d1f,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 61593004041272140, guid: 10a6d36ac80a34da8b123cea4e305d1f,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 0.6
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114657813997769422, guid: 10a6d36ac80a34da8b123cea4e305d1f, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 10a6d36ac80a34da8b123cea4e305d1f, type: 2}

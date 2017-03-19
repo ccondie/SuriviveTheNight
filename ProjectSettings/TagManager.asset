@@ -24,7 +24,7 @@ TagManager:
   - DoorLayer
   - HedgeLayer
   - WeaponLayer
-  - 
+  - RoofLayer
   - 
   - 
   - 
@@ -47,6 +47,9 @@ TagManager:
     locked: 0
   - name: Floor
     uniqueID: 4259120099
+    locked: 0
+  - name: Roof
+    uniqueID: 1601219545
     locked: 0
   - name: BlockingLayer
     uniqueID: 1591393131

@@ -10,10 +10,8 @@ namespace SurviveTheNight {
 	public class GameManager : MonoBehaviour {
 
 		public static GameManager instance = null;
-        private BoardManager boardScript;
-		private EnemyManager enemyScript;
-		private TimeManager timeScript;
-
+		//private EnemyManager enemyScript;
+		//private TimeManager timeScript;
 
 		// Use this for initialization
 		void Awake () {
@@ -23,14 +21,11 @@ namespace SurviveTheNight {
 			else if (instance != this)
 				Destroy(gameObject);	
 			DontDestroyOnLoad(gameObject);
-			boardScript = GetComponent<BoardManager> ();
-			enemyScript = GetComponent<EnemyManager> ();
-			timeScript = GetComponent<TimeManager> ();
 			InitGame ();
 		}
 
 		void InitGame() {
-			boardScript.SetupScene ();
+			BoardManager.Instance.SetupScene ();
 		}
 		
 		// Update is called once per frame
@@ -39,19 +34,19 @@ namespace SurviveTheNight {
 		}
 
         public int[,] getWallMap() {
-            return boardScript.getWallMap();
+			return BoardManager.Instance.getWallMap();
 		}
 
 		public Vector3 getRandomSpawnPosition() {
-			return boardScript.getRandomSpawnPosition();
+			return BoardManager.Instance.getRandomSpawnPosition();
 		}
 
 		public Vector3 getRandomIndoorPosition() {
-			return boardScript.getRandomIndoorPosition();
+			return BoardManager.Instance.getRandomIndoorPosition();
 		}
 
         public List<GameObject> getEnemies() {
-            return enemyScript.enemies;
+			return EnemyManager.Instance.enemies;
         }
     }
 }

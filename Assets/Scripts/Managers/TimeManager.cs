@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace SurviveTheNight {
 
-	public class TimeManager : MonoBehaviour {
+	public class TimeManager : Singleton<TimeManager> {
 
 		//public Text timeUI = null;
 		public static int frame_count = 0;
@@ -16,6 +16,8 @@ namespace SurviveTheNight {
 		private int frames_per_day = 10000;
 		private float time_rate;
 		private float sun_position = 0;
+
+		protected TimeManager () {}
 
 		// Use this for initialization
 		void Awake()

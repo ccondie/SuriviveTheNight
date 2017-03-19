@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SurviveTheNight {
 
-	public class EnemyManager : MonoBehaviour {
+	public class EnemyManager : Singleton<EnemyManager> {
 
 		public GameObject enemy;
         public List<GameObject> enemies = new List<GameObject>();
@@ -13,6 +13,8 @@ namespace SurviveTheNight {
 		public float MaxX = 60;
 		public float MinY = 0;
 		public float MaxY = 60;
+
+		protected EnemyManager () {}
 
 		// Use this for initialization
 		void Start () {
