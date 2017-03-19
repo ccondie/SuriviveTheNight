@@ -55,6 +55,8 @@ namespace SurviveTheNight {
 		// This should be moved to the player's belt or inventory at some point
 		public Gun gun;
 
+        public GameOverScreen gameOverScreen;
+
         void Awake()
         {
             currentHealth = startingHealth;
@@ -197,6 +199,7 @@ namespace SurviveTheNight {
         void Death()
         {
             isDead = true;
+            gameOverScreen.GetComponent<Canvas>().enabled = true;
         }
 
         private void DecreaseStamina(float amount)
