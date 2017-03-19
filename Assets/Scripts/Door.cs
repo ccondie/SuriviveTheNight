@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Door : MonoBehaviour {
+namespace SurviveTheNight {
 
-	// Use this for initialization
-	void Start () {
-		
+	public class Door : MonoBehaviour {
+
+		private static bool ieg = false;
+
+		private void OnTriggerEnter2D(Collider2D other) {
+			Debug.Log (other);
+			// Do something if you collide with something
+			if (other.gameObject.tag == "Player" && !ieg) {
+				EnemyManager.Instance.BeginIndoorEnemyGeneration ();
+				ieg = true;
+			}
+		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 }

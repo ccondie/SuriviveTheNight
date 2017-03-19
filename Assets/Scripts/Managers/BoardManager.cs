@@ -20,8 +20,6 @@ namespace SurviveTheNight {
 
 	public class BoardManager : Singleton<BoardManager> {
 
-		public int columns = 0;
-		public int rows = 0;
 		public static float scale = 0.6f;
 		public GameObject[] grassTiles;
 		public GameObject[] floorTiles;
@@ -34,7 +32,10 @@ namespace SurviveTheNight {
 		private int[,] wallMap = null;
 		private List <Vector3> spawnPositions = new List <Vector3>();
 		private List <Vector3> indoorPositions = new List <Vector3>();
+		private List <Vector3> edgePositions = new List <Vector3>();
 		private GameObject[,] roofs;
+		private int columns = 0;
+		private int rows = 0;
 
 		protected BoardManager () {}
 
@@ -117,12 +118,13 @@ namespace SurviveTheNight {
 						toInstantiate = wallTiles [wallMap [rows - y - 1, x]];
 						instance = Instantiate (toInstantiate, new Vector3 (x * scale, y * scale, 0f), Quaternion.identity) as GameObject;
 						instance.transform.SetParent (boardHolder);
-					} 
-					else if (floorMap [rows - y - 1, x] == (int)floor.GRASS
-						|| floorMap [rows - y - 1, x] == (int)floor.SIDEWALK 
-						|| floorMap [rows - y - 1, x] == (int)floor.ROAD)
+					} else if (floorMap [rows - y - 1, x] == (int)floor.GRASS
+					         || floorMap [rows - y - 1, x] == (int)floor.SIDEWALK
+					         || floorMap [rows - y - 1, x] == (int)floor.ROAD) {
 						spawnPositions.Add (new Vector3 (x * scale, y * scale, 0f));
-					else if(floorMap [rows - y - 1, x] == (int)floor.TILES) 
+						if (x == 0 || x == columns-1 || y == 0 || y == rows-1)
+							edgePositions.Add (new Vector3 (x * scale, y * scale, 0f));
+					} else if(floorMap [rows - y - 1, x] == (int)floor.TILES) 
 						indoorPositions.Add(new Vector3(x * scale, y * scale, 0f));
 				}
 			}
@@ -142,6 +144,10 @@ namespace SurviveTheNight {
 
 		public Vector3 getRandomIndoorPosition() {
 			return indoorPositions[Random.Range (0, indoorPositions.Count)];
+		}
+
+		public Vector3 getRandomEdgePosition() {
+			return edgePositions[Random.Range (0, edgePositions.Count)];
 		}
 
 		public GameObject[] getRoofNeighbors(Vector3 position) {

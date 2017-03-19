@@ -1,22 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Prefabs.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Managers/TimeManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Zombie.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Player.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/MovingObject.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Input/UserInputController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Input/MapController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Weapon/Handgun.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Weapon/Gun.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Movement/Path.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/TimeManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/EnemyManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Weapon/Bullet.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/BoardManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Movement/AStar.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/CameraMovement.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Prefabs.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Weapon/Bullet.cs" Line="17" Column="2" />
+      <File FileName="Assets/Scripts/Zombie.cs" Line="237" Column="24" />
+      <File FileName="Assets/Scripts/Roof.cs" Line="17" Column="4" />
+      <File FileName="Assets/Scripts/Loader.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Singleton.cs" Line="55" Column="8" />
+      <File FileName="Assets/Scripts/Door.cs" Line="15" Column="3" />
+      <File FileName="Assets/Scripts/Player.cs" Line="202" Column="1" />
+      <File FileName="Assets/Scripts/Managers/TimeManager.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

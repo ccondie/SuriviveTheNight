@@ -13,9 +13,11 @@ namespace SurviveTheNight {
 		private GameObject sun;
 		private Light lantern_light;
 		private Light sun_light;
-		private int frames_per_day = 10000;
+		private int frames_per_day = 5000;
 		private float time_rate;
 		private float sun_position = 0;
+		private bool night = false;
+		private int frames_per_spawn = 50;
 
 		protected TimeManager () {}
 
@@ -38,6 +40,26 @@ namespace SurviveTheNight {
 
 			sun_light.intensity = 1 + Mathf.Cos(sun_position);
 			lantern_light.intensity = 0.5f - 0.5f*Mathf.Cos(sun_position);
+
+			if (!night && sun_light.intensity <= 0.5f) {
+				night = true;
+				NightFall ();
+			} else if (night && sun_light.intensity >= 0.5f) {
+				night = false;
+				DayBreak ();
+			}
+			if (night && frame_count % frames_per_spawn == 0)
+				EnemyManager.Instance.SpawnAtEdge ();
+		}
+
+		void NightFall() {
+			Debug.Log ("NightFall");
+		}
+
+		void DayBreak() {
+			Debug.Log ("DayBreak");
+			if(frames_per_spawn>10)
+				frames_per_spawn--;
 		}
 	}
 
