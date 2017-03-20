@@ -9,6 +9,7 @@ TagManager:
   - Sun
   - MoveRing
   - Weapon
+  - Collectable
   layers:
   - Default
   - TransparentFX
@@ -26,7 +27,7 @@ TagManager:
   - HedgeLayer
   - WeaponLayer
   - RoofLayer
-  - 
+  - ItemLayer
   - 
   - 
   - 

@@ -6,6 +6,7 @@ namespace SurviveTheNight {
 
 	public class EnemyManager : Singleton<EnemyManager> {
 
+		public GameObject powerup;
 		public GameObject enemy;
         public List<GameObject> enemies = new List<GameObject>();
 
@@ -33,6 +34,10 @@ namespace SurviveTheNight {
 
 		public void SpawnAtLocation(Vector3 position) {
 			enemies.Add(Instantiate (enemy, position, Quaternion.identity));
+		}
+			
+		public void PowerUpAtLocation(Vector3 position) {
+			Instantiate (powerup, position, Quaternion.identity);
 		}
 		
 		// Update is called once per frame

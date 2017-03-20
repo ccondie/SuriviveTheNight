@@ -174,6 +174,10 @@ namespace SurviveTheNight {
 			// Do something if you collide with something
 			if (other.gameObject.tag == "MoveRing")
 				moveRing.GetComponent<Renderer> ().enabled = false;
+			else if (other.gameObject.tag == "Collectable") {
+				Heal(other.gameObject.GetComponent<FirstAidKit>().healFactor);
+				Destroy(other.gameObject);
+			}
 			//Debug.Log("OnTriggerEnter2D");
 		}
 
@@ -195,6 +199,12 @@ namespace SurviveTheNight {
                 Death();
             }
         }
+
+		public void Heal(float amount)
+		{
+			currentHealth = currentHealth + amount > startingHealth ? startingHealth : currentHealth + amount;
+			healthSlider.value = currentHealth;
+		}
 
         void Death()
         {

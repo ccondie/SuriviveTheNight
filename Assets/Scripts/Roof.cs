@@ -22,10 +22,17 @@ namespace SurviveTheNight {
 				for (int i = 0; i < neighbors.Length; i++)
 					if (neighbors [i] != null)
 						neighbors [i].GetComponent<Roof> ().LightRoom ();
-				if(spawnLocation 
-					&& Random.Range (0, 20) == 13
-					&& EnemyManager.Instance.GenerateEnemiesIndoors())
-					EnemyManager.Instance.SpawnAtLocation (transform.position);
+				int spawnItem = Random.Range (0, 20);
+				if (spawnLocation && EnemyManager.Instance.GenerateEnemiesIndoors ()) {
+					switch (spawnItem) {
+					case 7:
+						EnemyManager.Instance.PowerUpAtLocation (transform.position);
+						break;
+					case 13:
+						EnemyManager.Instance.SpawnAtLocation (transform.position);
+						break;
+					}
+				}
 				Destroy (gameObject);
 			}
 		}
