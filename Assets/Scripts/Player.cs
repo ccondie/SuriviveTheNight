@@ -28,14 +28,14 @@ namespace SurviveTheNight {
         public Color staminaBlue = new Color((0f / 255f), (114f / 255f), (188f / 255f), 1.0f);
         public Color staminaRed = new Color((158f / 255f), (11f / 255), (15f / 255f), 1.0f);
 
-        private float staminaGain = 0.4f;
+        private static float staminaGain = 0.1f;
 
         private Dictionary<String, float> moveStaminaLossMap = new Dictionary<string, float>
         {
             {"none", 0.0f },
-            {"walk", 1.1f },
-            {"run", 1.6f },
-            {"slug", 0.6f }
+            {"walk", 0.15f },
+            {"run", 0.5f },
+            {"slug", 0.15f }
         };
 
         // *******************************************************************************************************
@@ -46,9 +46,9 @@ namespace SurviveTheNight {
         private Dictionary<String, float> moveSpeedMap = new Dictionary<string, float>()
         {
             {"none", 0.0f },
-            {"walk", 2.8f },
-            {"run", 4.5f },
-            {"slug", 1.35f }
+            {"walk", 1.8f },
+            {"run", 2.6f },
+            {"slug", 0.9f }
         };
 
         public String moveState = "none";
