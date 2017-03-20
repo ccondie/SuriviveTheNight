@@ -7,11 +7,14 @@ public class Bullet : MonoBehaviour {
 	float maxSpeed = 7f;
     public float damage = 34f;
     float scale = .5f;
+	int travel_frame_count = 0;
 	
 	// Update is called once per frame
 	void Update () {
 		Vector3 velocity = new Vector3 (0, maxSpeed * Time.deltaTime, 0);
 		transform.position += transform.rotation * velocity;
+		if(travel_frame_count++ == 100)
+			Destroy (gameObject);
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
