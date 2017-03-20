@@ -28,22 +28,34 @@ namespace SurviveTheNight {
         public Color staminaBlue = new Color((0f / 255f), (114f / 255f), (188f / 255f), 1.0f);
         public Color staminaRed = new Color((158f / 255f), (11f / 255), (15f / 255f), 1.0f);
 
-        public float staminaGain = 0.4f;
-        public float staminaGainDelay = 0.03f;   // should update about 10 times a second
-        private float staminaGainDelay_Cur;
+        public float staminaGain = 1.0f;
+
+        private Dictionary<String, float> moveStaminaLossMap = new Dictionary<string, float>
+        {
+            {"none", 0.0f },
+            { "walk", 0.72f },
+            {"run", 2.5f },
+            {"slug", 1.35f }
+        };
 
         // *******************************************************************************************************
         // MOVEMENT VARIABLES
-		// *******************************************************************************************************
-		public GameObject moveRing;
+        // *******************************************************************************************************
+        public GameObject moveRing;
+
+        private Dictionary<String, float> moveSpeedMap = new Dictionary<string, float>()
+        {
+            {"none", 0.0f },
+            {"walk", 2.8f },
+            {"run", 4.5f },
+            {"slug", 1.35f }
+        };
+
+        private String moveState = "none";
 
         private float walkSpeed = 2.8f;
         private float runSpeed = 4.5f;
 		private float slugSpeed = 1.35f;
-
-        public float walkStaminaLoss = 0.72f;
-        public float walkStaminaDelay = 0.03f;
-        private float walkStaminaDelay_Cur;
 
         private DateTime previousClick = DateTime.UtcNow;
         private bool doubleClick = false;
@@ -62,8 +74,6 @@ namespace SurviveTheNight {
             currentHealth = startingHealth;
             currentStamina = startingStamina;
             staminaFill = staminaSlider.GetComponentsInChildren<Image>()[1];
-            staminaGainDelay_Cur = staminaGainDelay;
-            walkStaminaDelay_Cur = walkStaminaDelay;
 			//gun = new Handgun ();
         }
 
@@ -71,6 +81,9 @@ namespace SurviveTheNight {
         protected override void Start () {
             // Initialize the MoveableObject components
 			base.Start ();
+
+            // Kickstart the stamina managment functions
+            InvokeRepeating("UpdateStamina",0.0f, 0.03f);
         }
 
 		private void OnDisable() {}
@@ -78,7 +91,6 @@ namespace SurviveTheNight {
         // Update is called once per frame
         void Update () {
             UpdateMovement();
-            UpdateStamina();
 		}
 
         public void moveTo(Vector2 target) {
@@ -104,21 +116,20 @@ namespace SurviveTheNight {
         {
 			gun.transform.position = this.transform.position;
 
-            // for tracking stamina drain off of time, not frames
-            walkStaminaDelay_Cur -= Time.deltaTime;
-
             // set movement speed based on current stamina
-            if (currentStamina / startingStamina < 0.2)
-            {
-                this.moveTime = slugSpeed;
+            if (currentStamina / startingStamina < 0.2){
+                moveState = "slug";
             }
             else if (doubleClick) {
-                this.moveTime = runSpeed;
+                moveState = "run";
             } else {
-                this.moveTime = walkSpeed;
+                moveState = "walk";
             }
 
+            this.moveTime = moveSpeedMap[moveState];
+
 			if (!isMoving) {
+                moveState = "none";
 				if (navigatingPath) {
                     if (path != null) {
 						ContinueAStar ();
@@ -148,20 +159,8 @@ namespace SurviveTheNight {
 
         void UpdateStamina()
         {
-            if (isMoving) {
-                if (walkStaminaDelay_Cur < 0) {
-                    DecreaseStamina(walkStaminaLoss);
-                    walkStaminaDelay_Cur = walkStaminaDelay;
-                }
-            }
-
-            // if enough time has past (fractions of a second) to increase the stamina, increase it
-            staminaGainDelay_Cur -= Time.deltaTime;
-            if (staminaGainDelay_Cur < 0)
-            {
-                IncreaseStamina(staminaGain);
-                staminaGainDelay_Cur = staminaGainDelay;
-            }
+            float deltaStamina = staminaGain - moveStaminaLossMap[moveState];
+            DeltaStamina(deltaStamina);
 
             staminaSlider.value = currentStamina;
             if (currentStamina / startingStamina < 0.2f)
@@ -210,6 +209,24 @@ namespace SurviveTheNight {
         {
             isDead = true;
             gameOverScreen.GetComponent<Canvas>().enabled = true;
+        }
+
+        private void DeltaStamina(float amount)
+        {
+            // Alter the current stamina by a delta
+            currentStamina += amount;
+
+            // If it breaks the stamina ceiling, set it to max stamina
+            if(currentStamina > startingStamina)
+            {
+                currentStamina = startingStamina;
+            }
+
+            // If it breaks the stamina floor, set it to 0
+            if(currentStamina < 0)
+            {
+                currentStamina = 0;
+            }
         }
 
         private void DecreaseStamina(float amount)
