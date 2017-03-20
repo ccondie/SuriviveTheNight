@@ -9,6 +9,7 @@ namespace SurviveTheNight {
 		public GameObject powerup;
 		public GameObject enemy;
         public List<GameObject> enemies = new List<GameObject>();
+        public int ZombieCount = 20;
 
 		public int maxEnemies;
 		private bool indoorEnemyGeneration = false;
@@ -17,7 +18,7 @@ namespace SurviveTheNight {
 
 		// Use this for initialization
 		void Start () {
-			for (int i = 0; i < 0; i++) {
+			for (int i = 0; i < ZombieCount; i++) {
 				Spawn ();
 			}
 		}

@@ -28,14 +28,14 @@ namespace SurviveTheNight {
         public Color staminaBlue = new Color((0f / 255f), (114f / 255f), (188f / 255f), 1.0f);
         public Color staminaRed = new Color((158f / 255f), (11f / 255), (15f / 255f), 1.0f);
 
-        public float staminaGain = 1.0f;
+        private float staminaGain = 0.4f;
 
         private Dictionary<String, float> moveStaminaLossMap = new Dictionary<string, float>
         {
             {"none", 0.0f },
-            { "walk", 0.72f },
-            {"run", 2.5f },
-            {"slug", 1.35f }
+            {"walk", 1.1f },
+            {"run", 1.6f },
+            {"slug", 0.6f }
         };
 
         // *******************************************************************************************************
@@ -51,11 +51,7 @@ namespace SurviveTheNight {
             {"slug", 1.35f }
         };
 
-        private String moveState = "none";
-
-        private float walkSpeed = 2.8f;
-        private float runSpeed = 4.5f;
-		private float slugSpeed = 1.35f;
+        public String moveState = "none";
 
         private DateTime previousClick = DateTime.UtcNow;
         private bool doubleClick = false;
@@ -160,6 +156,8 @@ namespace SurviveTheNight {
         void UpdateStamina()
         {
             float deltaStamina = staminaGain - moveStaminaLossMap[moveState];
+            Debug.Log(staminaGain + " - " + moveStaminaLossMap[moveState] + " = " + deltaStamina);
+
             DeltaStamina(deltaStamina);
 
             staminaSlider.value = currentStamina;

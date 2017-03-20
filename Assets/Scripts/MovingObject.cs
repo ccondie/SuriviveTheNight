@@ -19,7 +19,7 @@ namespace SurviveTheNight {
 
 		protected BoxCollider2D boxCollider;
 		protected Rigidbody2D rb2D;
-		public float scale = 0.6f;
+		protected float scale = 0.6f;
 
 		protected bool isDead;
 
