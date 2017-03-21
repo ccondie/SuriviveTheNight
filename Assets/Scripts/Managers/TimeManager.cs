@@ -9,7 +9,7 @@ namespace SurviveTheNight {
 
         public Text timeUI;
 		private static int secondsPerHour = 1;
-        private static int secondsPerMin = secondsPerHour / 60;
+        private static float secondsPerMin = secondsPerHour / 60;
         private static int secondsPerDay = secondsPerHour * 24;
         private string aORp;
 
@@ -60,10 +60,11 @@ namespace SurviveTheNight {
         // converts from human recognizable time to a normalized time (0-1) adjusted for the current game settings
         public float NormalizeTime(int hour, int min)
         {
-            int totalSeconds = hour * secondsPerHour + min * secondsPerMin;
+            int totalSeconds = hour * secondsPerHour + (int)(min * secondsPerMin);
             return totalSeconds / secondsPerDay;
         }
 
+        // returns the time of day [from 12:00:01am to 11:59:59pm] as a range of 0 to 1
         public float getCurrentNormalizedTime()
         {
             return currentTime / secondsPerDay;
