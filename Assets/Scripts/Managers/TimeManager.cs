@@ -7,13 +7,14 @@ namespace SurviveTheNight {
 
 	public class TimeManager : Singleton<TimeManager> {
 
-		//public Text timeUI = null;
-		public int secondsPerHour;
-		private int hoursPerDay = 24;
-		private float dayTime;
-		private float inverseDayTime;
-		private float fractionOfDay;
-		private float timeOfDay;
+        public Text timeUI;
+		private static int secondsPerHour = 1;
+        private static int secondsPerMin = secondsPerHour / 60;
+        private static int secondsPerDay = secondsPerHour * 24;
+        private string aORp;
+
+		private float currentTime;
+
 		private bool night = false;
 
 		protected TimeManager () {}
@@ -21,30 +22,63 @@ namespace SurviveTheNight {
 		// Use this for initialization
 		void Awake()
 		{
-			dayTime = secondsPerHour * hoursPerDay;
-			inverseDayTime = 1.0f / dayTime;
-			timeOfDay = secondsPerHour * 6;
+			currentTime = secondsPerHour * 6;
 		}
+
+        void Start()
+        {
+            timeUI = GameObject.Find("ClockText").GetComponent<Text>();
+        }
 
 		// Update is called once per frame
 		void Update()
 		{
-			timeOfDay += Time.deltaTime;
-			timeOfDay -= timeOfDay >= dayTime ? dayTime : 0f;
-			fractionOfDay = timeOfDay * inverseDayTime;
+            // Count current time
+			currentTime += Time.deltaTime;
+            if (currentTime > secondsPerDay)
+                currentTime = 0;
 
-			if (!night && (timeOfDay >= 22 * secondsPerHour || timeOfDay < 6 * secondsPerHour)) {
+            // Update AM or PM status
+            if (currentTime <= (12 * secondsPerHour))
+                aORp = "AM";
+            else
+                aORp = "PM";
+
+            // Update the UI Text
+            timeUI.text = getHour() + ":" + getMinute().ToString("d2") + " " + aORp;
+
+            // Toggle Day/Night
+			if (!night && (currentTime >= NormalizeTime(22,0) || currentTime < NormalizeTime(6,0))) {
 				night = true;
 				NightFall ();
-			} else if (night && timeOfDay >= 6 * secondsPerHour && timeOfDay < 22 * secondsPerHour) {
+			} else if (night && currentTime >= NormalizeTime(6,0) && currentTime < NormalizeTime(22,0)) {
 				night = false;
 				DayBreak ();
 			}
 		}
 
-		public float CurrentTime() {
-			return fractionOfDay;
-		}
+        // converts from human recognizable time to a normalized time (0-1) adjusted for the current game settings
+        public float NormalizeTime(int hour, int min)
+        {
+            int totalSeconds = hour * secondsPerHour + min * secondsPerMin;
+            return totalSeconds / secondsPerDay;
+        }
+
+        public float getCurrentNormalizedTime()
+        {
+            return currentTime / secondsPerDay;
+        }
+
+        public int getHour()
+        {
+            return (int)(currentTime / secondsPerHour);
+        }
+
+        public int getMinute()
+        {
+            return (int)((currentTime % secondsPerHour) * 60 / secondsPerHour);
+        }
+
 
 		public bool IsNight() {
 			return night;

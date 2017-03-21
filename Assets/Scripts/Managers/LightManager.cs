@@ -26,7 +26,7 @@ namespace SurviveTheNight {
 		// Update is called once per frame
 		void Update()
 		{
-			sun_position = 2 * Mathf.PI * tm.CurrentTime();
+			sun_position = 2 * Mathf.PI * tm.getCurrentNormalizedTime();
 			sun.intensity = 0.5f - 0.5f*Mathf.Cos(sun_position);
 			lantern.intensity = 0.5f + 0.5f*Mathf.Cos(sun_position);
 		}
