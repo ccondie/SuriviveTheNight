@@ -22,7 +22,7 @@ namespace SurviveTheNight {
 		// Use this for initialization
 		void Awake()
 		{
-			currentTime = secondsPerHour * 19;
+			currentTime = secondsPerHour * 6;
 		}
 
         void Start()
