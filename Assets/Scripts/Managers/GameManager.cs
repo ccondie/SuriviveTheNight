@@ -10,8 +10,6 @@ namespace SurviveTheNight {
 	public class GameManager : MonoBehaviour {
 
 		public static GameManager instance = null;
-		//private EnemyManager enemyScript;
-		//private TimeManager timeScript;
 
 		// Use this for initialization
 		void Awake () {

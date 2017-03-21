@@ -8,48 +8,46 @@ namespace SurviveTheNight {
 	public class TimeManager : Singleton<TimeManager> {
 
 		//public Text timeUI = null;
-		public static int frame_count = 0;
-		private GameObject lantern;
-		private GameObject sun;
-		private Light lantern_light;
-		private Light sun_light;
-		private int frames_per_day = 5000;
-		private float time_rate;
-		private float sun_position = 0;
+		public int secondsPerHour;
+		private int hoursPerDay = 24;
+		private float dayTime;
+		private float inverseDayTime;
+		private float fractionOfDay;
+		private float timeOfDay;
 		private bool night = false;
-		private int frames_per_spawn = 50;
 
 		protected TimeManager () {}
 
 		// Use this for initialization
 		void Awake()
 		{
-			time_rate = 2 * Mathf.PI / frames_per_day;
-			lantern = GameObject.FindGameObjectWithTag("Lantern");
-			sun = GameObject.FindGameObjectWithTag("Sun");
-			lantern_light = (Light)lantern.GetComponent(typeof(Light));
-			sun_light = (Light)sun.GetComponent(typeof(Light));
+			dayTime = secondsPerHour * hoursPerDay;
+			inverseDayTime = 1.0f / dayTime;
+			timeOfDay = secondsPerHour * 6;
 		}
 
 		// Update is called once per frame
 		void Update()
 		{
-			frame_count += 1;
-			sun_position += time_rate;
-			//timeUI.text = "[" + frame_count.ToString("D8") + "]";
+			timeOfDay += Time.deltaTime;
+			timeOfDay -= timeOfDay >= dayTime ? dayTime : 0f;
+			fractionOfDay = timeOfDay * inverseDayTime;
 
-			sun_light.intensity = 1 + Mathf.Cos(sun_position);
-			lantern_light.intensity = 0.5f - 0.5f*Mathf.Cos(sun_position);
-
-			if (!night && sun_light.intensity <= 0.5f) {
+			if (!night && (timeOfDay >= 22 * secondsPerHour || timeOfDay < 6 * secondsPerHour)) {
 				night = true;
 				NightFall ();
-			} else if (night && sun_light.intensity >= 0.5f) {
+			} else if (night && timeOfDay >= 6 * secondsPerHour && timeOfDay < 22 * secondsPerHour) {
 				night = false;
 				DayBreak ();
 			}
-			if (night && frame_count % frames_per_spawn == 0)
-				EnemyManager.Instance.SpawnAtEdge ();
+		}
+
+		public float CurrentTime() {
+			return fractionOfDay;
+		}
+
+		public bool IsNight() {
+			return night;
 		}
 
 		void NightFall() {
@@ -58,8 +56,8 @@ namespace SurviveTheNight {
 
 		void DayBreak() {
 			Debug.Log ("DayBreak");
-			if(frames_per_spawn>10)
-				frames_per_spawn--;
+			/*if(frames_per_spawn>10)
+				frames_per_spawn--;*/
 		}
 	}
 

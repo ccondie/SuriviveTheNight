@@ -19,10 +19,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4901972781693616}
-  - component: {fileID: 114703770089955606}
   - component: {fileID: 114616300664012932}
-  - component: {fileID: 114461120292192248}
+  - component: {fileID: 114703770089955606}
   - component: {fileID: 114747387612546210}
+  - component: {fileID: 114676835365839758}
+  - component: {fileID: 114461120292192248}
   - component: {fileID: 82700181654351498}
   m_Layer: 0
   m_Name: GameManager
@@ -138,7 +139,9 @@ MonoBehaviour:
   powerup: {fileID: 1609903013003372, guid: 954a5d8fe4ddd41a1a8fcdd7ce2eb67a, type: 2}
   enemy: {fileID: 1095380027492598, guid: 6bafa327a61924feb92cf741c9573b49, type: 2}
   enemies: []
+  ZombieCount: 20
   maxEnemies: 500
+  spawnDelay: 50
 --- !u!114 &114616300664012932
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -150,6 +153,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf49ebb32b55498c935e4db1712df6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114676835365839758
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1027245521327092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06fbccddf4116404a94732b501c155c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sunPrefab: {fileID: 108072341829427652, guid: 758715cb2d07945a8b10867181f48b41,
+    type: 2}
+  lanternPrefab: {fileID: 108868106327368154, guid: 0531cc2b5a8354ace80ffeb6f86ff33e,
+    type: 2}
 --- !u!114 &114703770089955606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -225,3 +243,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 728286f606c35d4429426c06ecf9c30e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  secondsPerHour: 5

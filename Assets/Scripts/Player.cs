@@ -41,7 +41,8 @@ namespace SurviveTheNight {
         // *******************************************************************************************************
         // MOVEMENT VARIABLES
         // *******************************************************************************************************
-        public GameObject moveRing;
+		public GameObject moveRingPrefab;
+		private GameObject moveRing;
 
         private Dictionary<String, float> moveSpeedMap = new Dictionary<string, float>()
         {
@@ -67,6 +68,7 @@ namespace SurviveTheNight {
 
         void Awake()
         {
+			moveRing = Instantiate (moveRingPrefab);
             currentHealth = startingHealth;
             currentStamina = startingStamina;
             staminaFill = staminaSlider.GetComponentsInChildren<Image>()[1];
@@ -156,7 +158,7 @@ namespace SurviveTheNight {
         void UpdateStamina()
         {
             float deltaStamina = staminaGain - moveStaminaLossMap[moveState];
-            Debug.Log(staminaGain + " - " + moveStaminaLossMap[moveState] + " = " + deltaStamina);
+            //Debug.Log(staminaGain + " - " + moveStaminaLossMap[moveState] + " = " + deltaStamina);
 
             DeltaStamina(deltaStamina);
 

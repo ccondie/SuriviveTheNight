@@ -15,11 +15,11 @@ namespace SurviveTheNight {
 				EnemyManager.Instance.BeginIndoorEnemyGeneration ();
 				ieg = true;
 			} else if (other.gameObject.tag == "Enemy") {
-				Debug.Log ("Door Integrity: " + (doorIntegrity-1));
+				//Debug.Log ("Door Integrity: " + (doorIntegrity-1));
 				if (--doorIntegrity <= 0)
 					Destroy (gameObject);
 			} else if (other.gameObject.tag == "Weapon") {
-				Debug.Log ("Door Integrity: " + (doorIntegrity-50));
+				//Debug.Log ("Door Integrity: " + (doorIntegrity-50));
 				if ((doorIntegrity -= 50) <= 0)
 					Destroy (gameObject);
 			}
