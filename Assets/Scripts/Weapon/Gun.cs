@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SurviveTheNight {
 
-	public abstract class Gun : MonoBehaviour {
+	public abstract class Gun : Item {
 
 		//public GameObject player;
 

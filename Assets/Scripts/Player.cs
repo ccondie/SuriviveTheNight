@@ -61,8 +61,8 @@ namespace SurviveTheNight {
         // OTHER
         // *******************************************************************************************************
 
-		// This should be moved to the player's belt or inventory at some point
-		public Gun gun;
+        // This should be moved to the player's belt or inventory at some point
+        public Belt belt;
 
         public GameOverScreen gameOverScreen;
 
@@ -72,6 +72,8 @@ namespace SurviveTheNight {
             currentHealth = startingHealth;
             currentStamina = startingStamina;
             staminaFill = staminaSlider.GetComponentsInChildren<Image>()[1];
+            belt = new Belt();
+            belt.gun = gameObject.AddComponent<Handgun>();
 			//gun = new Handgun ();
         }
 
@@ -112,7 +114,7 @@ namespace SurviveTheNight {
         // A subroutine of the Update function that handles player movement per update
         void UpdateMovement()
         {
-			gun.transform.position = this.transform.position;
+			belt.gun.transform.position = this.transform.position;
 
             // set movement speed based on current stamina
             if (currentStamina / startingStamina < 0.2){
@@ -259,7 +261,7 @@ namespace SurviveTheNight {
 
 		public void fireWeapon(Vector2 target) {
 			playFireAnimation(target);
-			gun.Fire(target);
+			belt.gun.Fire(target);
 		}
 
 		private void playFireAnimation(Vector2 target) {
