@@ -13,7 +13,7 @@ public class Rocket : MonoBehaviour {
     void Update() {
         Vector3 velocity = new Vector3(0, maxSpeed * Time.deltaTime, 0);
         transform.position += transform.rotation * velocity;
-        if (travel_frame_count++ == 100)
+        if (travel_frame_count++ == 700 * (1 / maxSpeed))
             Destroy(gameObject);
     }
 
