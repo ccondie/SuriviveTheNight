@@ -25,14 +25,6 @@ public class Rocket : MonoBehaviour {
     }
 
     private void OnTriggerStay2D(Collider2D other) {
-        //This is probably not the best way to handle it, but
-        //This function is to take into account the fact that without it,
-        //Bullets get destroyed almost two tiles away from walls
-        //We ignore everything except enemies in OnTriggerEnter2D
-        //Then we keep checking the actual distance in OnTriggerStay2D, 
-        //And if it gets close enough we destroy the bullet
-        //Debug.Log("Sq distance: " + squareDist(transform.position, other.transform.position));
-        //It seems to need an additional margin of error of about .15
         if (squareDist(transform.position, other.transform.position) <= (scale * scale - .15)) {
             //Debug.Log("Bullet vector on impact: " + transform.position + " - hit: " + other.transform.position);
             Destroy(gameObject);

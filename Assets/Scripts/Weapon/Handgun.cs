@@ -7,7 +7,7 @@ namespace SurviveTheNight {
 
 	public class Handgun : Gun {
 
-		public GameObject bullet;
+		//public GameObject bullet;
 
 		// Use this for initialization
 		/*protected override void Awake () {
@@ -19,7 +19,7 @@ namespace SurviveTheNight {
 			Vector3 trans = (Vector3)target - transform.position;
 			float angle = Mathf.Atan2(trans.y, trans.x) * Mathf.Rad2Deg - 90f;
 			Quaternion rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
-			Instantiate (bullet, transform.position, rotation);
+			Instantiate ((GameObject)Resources.Load("Bullet"), transform.position, rotation);
 		}
 	}
 

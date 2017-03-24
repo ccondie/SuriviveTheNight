@@ -290,6 +290,12 @@ namespace SurviveTheNight {
 			else if (xDir > 0 && yDir < 0)
 				animator.SetTrigger("fire_southeast");
 		}
-    }
 
+        public void setHandgun() {
+            belt.gun = gameObject.AddComponent<Handgun>();
+        }
+        public void setRocketLauncher() {
+            belt.gun = gameObject.AddComponent<RocketLauncher>();
+        }
+    }
 }

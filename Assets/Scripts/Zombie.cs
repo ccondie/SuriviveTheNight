@@ -281,8 +281,13 @@ namespace SurviveTheNight
 		void OnTriggerEnter2D(Collider2D collider) {
 			if (collider.gameObject.tag == "Weapon") {
                 //Debug.Log("Zombie hit by bullet");
-                Bullet b = collider.GetComponent<Bullet>();
-                receiveDamage(b.damage);
+                if (collider.GetComponent<Bullet>()) {
+                    Bullet b = collider.GetComponent<Bullet>();
+                    receiveDamage(b.damage);
+                } else if (collider.GetComponent<Rocket>()) {
+                    Rocket r = collider.GetComponent<Rocket>();
+                    receiveDamage(r.damage);
+                }
 			} /*else {
                 Debug.Log("Zombie hit by unknown object");
                 receiveDamage(currentHealth);
