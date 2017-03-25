@@ -40,7 +40,7 @@ namespace SurviveTheNight {
             } else {
                 //ATTACK
                 if (c == UserInputController.Click.LEFT_DOWN || c == UserInputController.Click.LEFT_DOUBLE) {
-                    playerScript.fireWeapon(Camera.main.ScreenToWorldPoint(position));
+                    playerScript.clickedOnMap(c, Camera.main.ScreenToWorldPoint(position));
                 }
             }
         }

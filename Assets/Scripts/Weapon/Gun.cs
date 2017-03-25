@@ -12,7 +12,8 @@ namespace SurviveTheNight {
 			player = GameObject.FindGameObjectWithTag("Player");
 		}*/
 
-		public abstract void Fire (Vector2 target);
+        //returns whether the gun actually fired (if it had ammo, if the gun requires a wait time, etc.)
+		public abstract bool Fire (Vector2 target);
 	}
 
 }

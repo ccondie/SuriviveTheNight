@@ -72,9 +72,10 @@ namespace SurviveTheNight {
             currentHealth = startingHealth;
             currentStamina = startingStamina;
             staminaFill = staminaSlider.GetComponentsInChildren<Image>()[1];
-            belt = new Belt();
-            belt.gun = gameObject.AddComponent<Handgun>();
-			//gun = new Handgun ();
+            belt = new Belt(this);
+            belt.addItem(gameObject.AddComponent<Handgun>());
+            belt.addItem(gameObject.AddComponent<RocketLauncher>());
+            //gun = new Handgun ();
         }
 
         // Use this for initialization
@@ -114,7 +115,7 @@ namespace SurviveTheNight {
         // A subroutine of the Update function that handles player movement per update
         void UpdateMovement()
         {
-			belt.gun.transform.position = this.transform.position;
+			//belt.gun.transform.position = this.transform.position;
 
             // set movement speed based on current stamina
             if (currentStamina / startingStamina < 0.2){
@@ -259,12 +260,15 @@ namespace SurviveTheNight {
             }
         }
 
-		public void fireWeapon(Vector2 target) {
-			playFireAnimation(target);
-			belt.gun.Fire(target);
-		}
+        public void clickedOnMap(UserInputController.Click c, Vector2 target) {
+            belt.clickedOnMap(c, target);
+        }
 
-		private void playFireAnimation(Vector2 target) {
+        public void setActiveBeltItem(int index) {
+            belt.activeBeltItem = index;
+        }
+
+        public void playFireAnimation(Vector2 target) {
 
 			int xDir = BoardManager.worldToTile(target.x) - BoardManager.worldToTile(this.transform.position.x);
 			int yDir = BoardManager.worldToTile(target.y) - BoardManager.worldToTile(this.transform.position.y);
@@ -290,12 +294,5 @@ namespace SurviveTheNight {
 			else if (xDir > 0 && yDir < 0)
 				animator.SetTrigger("fire_southeast");
 		}
-
-        public void setHandgun() {
-            belt.gun = gameObject.AddComponent<Handgun>();
-        }
-        public void setRocketLauncher() {
-            belt.gun = gameObject.AddComponent<RocketLauncher>();
-        }
     }
 }

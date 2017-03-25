@@ -6,9 +6,13 @@ namespace SurviveTheNight {
 
     public class InventoryController : MonoBehaviour {
 
+        GameObject player;
+        Player playerScript;
+
         // Use this for initialization
         void Start() {
-
+            player = GameObject.FindGameObjectWithTag("Player");
+            playerScript = (Player)player.GetComponent("Player");
         }
 
         // Update is called once per frame
@@ -30,6 +34,10 @@ namespace SurviveTheNight {
             if (Input.GetKeyDown(KeyCode.A)) {
                 //
             } //etc.
+        }
+
+        public void beltItemPressed(int button) {
+            playerScript.setActiveBeltItem(button);
         }
     }
 }

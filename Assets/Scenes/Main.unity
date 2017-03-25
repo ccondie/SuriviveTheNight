@@ -867,8 +867,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 915181218}
-        m_MethodName: setRocketLauncher
+      - m_Target: {fileID: 828533591}
+        m_MethodName: beltPress2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1199,12 +1199,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 905546699}
---- !u!114 &915181218 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114516899369553616, guid: 10a6d36ac80a34da8b123cea4e305d1f,
-    type: 2}
-  m_PrefabInternal: {fileID: 1713380614}
-  m_Script: {fileID: 11500000, guid: 0ea38bc6d11de43a8bbc316380c665a0, type: 3}
 --- !u!1 &947086904
 GameObject:
   m_ObjectHideFlags: 0
@@ -1788,8 +1782,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 915181218}
-        m_MethodName: setHandgun
+      - m_Target: {fileID: 828533591}
+        m_MethodName: beltPress1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2374,7 +2368,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1865386644}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 828533591}
+        m_MethodName: beltPress
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 3
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1865386644
