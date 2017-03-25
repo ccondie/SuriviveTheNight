@@ -75,7 +75,6 @@ namespace SurviveTheNight {
             belt = new Belt(this);
             belt.addItem(gameObject.AddComponent<Handgun>());
             belt.addItem(gameObject.AddComponent<RocketLauncher>());
-            //gun = new Handgun ();
         }
 
         // Use this for initialization

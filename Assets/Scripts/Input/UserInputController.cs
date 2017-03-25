@@ -3,6 +3,8 @@ using System.Timers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace SurviveTheNight {
 
@@ -100,18 +102,35 @@ namespace SurviveTheNight {
                     }
                 }
             }
-
             //TODO: checking key presses (as far as I know, only used for cycling through belt)
         }
 
         private void assignClickToController(Click c, Vector2 position) {
-            if (mc.clickHit()) {
-                mc.processClick(c, position);
-            } else if (ic.clickHit()) {
-                ic.processClick(c, position);
-            } else if (mmc.clickHit()) {
-                mmc.processClick(c, position);
-            } 
+            
+            PointerEventData ped = new PointerEventData(EventSystem.current);
+            if (c >= UserInputController.Click.RIGHT_DOWN ) {
+                ped.position = previousClickRightLocation;
+            } else {
+                ped.position = previousClickLeftLocation;
+            }
+            List<RaycastResult> results = new List<RaycastResult>();
+            EventSystem.current.RaycastAll(ped, results);
+            
+            foreach(RaycastResult r in results) {
+                Debug.Log("result: " + results);
+            }
+
+            if (results.Count > 0) {
+                if (ic.clickHit()) {
+                    ic.processClick(c, position);
+                } else if (mmc.clickHit()) {
+                    mmc.processClick(c, position);
+                }
+            } else {
+                if (mc.clickHit()) {
+                    mc.processClick(c, position);
+                }
+            }
         }
     }
 }
