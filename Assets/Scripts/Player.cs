@@ -69,12 +69,20 @@ namespace SurviveTheNight {
         void Awake()
         {
 			moveRing = Instantiate (moveRingPrefab);
-            currentHealth = startingHealth;
-            currentStamina = startingStamina;
+            Reset();
             staminaFill = staminaSlider.GetComponentsInChildren<Image>()[1];
             belt = new Belt(this);
             belt.addItem(gameObject.AddComponent<Handgun>());
             belt.addItem(gameObject.AddComponent<RocketLauncher>());
+        }
+
+        public void Reset()
+        {
+            currentHealth = startingHealth;
+            healthSlider.value = currentHealth;
+            currentStamina = startingStamina;
+            staminaSlider.value = currentStamina;
+            isDead = false;
         }
 
         // Use this for initialization
