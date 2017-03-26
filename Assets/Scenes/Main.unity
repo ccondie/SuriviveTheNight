@@ -354,7 +354,7 @@ GameObject:
   - component: {fileID: 387398635}
   - component: {fileID: 387398638}
   m_Layer: 5
-  m_Name: Button
+  m_Name: PlayAgainButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -429,12 +429,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 11500000, guid: d943fb34373e3e5418d82144da4575b2, type: 3}
-        m_MethodName: 
+      - m_Target: {fileID: 652632128}
+        m_MethodName: Reset
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -486,6 +486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a706aba77a8beb41999226a2de7e303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  button: {fileID: 387398635}
 --- !u!1 &392923098
 GameObject:
   m_ObjectHideFlags: 0
@@ -742,6 +743,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 571816197}
+--- !u!114 &652632128 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114516899369553616, guid: 10a6d36ac80a34da8b123cea4e305d1f,
+    type: 2}
+  m_PrefabInternal: {fileID: 1713380614}
+  m_Script: {fileID: 11500000, guid: 0ea38bc6d11de43a8bbc316380c665a0, type: 3}
 --- !u!1 &668310230
 GameObject:
   m_ObjectHideFlags: 0
