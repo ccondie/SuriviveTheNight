@@ -60,8 +60,7 @@ namespace SurviveTheNight {
         // *******************************************************************************************************
         // OTHER
         // *******************************************************************************************************
-
-        // This should be moved to the player's belt or inventory at some point
+        public Slider ammoSlider;
         public Belt belt;
 
         public GameOverScreen gameOverScreen;
@@ -99,6 +98,29 @@ namespace SurviveTheNight {
         // Update is called once per frame
         void Update () {
             UpdateMovement();
+
+            // if the current item is a Gun, update the ammo bar
+            if(belt.getActiveItem() is Gun)
+            {
+                Gun activeGun = (Gun)belt.getActiveItem();
+                ammoSlider.enabled = true;
+                if (activeGun.isReloading())
+                {
+                    ammoSlider.maxValue = 1.0f;
+                    ammoSlider.value = 1.0f - activeGun.getReloadTimeRemain() / activeGun.getReloadTime();
+
+                }
+                else
+                {
+                    ammoSlider.maxValue = activeGun.getFullAmmo();
+                    ammoSlider.value = activeGun.getCurAmmo();
+                }
+                
+            }
+            else
+            {
+                ammoSlider.enabled = false;
+            }
 		}
 
         public void moveTo(Vector2 target) {
@@ -273,6 +295,12 @@ namespace SurviveTheNight {
 
         public void setActiveBeltItem(int index) {
             belt.activeBeltItem = index;
+        }
+
+        public int getWeaponAmmoFull()
+        {
+            Gun currentGun = (Gun)belt.getActiveItem();
+            return currentGun.getFullAmmo();
         }
 
         public void playFireAnimation(Vector2 target) {

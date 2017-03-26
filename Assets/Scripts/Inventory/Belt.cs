@@ -33,5 +33,10 @@ namespace SurviveTheNight {
             }
             Debug.Log("Belt full");
         }
+
+        public Item getActiveItem()
+        {
+            return items[activeBeltItem];
+        }
     }
 }

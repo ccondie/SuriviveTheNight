@@ -9,16 +9,16 @@ namespace SurviveTheNight {
 		public GameObject powerup;
 		public GameObject enemy;
         public List<GameObject> enemies = new List<GameObject>();
-        public int ZombieCount = 20;
+        private int ZombieCount = 0;
 
-		public int maxEnemies;
+		private int maxEnemies = 100;
 
 		// This is initially false to prevent spawning enemies in the same room as you
 		// at the start of the game
 		private bool indoorEnemyGeneration = false;
 
 		private int spawnCheck = 0;
-		public int spawnDelay;
+		private int spawnDelay = 50;
 
 		private TimeManager tm;
 		private BoardManager bm;
