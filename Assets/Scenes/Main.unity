@@ -804,7 +804,7 @@ GameObject:
   - component: {fileID: 723621019}
   - component: {fileID: 723621018}
   m_Layer: 5
-  m_Name: Button1
+  m_Name: beltButton1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1457,7 +1457,7 @@ GameObject:
   - component: {fileID: 1194689344}
   - component: {fileID: 1194689343}
   m_Layer: 5
-  m_Name: Button5
+  m_Name: beltButton5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1730,7 +1730,7 @@ GameObject:
   - component: {fileID: 1298969126}
   - component: {fileID: 1298969125}
   m_Layer: 5
-  m_Name: Button0
+  m_Name: beltButton0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2139,7 +2139,7 @@ GameObject:
   - component: {fileID: 1666122334}
   - component: {fileID: 1666122333}
   m_Layer: 5
-  m_Name: Button3
+  m_Name: beltButton3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2328,7 +2328,7 @@ GameObject:
   - component: {fileID: 1865386644}
   - component: {fileID: 1865386643}
   m_Layer: 5
-  m_Name: Button2
+  m_Name: beltButton2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2449,7 +2449,7 @@ GameObject:
   - component: {fileID: 1905335159}
   - component: {fileID: 1905335158}
   m_Layer: 5
-  m_Name: Button4
+  m_Name: beltButton4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

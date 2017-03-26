@@ -115,21 +115,22 @@ namespace SurviveTheNight {
             }
             List<RaycastResult> results = new List<RaycastResult>();
             EventSystem.current.RaycastAll(ped, results);
-            
+            bool inventoryController = false;
+            bool mainMenuController = false;
+
             foreach(RaycastResult r in results) {
-                Debug.Log("result: " + results);
+                //eventually, use the results to figure out which UI element you're clicking on
+                if (r.gameObject.name.Contains("belt")) {
+                    inventoryController = true;
+                }
             }
 
-            if (results.Count > 0) {
-                if (ic.clickHit()) {
-                    ic.processClick(c, position);
-                } else if (mmc.clickHit()) {
-                    mmc.processClick(c, position);
-                }
+            if (inventoryController) {
+                ic.processClick(c, position);
+            } else if (mainMenuController) {
+                mmc.processClick(c, position);
             } else {
-                if (mc.clickHit()) {
-                    mc.processClick(c, position);
-                }
+                mc.processClick(c, position);
             }
         }
     }
