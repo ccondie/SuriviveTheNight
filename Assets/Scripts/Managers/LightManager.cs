@@ -13,10 +13,10 @@ namespace SurviveTheNight {
 		private Light lantern;
 		private TimeManager tm;
 
-		public int sunUpHour;
-		public int sunUpMin;
-		public int sunDownHour;
-		public int sunDownMin;
+		private int sunUpHour = 6;
+		private int sunUpMin = 0;
+		private int sunDownHour = 22;
+		private int sunDownMin = 0;
 
         private float sunUp;
 		private float sunDown;
