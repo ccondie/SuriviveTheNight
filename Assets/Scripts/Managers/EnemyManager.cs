@@ -25,6 +25,21 @@ namespace SurviveTheNight {
 
 		protected EnemyManager () {}
 
+        public void Reset()
+        {
+            RemoveAll();
+            SpawnZombiesAtStartUp();
+        }
+
+        void RemoveAll()
+        {
+            foreach(GameObject enemy in enemies)
+            {
+                Destroy(enemy);
+            }
+            enemies.Clear();
+        }
+
 		// Use this for initialization
 		void Start () {
 			tm = TimeManager.Instance;
