@@ -41,21 +41,14 @@ namespace SurviveTheNight {
 
 		void LoadWorldMap() {
 
-			String mapPath = "Assets/Maps/";
-			/*
-            String[] worldMaps = { 
-				"4player.map",
-				"suburbs.map"
-			};
-            */
             String[] worldMaps = {
-                "suburbs.map"
+                "suburbs"
             };
-
-            System.IO.StreamReader file = new System.IO.StreamReader(mapPath + worldMaps[Random.Range (0, worldMaps.Length)]);
-			String floorStr = file.ReadLine ();
-			String wallStr = file.ReadLine ();
-			file.Close();
+			TextAsset mapdata = Resources.Load(worldMaps[Random.Range (0, worldMaps.Length)]) as TextAsset;
+			string[] linesFromfile = mapdata.text.Split("\n"[0]);
+			String floorStr = linesFromfile[0];
+			String wallStr = linesFromfile[1];
+			//file.Close();
 
 			floorMap = parse2DarrayStr (floorStr);
 			wallMap = parse2DarrayStr (wallStr);
