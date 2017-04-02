@@ -42,7 +42,8 @@ namespace SurviveTheNight {
 		void LoadWorldMap() {
 
             String[] worldMaps = {
-                "suburbs"
+                "suburbs",
+				"mansion"
             };
 			TextAsset mapdata = Resources.Load(worldMaps[Random.Range (0, worldMaps.Length)]) as TextAsset;
 			string[] linesFromfile = mapdata.text.Split("\n"[0]);
