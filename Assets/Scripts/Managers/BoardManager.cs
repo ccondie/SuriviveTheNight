@@ -68,8 +68,16 @@ namespace SurviveTheNight {
 			int[,] arr = new int[r.Length, c.Length];
 			for(int i = 0; i < r.Length; i++) {
 				c = r[i].Split(delim, StringSplitOptions.RemoveEmptyEntries);
-				for(int j = 0; j < c.Length; j++)
-					arr[i,j] = Int32.Parse(c[j]);
+				for(int j = 0; j < c.Length; j++) {
+					int output;
+					if(Int32.TryParse(c[j], out output))
+					{
+						arr[i,j] = output;
+					}
+					else {
+						Console.Write("Integer Parse failed: " + c[j]);
+					}
+				}
 			}
 			return arr;
 		}
