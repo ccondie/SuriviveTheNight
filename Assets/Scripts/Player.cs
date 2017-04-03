@@ -11,17 +11,14 @@ namespace SurviveTheNight {
 
 		//private PlayerHealth myHealth;
 
-        // *******************************************************************************************************
-        // HEALTH RELATED VARIABLES
-        // *******************************************************************************************************
+        #region Health Related Variables
         public float startingHealth = 100f;
         public float currentHealth;
         public Slider healthSlider;
-
-        // *******************************************************************************************************
-        //      STAMINA RELATED VARIABLES 
-        // *******************************************************************************************************
-        public float startingStamina = 100f;
+		#endregion
+		
+        #region Stamina Related Variables
+		public float startingStamina = 100f;
         public float currentStamina;
         public Slider staminaSlider;
         private Image staminaFill;
@@ -37,10 +34,9 @@ namespace SurviveTheNight {
             {"run", 0.5f },
             {"slug", 0.15f }
         };
+		#endregion
 
-        // *******************************************************************************************************
-        // MOVEMENT VARIABLES
-        // *******************************************************************************************************
+        #region Movement Variables
 		public GameObject moveRingPrefab;
 		private GameObject moveRing;
 
@@ -56,15 +52,20 @@ namespace SurviveTheNight {
 
         private DateTime previousClick = DateTime.UtcNow;
         private bool doubleClick = false;
+		#endregion
 
-        // *******************************************************************************************************
-        // OTHER
-        // *******************************************************************************************************
+        #region Other
+		public Image damageImage;                                   // Reference to an image to flash on the screen on being hurt.
+		public float flashSpeed = 5f;                               // The speed the damageImage will fade at.
+		public Color flashColour = new Color(1f, 0f, 0f, 0.1f);     // The colour the damageImage is set to, to flash.
+		bool damaged;                                               // True when the player gets damaged.
+		
         public Slider ammoSlider;
         public Belt belt;
 
         public GameOverScreen gameOverScreen;
-
+		#endregion
+		
         void Awake()
         {
 			moveRing = Instantiate (moveRingPrefab);
@@ -98,6 +99,16 @@ namespace SurviveTheNight {
         // Update is called once per frame
         void Update () {
             UpdateMovement();
+			
+        if(damaged)	// If the player has just been damaged...
+        {
+            damageImage.color = flashColour;	// ... set the colour of the damageImage to the flash colour.
+        }
+        else
+        {
+            damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);	// ... transition the colour back to clear.
+        }
+        damaged = false;	// Reset the damaged flag.
 
             // if the current item is a Gun, update the ammo bar
             if(belt.getActiveItem() is Gun)
@@ -222,6 +233,7 @@ namespace SurviveTheNight {
 
         public void TakeDamage(float amount)
         {
+			damaged = true;	// Set the damaged flag so the screen will flash.
             currentHealth -= amount;
             healthSlider.value = currentHealth;
             //playerAudio.Play ();

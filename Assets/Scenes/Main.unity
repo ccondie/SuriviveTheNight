@@ -2558,6 +2558,11 @@ Prefab:
       propertyPath: ammoSlider
       value: 
       objectReference: {fileID: 396794992}
+    - target: {fileID: 114516899369553616, guid: 10a6d36ac80a34da8b123cea4e305d1f,
+        type: 2}
+      propertyPath: damageImage
+      value: 
+      objectReference: {fileID: 1474985569}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 10a6d36ac80a34da8b123cea4e305d1f, type: 2}
   m_IsPrefabParent: 0
