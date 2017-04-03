@@ -56,9 +56,11 @@ namespace SurviveTheNight {
 
         #region Other
 		public Image damageImage;                                   // Reference to an image to flash on the screen on being hurt.
-		public float flashSpeed = 5f;                               // The speed the damageImage will fade at.
-		public Color flashColour = new Color(1f, 0f, 0f, 0.1f);     // The colour the damageImage is set to, to flash.
+		public float flashSpeed = 1f;                               // The speed the damageImage will fade at.
+		public Color flashColour = new Color(1f, 0f, 0f, 0.2f);     // The colour the damageImage is set to, to flash.
+		public Color healColour = new Color(0f, 1f, 0f, 0.2f);     // The colour the damageImage is set to, to flash.
 		bool damaged;                                               // True when the player gets damaged.
+		bool healed;												// True when the player gets healed.
 		
         public Slider ammoSlider;
         public Belt belt;
@@ -110,6 +112,16 @@ namespace SurviveTheNight {
         }
         damaged = false;	// Reset the damaged flag.
 
+		if(healed)	// If the player has just been damaged...
+        {
+            damageImage.color = healColour;	// ... set the colour of the damageImage to the flash colour.
+        }
+        else
+        {
+            damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);	// ... transition the colour back to clear.
+        }
+        healed = false;	// Reset the damaged flag.
+		
             // if the current item is a Gun, update the ammo bar
             if(belt.getActiveItem() is Gun)
             {
@@ -245,6 +257,7 @@ namespace SurviveTheNight {
 
 		public void Heal(float amount)
 		{
+			healed = true;
 			currentHealth = currentHealth + amount > startingHealth ? startingHealth : currentHealth + amount;
 			healthSlider.value = currentHealth;
 		}
