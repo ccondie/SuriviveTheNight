@@ -39,7 +39,7 @@ namespace SurviveTheNight {
                 }
             } else {
                 //ATTACK
-                if (c == UserInputController.Click.LEFT_DOWN || c == UserInputController.Click.LEFT_DOUBLE) {
+                if (c >= UserInputController.Click.LEFT_DOWN && c <= UserInputController.Click.LEFT_DOUBLE) {
                     playerScript.clickedOnMap(c, Camera.main.ScreenToWorldPoint(position));
                 }
             }

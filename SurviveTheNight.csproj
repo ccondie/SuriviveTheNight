@@ -104,12 +104,14 @@
     <Compile Include="Assets\Scripts\Roof.cs" />
     <Compile Include="Assets\Scripts\Singleton.cs" />
     <Compile Include="Assets\Scripts\Wall.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Buckshot.cs" />
     <Compile Include="Assets\Scripts\Weapon\Bullet.cs" />
     <Compile Include="Assets\Scripts\Weapon\Gun.cs" />
     <Compile Include="Assets\Scripts\Weapon\Handgun.cs" />
     <Compile Include="Assets\Scripts\Weapon\Projectile.cs" />
     <Compile Include="Assets\Scripts\Weapon\Rocket.cs" />
     <Compile Include="Assets\Scripts\Weapon\RocketLauncher.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Shotgun.cs" />
     <Compile Include="Assets\Scripts\Zombie.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -17,7 +17,7 @@ namespace SurviveTheNight {
         public void clickedOnMap(UserInputController.Click c, Vector2 target) {
             if (items[activeBeltItem] != null) {
                 if (items[activeBeltItem] is Gun) {
-                    if (((Gun)items[activeBeltItem]).Fire(target)) {
+                    if (((Gun)items[activeBeltItem]).clickedOnMap(c, target)) {
                         playerScript.playFireAnimation(target);
                     }
                 }

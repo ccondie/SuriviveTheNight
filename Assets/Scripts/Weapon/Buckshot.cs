@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rocket : Projectile {
+public class Buckshot : Projectile {
     void Awake() {
-        damage = 100f;
-        maxSpeed = 3f;
+        damage = 20f;
+        maxSpeed = 7f;
     }
 }

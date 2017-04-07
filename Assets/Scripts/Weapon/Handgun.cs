@@ -18,5 +18,11 @@ namespace SurviveTheNight
             previousShot = DateTime.UtcNow;
             shotDelayMilSec = 0;
         }
+
+        override public void clickType(UserInputController.Click c, Vector2 target) {
+            if (c == UserInputController.Click.LEFT_DOWN || c == UserInputController.Click.LEFT_DOUBLE) {
+                Fire(target);
+            }
+        }
     }
 }

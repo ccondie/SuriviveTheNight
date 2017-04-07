@@ -34,7 +34,7 @@ namespace SurviveTheNight {
         }
 
 
-        public bool Fire(Vector2 target)
+        public bool clickedOnMap(UserInputController.Click c, Vector2 target)
         {
             double gap = DateTime.UtcNow.Subtract(previousShot).TotalMilliseconds;
             if (gap >= shotDelayMilSec)
@@ -49,11 +49,7 @@ namespace SurviveTheNight {
             if (curAmmo > 0)
             {
                 // standard fire case
-                curAmmo -= 1;
-                Vector3 trans = (Vector3)target - transform.position;
-                float angle = Mathf.Atan2(trans.y, trans.x) * Mathf.Rad2Deg - 90f;
-                Quaternion rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
-                Instantiate((GameObject)Resources.Load(ammoResource), transform.position, rotation);
+                clickType(c, target);
 
                 if(curAmmo == 0)
                 {
@@ -69,6 +65,16 @@ namespace SurviveTheNight {
                 return false;
             }
         }
+
+        public void Fire(Vector2 target) {
+            curAmmo -= 1;
+            Vector3 trans = (Vector3)target - transform.position;
+            float angle = Mathf.Atan2(trans.y, trans.x) * Mathf.Rad2Deg - 90f;
+            Quaternion rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+            Instantiate((GameObject)Resources.Load(ammoResource), transform.position, rotation);
+        }
+
+        abstract public void clickType(UserInputController.Click c, Vector2 target);
 
         public int getFullAmmo()
         {
