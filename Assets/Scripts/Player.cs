@@ -77,6 +77,7 @@ namespace SurviveTheNight {
             belt.addItem(gameObject.AddComponent<Handgun>());
             belt.addItem(gameObject.AddComponent<RocketLauncher>());
             belt.addItem(gameObject.AddComponent<Shotgun>());
+            belt.addItem(gameObject.AddComponent<Minigun>());
         }
 
         public void Reset()

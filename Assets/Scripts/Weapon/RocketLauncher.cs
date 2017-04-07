@@ -12,7 +12,7 @@ namespace SurviveTheNight {
             fullAmmo = 1;
             curAmmo = 1;
             reloading = false;
-            reloadTime = 1f;
+            reloadTime = 3f;
             reloadTimeRemain = 0;
             ammoResource = "Rocket";
             previousShot = DateTime.UtcNow;

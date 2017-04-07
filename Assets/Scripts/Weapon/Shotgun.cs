@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace SurviveTheNight {
     public class Shotgun : Gun {
@@ -13,7 +12,7 @@ namespace SurviveTheNight {
             fullAmmo = 4 * shellSize;
             curAmmo = 4 * shellSize;
             reloading = false;
-            reloadTime = 2.5f;
+            reloadTime = 4f;
             reloadTimeRemain = 0;
             ammoResource = "Buckshot";
             previousShot = DateTime.UtcNow;
