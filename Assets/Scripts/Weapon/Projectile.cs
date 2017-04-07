@@ -6,13 +6,18 @@ public abstract class Projectile : MonoBehaviour {
 
     private float scale = .5f;
     public float damage;
+    protected float startSpeed;
     protected float maxSpeed;
+    protected float currentSpeed;
     protected int travel_frame_count = 0;
 
     void Update() {
-        Vector3 velocity = new Vector3(0, maxSpeed * Time.deltaTime, 0);
+        if (currentSpeed < maxSpeed) {
+            currentSpeed += (maxSpeed - startSpeed) / 50;
+        }
+        Vector3 velocity = new Vector3(0, currentSpeed * Time.deltaTime, 0);
         transform.position += transform.rotation * velocity;
-        if (travel_frame_count++ == 700 * (1 / maxSpeed))
+        if (travel_frame_count++ == 700 * (1 / currentSpeed))
             Destroy(gameObject);
     }
 

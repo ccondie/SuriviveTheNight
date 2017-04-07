@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Rocket : Projectile {
     void Awake() {
-        damage = 100f;
-        maxSpeed = 3f;
+        damage = 100f; //1 shot kill
+        maxSpeed = 7f;
+        startSpeed = 1;
+        currentSpeed = startSpeed;
     }
 }
