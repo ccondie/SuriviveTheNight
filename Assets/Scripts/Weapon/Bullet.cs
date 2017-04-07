@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour {
+public class Bullet : Projectile {
 
 	float maxSpeed = 7f;
-    public float damage = 34f;
     float scale = .5f;
 	int travel_frame_count = 0;
+
+    void Awake() {
+        damage = 34f;
+    }
 	
 	// Update is called once per frame
 	void Update () {
