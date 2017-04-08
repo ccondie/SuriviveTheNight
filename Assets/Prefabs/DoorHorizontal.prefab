@@ -67,7 +67,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aa22713630ee495ebc181ecceb78495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorIntegrity: 500
+  integrity: 500
+  imageList: []
 --- !u!212 &212581805977293434
 SpriteRenderer:
   m_ObjectHideFlags: 1

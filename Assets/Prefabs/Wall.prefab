@@ -67,6 +67,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58044f4d5fae24e65ac6bf62ba28c980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  integrity: 1000
+  imageList:
+  - {fileID: 21300000, guid: dad45201b47a74480bf2276510a945c7, type: 3}
+  - {fileID: 21300000, guid: ac93a0864a4b443d9a597c8a469d2613, type: 3}
+  - {fileID: 21300000, guid: 0285209d551e7483d8ed42dc5550e0d6, type: 3}
+  - {fileID: 21300000, guid: 1fa3e63b00d964d5b83e51da20dbed58, type: 3}
+  - {fileID: 21300000, guid: 02b3db97994d44eb1b7e088ed15c3e95, type: 3}
 --- !u!212 &212579838039029122
 SpriteRenderer:
   m_ObjectHideFlags: 1

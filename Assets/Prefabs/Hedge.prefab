@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4971140340938088}
   - component: {fileID: 212080712996401830}
   - component: {fileID: 61087387260004068}
+  - component: {fileID: 114719894287432598}
   m_Layer: 13
   m_Name: Hedge
   m_TagString: Untagged
@@ -55,6 +56,19 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 0.6, y: 0.6}
+--- !u!114 &114719894287432598
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1404310106008232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93590dc78c0064e2ea2d4fa414af8fee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  integrity: 100
+  imageList: []
 --- !u!212 &212080712996401830
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -4,9 +4,8 @@ using UnityEngine;
 
 namespace SurviveTheNight {
 
-	public class Door : MonoBehaviour {
+	public class Door : Destructable {
 
-		public int doorIntegrity;
 		private static bool ieg = false;
 
 		private void OnTriggerEnter2D(Collider2D other) {
@@ -15,15 +14,17 @@ namespace SurviveTheNight {
 				EnemyManager.Instance.BeginIndoorEnemyGeneration ();
 				ieg = true;
 			} else if (other.gameObject.tag == "Enemy") {
-				//Debug.Log ("Door Integrity: " + (doorIntegrity-1));
-				if (--doorIntegrity <= 0)
-					Destroy (gameObject);
+				Damage (1);
 			} else if (other.gameObject.tag == "Weapon") {
-				//Debug.Log ("Door Integrity: " + (doorIntegrity-50));
-				if ((doorIntegrity -= 50) <= 0)
-					Destroy (gameObject);
+				if (other.GetComponent<Projectile>()) {
+					Projectile p = other.GetComponent<Projectile>();
+					Damage (p.damage);
+					Destroy (other.gameObject);
+				}
 			}
 		}
+
+		protected override void UpdateSprite() {}
 	}
 
 }
