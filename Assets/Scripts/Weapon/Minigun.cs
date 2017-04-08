@@ -25,7 +25,9 @@ namespace SurviveTheNight {
                 target.x += Random.Range(-.1f, .1f);
                 target.y += Random.Range(-.1f, .1f);
                 Fire(target);
-                playSound(shotSound, .5f);
+                playSound(shotSound, .3f);
+
+                if (curAmmo == 1) playSound(casingSound, 1f);
             }
         }
     }
