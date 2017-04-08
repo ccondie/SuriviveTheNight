@@ -56,8 +56,8 @@ namespace SurviveTheNight {
 		protected IEnumerator SmoothMovement (Vector3 end) {
 			float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
             isMoving = true;
-            defineAnimationState(end);
-			while (sqrRemainingDistance > float.Epsilon && hasLineOfSight(end)) {
+			if(!isDead) defineAnimationState(end);
+			while (!isDead && sqrRemainingDistance > float.Epsilon && hasLineOfSight(end)) {
 				isMoving = true;
 				Vector3 newPosition = Vector3.MoveTowards (rb2D.position, end, moveTime * Time.deltaTime);
 				rb2D.MovePosition (newPosition);
@@ -65,7 +65,10 @@ namespace SurviveTheNight {
 				yield return null;
 			}
             isMoving = false;
-			animator.SetTrigger ("stop");
+			if (!isDead) {
+				animator.SetTrigger ("stop");
+				//Debug.Log ("stop");
+			}
 		}
 
         protected void ContinueAStar() {
@@ -92,6 +95,9 @@ namespace SurviveTheNight {
 
         protected virtual void AttemptMoveAStar<T>(Vector2 target) {
             RaycastHit2D hit = LineCastCheck (target);
+
+			if (isDead)
+				return;
 
             if (hit.transform == null) {
                 //there's a straight path
@@ -159,8 +165,9 @@ namespace SurviveTheNight {
                 state = "walk_southeast";
 
             if (state != null) {                
-                if (!(animator.GetCurrentAnimatorStateInfo(0).IsName("pm_" + state) || (animator.GetCurrentAnimatorStateInfo(0).IsName("z_" + state)))) {
-                    animator.SetTrigger(state);
+                if (!(animator.GetCurrentAnimatorStateInfo(0).IsName("pm_" + state) || (animator.GetCurrentAnimatorStateInfo(0).IsName("z_" + state))) && !isDead) {
+					animator.SetTrigger(state);
+					//Debug.Log (state);
                 }
                 //else if the moving object already has that animation state, don't just reset it
             }

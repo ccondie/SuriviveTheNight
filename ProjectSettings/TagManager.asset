@@ -56,11 +56,11 @@ TagManager:
   - name: BlockingLayer
     uniqueID: 1591393131
     locked: 0
-  - name: PlayerLayer
-    uniqueID: 4261311099
-    locked: 0
   - name: EnemyLayer
     uniqueID: 429186977
+    locked: 0
+  - name: PlayerLayer
+    uniqueID: 4261311099
     locked: 0
   - name: EdgeLayer
     uniqueID: 1174767833

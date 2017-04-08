@@ -37,6 +37,9 @@ namespace SurviveTheNight
         private float walkStaminaDelay_Cur;
 
         private float damage = 20f;
+		private float t = 0f;
+
+		private IEnumerator dtpCoroutine;
 
         void Awake()
         {
@@ -59,7 +62,10 @@ namespace SurviveTheNight
         // Update is called once per frame
         void Update()
         {
-            UpdateMovement();
+			if (isDead)
+				Countdown ();
+			else
+            	UpdateMovement();
         }
 
         void UpdateMovement()
@@ -67,7 +73,7 @@ namespace SurviveTheNight
             walkStaminaDelay_Cur -= Time.deltaTime;
             moveTime = moveSpeed;
 
-            if (!isMoving) {
+			if (!isMoving && !isDead) {
 				if (squareDistToPlayer() < 225f*scale*scale) {
                     if (navigatingPath && (!path.targetHasMoved(player.transform.position))) {
                         if (path != null) {
@@ -78,7 +84,8 @@ namespace SurviveTheNight
                     } else {
                         Vector2 target = targetClosestToPlayer(player.transform.position);
                         if (hasLineOfSight(target)) {
-                            StartCoroutine(directlyTrackPlayer());
+							dtpCoroutine = directlyTrackPlayer ();
+							StartCoroutine(dtpCoroutine);
                         } else {
                             path = null;
                             navigatingPath = false;
@@ -89,7 +96,7 @@ namespace SurviveTheNight
                     }
                 }
 			} else {
-                if (walkStaminaDelay_Cur < 0)
+				if (walkStaminaDelay_Cur < 0 && !isDead)
                 {
                     DecreaseStamina(walkStaminaLoss);
                     walkStaminaDelay_Cur = walkStaminaDelay;
@@ -98,7 +105,7 @@ namespace SurviveTheNight
 		}
 
         private void TryAttackPlayer() {
-            if (squareDistToPlayer() < 2 * scale * scale) {
+            if (!isDead && squareDistToPlayer() < 2 * scale * scale) {
                 Player playerScript = (Player)player.GetComponent("Player");
                 playerScript.TakeDamage(damage);
             }
@@ -218,7 +225,7 @@ namespace SurviveTheNight
             //Debug.Log("Directly tracking player");
             Vector3 target = targetClosestToPlayer(player.transform.position);
             float sqrRemainingDistance = (transform.position - target).sqrMagnitude;
-            while (sqrRemainingDistance > float.Epsilon && hasLineOfSight(target)) {
+            while (sqrRemainingDistance > float.Epsilon && hasLineOfSight(target) && !isDead) {
                 isMoving = true;
                 Vector3 newPosition = Vector3.MoveTowards(rb2D.position, target, moveTime * Time.deltaTime);
                 rb2D.MovePosition(newPosition);
@@ -229,7 +236,6 @@ namespace SurviveTheNight
                 
             }
             isMoving = false;
-            animator.SetTrigger("stop");
             //Debug.Log("No longer tracking player");
         }
 
@@ -295,7 +301,7 @@ namespace SurviveTheNight
             currentHealth -= damage;
             if (currentHealth <= 0) {
                 //Debug.Log("Zombie defeated!");
-                Destroy(gameObject);
+				Die();
             } else {
                 //Debug.Log("Zombie health: " + currentHealth + " (" + damage + " damage)");
             }
@@ -305,6 +311,23 @@ namespace SurviveTheNight
         {
                 throw new NotImplementedException();
         }
+
+		private void Die() {
+			isDead = true;
+			//animator.SetTrigger ("die");
+			animator.Play ("z_death");
+			//Debug.Log ("Die");
+			StopCoroutine (dtpCoroutine);
+			StopCoroutine (coroutine);
+			boxCollider.enabled = false;
+			Destroy (rb2D);
+		}
+
+		private void Countdown() {
+			t += Time.deltaTime;
+			if(t >= 25f)
+				Destroy(gameObject);
+		}
     }
 
 }
