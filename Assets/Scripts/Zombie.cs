@@ -318,8 +318,8 @@ namespace SurviveTheNight
 			//animator.SetTrigger ("die");
 			animator.Play ("z_death");
 			//Debug.Log ("Die");
-			StopCoroutine (dtpCoroutine);
-			StopCoroutine (coroutine);
+			if(dtpCoroutine != null) StopCoroutine (dtpCoroutine);
+			if(coroutine != null) StopCoroutine (coroutine);
 			boxCollider.enabled = false;
 			Destroy (rb2D);
 			DropItem ();
