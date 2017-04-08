@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace SurviveTheNight
 {
@@ -285,7 +286,7 @@ namespace SurviveTheNight
         }
 
 		void OnTriggerEnter2D(Collider2D collider) {
-			if (collider.gameObject.tag == "Weapon") {
+			if (collider.gameObject.tag == "Weapon" && !isDead) {
                 //Debug.Log("Zombie hit by bullet");
                 if (collider.GetComponent<Projectile>()) {
                     Projectile p = collider.GetComponent<Projectile>();
@@ -321,12 +322,30 @@ namespace SurviveTheNight
 			StopCoroutine (coroutine);
 			boxCollider.enabled = false;
 			Destroy (rb2D);
+			DropItem ();
 		}
 
 		private void Countdown() {
 			t += Time.deltaTime;
-			if(t >= 25f)
-				Destroy(gameObject);
+			if (t >= 25f)
+				Destroy (gameObject);
+		}
+
+		private void DropItem() {
+			int spawnItem = Random.Range (0, 20);
+			switch (spawnItem) {
+			case 1:
+			case 3:
+			case 7:
+			case 11:
+			case 15:
+			case 17:
+				EnemyManager.Instance.PowerUpAtLocation (transform.position);
+				break;
+			case 13:
+				// spawn something else
+				break;
+			}
 		}
     }
 
