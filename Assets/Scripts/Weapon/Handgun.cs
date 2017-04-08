@@ -7,6 +7,8 @@ namespace SurviveTheNight
 {
     public class Handgun : Gun
     {
+        
+
         void Start()
         {
             fullAmmo = 7;
@@ -17,12 +19,19 @@ namespace SurviveTheNight
             ammoResource = "Bullet";
             previousShot = DateTime.UtcNow;
             shotDelayMilSec = 0;
+
+            shotSound = Resources.Load("shot-handgun") as AudioClip;
+            casingSound = Resources.Load("casing") as AudioClip;
         }
 
-        override public void clickType(UserInputController.Click c, Vector2 target) {
+        override public void weaponSpecificFire(UserInputController.Click c, Vector2 target) {
             if (c == UserInputController.Click.LEFT_DOWN || c == UserInputController.Click.LEFT_DOUBLE) {
                 Fire(target);
+                playSound(shotSound, .5f);
+                playSound(casingSound, .5f);
             }
         }
+
+        
     }
 }

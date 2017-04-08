@@ -18,6 +18,16 @@ namespace SurviveTheNight {
         protected DateTime previousShot;
         protected double shotDelayMilSec;
 
+        public AudioClip shotSound;
+        public AudioClip casingSound;
+        public AudioClip emptySound;
+        public AudioClip cockingSound;
+
+        void Awake() {
+            emptySound = Resources.Load("empty") as AudioClip;
+            cockingSound = Resources.Load("cocking") as AudioClip;
+        }
+
         //returns whether the gun actually fired (if it had ammo, if the gun requires a wait time, etc.)
         void Update()
         {
@@ -27,6 +37,7 @@ namespace SurviveTheNight {
                     reloadTimeRemain -= Time.deltaTime;
                 else
                 {
+                    playSound(cockingSound, 1f);
                     curAmmo = fullAmmo;
                     reloading = false;
                 }
@@ -49,7 +60,7 @@ namespace SurviveTheNight {
             if (curAmmo > 0)
             {
                 // standard fire case
-                clickType(c, target);
+                weaponSpecificFire(c, target);
 
                 if(curAmmo == 0)
                 {
@@ -62,6 +73,7 @@ namespace SurviveTheNight {
             }
             else
             {
+                playSound(emptySound, .5f);
                 return false;
             }
         }
@@ -74,7 +86,13 @@ namespace SurviveTheNight {
             Instantiate((GameObject)Resources.Load(ammoResource), transform.position, rotation);
         }
 
-        abstract public void clickType(UserInputController.Click c, Vector2 target);
+        public void playSound(AudioClip clip, float volume) {
+            if (clip != null) {
+                AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position, volume);
+            }
+        }
+
+        abstract public void weaponSpecificFire(UserInputController.Click c, Vector2 target);
 
         public int getFullAmmo()
         {

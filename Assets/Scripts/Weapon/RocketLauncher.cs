@@ -16,12 +16,14 @@ namespace SurviveTheNight {
             reloadTimeRemain = 0;
             ammoResource = "Rocket";
             previousShot = DateTime.UtcNow;
-            shotDelayMilSec = 1000;
+            shotDelayMilSec = 0;
         }
 
-        override public void clickType(UserInputController.Click c, Vector2 target) {
+        override public void weaponSpecificFire(UserInputController.Click c, Vector2 target) {
             if (c == UserInputController.Click.LEFT_DOWN || c == UserInputController.Click.LEFT_DOUBLE) {
                 Fire(target);
+                playSound(shotSound, .5f);
+                playSound(casingSound, .5f);
             }
         }
     }

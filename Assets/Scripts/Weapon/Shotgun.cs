@@ -17,14 +17,18 @@ namespace SurviveTheNight {
             ammoResource = "Buckshot";
             previousShot = DateTime.UtcNow;
             shotDelayMilSec = 0;
+
+            shotSound = Resources.Load("shot-shotgun") as AudioClip;
         }
 
-        override public void clickType(UserInputController.Click c, Vector2 target) {
+        override public void weaponSpecificFire(UserInputController.Click c, Vector2 target) {
             if (c == UserInputController.Click.LEFT_DOWN || c == UserInputController.Click.LEFT_DOUBLE) {
                 Vector2[] shell = generateShell(target);
                 foreach (Vector2 v in shell) {
                     Fire(v);
                 }
+                playSound(shotSound, .5f);
+                playSound(casingSound, .5f);
             }
         }
 
