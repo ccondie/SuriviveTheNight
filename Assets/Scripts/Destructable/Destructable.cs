@@ -10,6 +10,8 @@ namespace SurviveTheNight {
 		public float integrity;
 		protected float startIntegrity;
 		public Sprite[] imageList;
+		private int x;
+		private int y;
 
 		void Awake () {
 			startIntegrity = integrity;
@@ -19,10 +21,17 @@ namespace SurviveTheNight {
 		protected void Damage(float amount) {
 			integrity -= amount;
 			UpdateSprite();
-			if (integrity <= 0f)
+			if (integrity <= 0f) {
+				BoardManager.Instance.clearWall (x, y);
 				Destroy (gameObject);
+			}
 		}
 
 		protected abstract void UpdateSprite();
+
+		public void SetCoords(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
 	}
 }

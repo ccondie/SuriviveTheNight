@@ -120,6 +120,7 @@ namespace SurviveTheNight {
 						toInstantiate = wallTiles [wallMap [rows - y - 1, x]];
 						instance = Instantiate (toInstantiate, new Vector3 (x * scale, y * scale, 0f), Quaternion.identity) as GameObject;
 						instance.transform.SetParent (boardHolder);
+						instance.GetComponent<Destructable>().SetCoords (x, rows - y - 1);
 					} else if (floorMap [rows - y - 1, x] == (int)floor.GRASS
 					         || floorMap [rows - y - 1, x] == (int)floor.SIDEWALK
 					         || floorMap [rows - y - 1, x] == (int)floor.ROAD) {
@@ -138,6 +139,10 @@ namespace SurviveTheNight {
 
         public int[,] getWallMap() {
             return wallMap;
+		}
+
+		public void clearWall(int x, int y) {
+			wallMap [y, x] = 0;
 		}
 
 		public Vector3 getRandomSpawnPosition() {
