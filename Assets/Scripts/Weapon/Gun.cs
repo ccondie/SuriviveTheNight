@@ -87,7 +87,7 @@ namespace SurviveTheNight {
             Quaternion rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
             GameObject projectileGameObject = Instantiate((GameObject)Resources.Load(ammoResource), transform.position, rotation);
             Projectile projectileScript = projectileGameObject.GetComponent<Projectile>();
-            projectileScript.player = player;
+            projectileScript.player = this.player;
         }
 
         public void playSound(AudioClip clip, float volume) {

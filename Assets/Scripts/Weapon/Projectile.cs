@@ -12,6 +12,7 @@ public abstract class Projectile : MonoBehaviour {
     protected float maxSpeed;
     protected float currentSpeed;
     protected int travel_frame_count = 0;
+    public AudioClip impactSound;
 
     void Update() {
         if (currentSpeed < maxSpeed) {
@@ -28,6 +29,7 @@ public abstract class Projectile : MonoBehaviour {
 
         if (other.tag == "Enemy")
             Destroy(gameObject);
+        playSound(impactSound, 1.0f);
     }
 
     private void OnTriggerStay2D(Collider2D other) {
@@ -42,6 +44,15 @@ public abstract class Projectile : MonoBehaviour {
         if (squareDist(transform.position, other.transform.position) <= (scale * scale - .15)) {
             //Debug.Log("Bullet vector on impact: " + transform.position + " - hit: " + other.transform.position);
             Destroy(gameObject);
+        }
+    }
+
+    public void playSound(AudioClip clip, float volume)
+    {
+        Debug.Log("IMPACT!");
+        if (clip != null)
+        {
+            AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position, volume);
         }
     }
 

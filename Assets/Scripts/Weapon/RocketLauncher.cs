@@ -17,6 +17,7 @@ namespace SurviveTheNight {
             ammoResource = "Rocket";
             previousShot = DateTime.UtcNow;
             shotDelayMilSec = 0;
+            shotSound = Resources.Load("shot-rocket-launcher") as AudioClip;
         }
 
         override public void weaponSpecificFire(UserInputController.Click c, Vector2 target) {
