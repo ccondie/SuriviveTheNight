@@ -9,7 +9,12 @@ namespace SurviveTheNight {
 
 	public class Player : MovingObject {
 
-		//private PlayerHealth myHealth;
+        private static float DEATH_VOLUME = 1.0f;
+
+        public AudioClip deathSound;
+
+        private AudioSource audioSource;
+        //private PlayerHealth myHealth;
 
         #region Health Related Variables
         public float startingHealth = 100f;
@@ -70,7 +75,7 @@ namespace SurviveTheNight {
 		
         void Awake()
         {
-			moveRing = Instantiate (moveRingPrefab);
+            moveRing = Instantiate (moveRingPrefab);
             Reset();
             staminaFill = staminaSlider.GetComponentsInChildren<Image>()[1];
             belt = new Belt(this);
@@ -78,6 +83,8 @@ namespace SurviveTheNight {
             belt.addItem(gameObject.AddComponent<RocketLauncher>());
             belt.addItem(gameObject.AddComponent<Shotgun>());
             belt.addItem(gameObject.AddComponent<Minigun>());
+
+            audioSource = GetComponent<AudioSource>();
         }
 
         public void Reset()
@@ -267,6 +274,7 @@ namespace SurviveTheNight {
         void Death()
         {
             isDead = true;
+            audioSource.PlayOneShot(deathSound, DEATH_VOLUME);
             gameOverScreen.GetComponent<Canvas>().enabled = true;
         }
 
