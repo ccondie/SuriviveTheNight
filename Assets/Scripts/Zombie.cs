@@ -290,7 +290,7 @@ namespace SurviveTheNight
                 //Debug.Log("Zombie hit by bullet");
                 if (collider.GetComponent<Projectile>()) {
                     Projectile p = collider.GetComponent<Projectile>();
-                    receiveDamage(p.damage);
+                    receiveDamage(p.damage, p.player);
                 }
 			} /*else {
                 Debug.Log("Zombie hit by unknown object");
@@ -298,11 +298,11 @@ namespace SurviveTheNight
             }*/
 		}
 
-        public void receiveDamage(float damage) {
+        public void receiveDamage(float damage, Player dealer) {
             currentHealth -= damage;
             if (currentHealth <= 0) {
                 //Debug.Log("Zombie defeated!");
-				Die();
+				Die(player.GetComponent<Player>());
             } else {
                 //Debug.Log("Zombie health: " + currentHealth + " (" + damage + " damage)");
             }
@@ -313,7 +313,7 @@ namespace SurviveTheNight
                 throw new NotImplementedException();
         }
 
-		private void Die() {
+		private void Die(Player killer) {
 			isDead = true;
 			//animator.SetTrigger ("die");
 			animator.Play ("z_death");
@@ -323,6 +323,7 @@ namespace SurviveTheNight
 			boxCollider.enabled = false;
 			Destroy (rb2D);
 			DropItem ();
+            killer.score += 1000;
 		}
 
 		private void Countdown() {

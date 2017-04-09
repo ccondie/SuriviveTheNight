@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SurviveTheNight;
 
 public abstract class Projectile : MonoBehaviour {
 
     private float scale = .5f;
     public float damage;
+    public Player player;
     protected float startSpeed;
     protected float maxSpeed;
     protected float currentSpeed;

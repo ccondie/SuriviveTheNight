@@ -12,18 +12,17 @@ namespace SurviveTheNight {
         private static float DEATH_VOLUME = 1.0f;
 
         public AudioClip deathSound;
-
-        private AudioSource audioSource;
-        //private PlayerHealth myHealth;
+        public int score;
 
         #region Health Related Variables
         public float startingHealth = 100f;
         public float currentHealth;
         public Slider healthSlider;
-		#endregion
-		
+        #endregion
+
         #region Stamina Related Variables
-		public float startingStamina = 100f;
+        //private PlayerHealth myHealth;
+        public float startingStamina = 100f;
         public float currentStamina;
         public Slider staminaSlider;
         private Image staminaFill;
@@ -31,6 +30,7 @@ namespace SurviveTheNight {
         public Color staminaRed = new Color((158f / 255f), (11f / 255), (15f / 255f), 1.0f);
 
         private static float staminaGain = 0.1f;
+        private AudioSource audioSource;
 
         private Dictionary<String, float> moveStaminaLossMap = new Dictionary<string, float>
         {
@@ -83,8 +83,14 @@ namespace SurviveTheNight {
             belt.addItem(gameObject.AddComponent<RocketLauncher>());
             belt.addItem(gameObject.AddComponent<Shotgun>());
             belt.addItem(gameObject.AddComponent<Minigun>());
-
             audioSource = GetComponent<AudioSource>();
+            score = 0;
+        }
+
+        private void AddGun<T>(Player player) where T : Gun
+        {
+            T result = gameObject.AddComponent<T>();
+            result.player = this;
         }
 
         public void Reset()

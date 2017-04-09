@@ -18,6 +18,8 @@ namespace SurviveTheNight {
         protected DateTime previousShot;
         protected double shotDelayMilSec;
 
+        public Player player;
+
         public AudioClip shotSound;
         public AudioClip casingSound;
         public AudioClip emptySound;
@@ -83,7 +85,9 @@ namespace SurviveTheNight {
             Vector3 trans = (Vector3)target - transform.position;
             float angle = Mathf.Atan2(trans.y, trans.x) * Mathf.Rad2Deg - 90f;
             Quaternion rotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
-            Instantiate((GameObject)Resources.Load(ammoResource), transform.position, rotation);
+            GameObject projectileGameObject = Instantiate((GameObject)Resources.Load(ammoResource), transform.position, rotation);
+            Projectile projectileScript = projectileGameObject.GetComponent<Projectile>();
+            projectileScript.player = player;
         }
 
         public void playSound(AudioClip clip, float volume) {
