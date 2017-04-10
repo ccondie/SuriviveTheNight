@@ -42,6 +42,10 @@ namespace SurviveTheNight
 
 		private IEnumerator dtpCoroutine;
 
+		public AudioClip attackSound;
+		private AudioSource audioSource;
+		private static float ATTACK_VOLUME = 1.0f;
+
         void Awake()
         {
             player = GameObject.FindGameObjectWithTag("Player");
@@ -51,6 +55,7 @@ namespace SurviveTheNight
             walkStaminaDelay_Cur = walkStaminaDelay;
             InvokeRepeating("DecideNextAction", 0.0f, 4f);
             InvokeRepeating("TryAttackPlayer", 0.0f, 2f);
+			audioSource = GetComponent<AudioSource>();
         }
 
         // Use this for initialization
@@ -106,7 +111,8 @@ namespace SurviveTheNight
 		}
 
         private void TryAttackPlayer() {
-            if (!isDead && squareDistToPlayer() < 2 * scale * scale) {
+			if (!player.GetComponent<Player>().isDead && !isDead && squareDistToPlayer() < 2 * scale * scale) {
+				audioSource.PlayOneShot(attackSound, ATTACK_VOLUME);
                 Player playerScript = (Player)player.GetComponent("Player");
                 playerScript.TakeDamage(damage);
             }

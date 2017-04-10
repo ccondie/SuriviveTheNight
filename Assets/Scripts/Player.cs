@@ -12,7 +12,13 @@ namespace SurviveTheNight {
         private static float DEATH_VOLUME = 1.0f;
 
         public AudioClip deathSound;
-        public int score;
+		private static float HURT_VOLUME = 1.0f;
+
+		public AudioClip hurtSound;
+		private static float HEAL_VOLUME = 1.0f;
+
+		public AudioClip healSound;
+		public int score;
 
         #region Health Related Variables
         public float startingHealth = 100f;
@@ -120,6 +126,8 @@ namespace SurviveTheNight {
         if(damaged)	// If the player has just been damaged...
         {
             damageImage.color = flashColour;	// ... set the colour of the damageImage to the flash colour.
+			audioSource.PlayOneShot(healSound, HURT_VOLUME);
+
         }
         else
         {
@@ -130,6 +138,7 @@ namespace SurviveTheNight {
 		if(healed)	// If the player has just been damaged...
         {
             damageImage.color = healColour;	// ... set the colour of the damageImage to the flash colour.
+			audioSource.PlayOneShot(healSound, HEAL_VOLUME);
         }
         else
         {
@@ -264,10 +273,11 @@ namespace SurviveTheNight {
             currentHealth -= amount;
             healthSlider.value = currentHealth;
             //playerAudio.Play ();
-            if (currentHealth <= 0 && !isDead)
-            {
-                Death();
-            }
+			if (currentHealth <= 0 && !isDead) {
+				Death ();
+			} else {
+				audioSource.PlayOneShot(hurtSound, HURT_VOLUME);
+			}
         }
 
 		public void Heal(float amount)

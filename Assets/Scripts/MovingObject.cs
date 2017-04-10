@@ -21,7 +21,7 @@ namespace SurviveTheNight {
 		protected Rigidbody2D rb2D;
 		protected float scale = 0.6f;
 
-		protected bool isDead;
+		public bool isDead;
 
 		// Use this for initialization
 		protected virtual void Start () {
