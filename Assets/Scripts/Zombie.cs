@@ -10,7 +10,7 @@ namespace SurviveTheNight
 {
     public class Zombie : MovingObject
     {
-        GameObject player;
+        public GameObject player;
 
         // *******************************************************************************************************
         // HEALTH RELATED VARIABLES

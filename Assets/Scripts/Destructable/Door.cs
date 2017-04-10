@@ -14,6 +14,11 @@ namespace SurviveTheNight {
 				EnemyManager.Instance.BeginIndoorEnemyGeneration ();
 				ieg = true;
 			} else if (other.gameObject.tag == "Enemy") {
+				AudioSource audioSource = other.GetComponent<Zombie>().GetComponent<AudioSource>();
+				Zombie z = other.GetComponent<Zombie> ();
+				if (!audioSource.isPlaying && !z.isDead && !z.player.GetComponent<Player>().isDead) {
+						audioSource.Play ();
+				}
 				Damage (1);
 			} else if (other.gameObject.tag == "Weapon") {
 				if (other.GetComponent<Projectile>()) {
