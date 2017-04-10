@@ -17,7 +17,7 @@ namespace SurviveTheNight {
 
 		private int sunUpHour = 6;
 		private int sunUpMin = 0;
-		private int sunDownHour = 22;
+		private int sunDownHour = 21;
 		private int sunDownMin = 0;
 
 		private float sunUp;
@@ -27,6 +27,39 @@ namespace SurviveTheNight {
 
 		private TimeManager tm;
 
+		public static class AudioFadeOut {
+
+			public static IEnumerator FadeOut (AudioSource audioSource, float FadeTime) {
+				float startVolume = audioSource.volume;
+
+				while (audioSource.volume > 0) {
+					audioSource.volume -= startVolume * Time.deltaTime / FadeTime;
+
+					yield return null;
+				}
+
+				audioSource.Stop ();
+				audioSource.volume = startVolume;
+			}
+
+		}
+
+		public static class AudioFadeIn {
+
+			public static IEnumerator FadeIn (AudioSource audioSource, float FadeTime) {
+				float startVolume = audioSource.volume;
+				audioSource.volume = 0;
+				audioSource.Play ();
+				while (audioSource.volume < startVolume) {
+					audioSource.volume += startVolume * Time.deltaTime / FadeTime;
+
+					yield return null;
+				}
+					
+				audioSource.volume = startVolume;
+			}
+
+		}
 
 		// Use this for initialization
 		void Awake () {
@@ -51,7 +84,8 @@ namespace SurviveTheNight {
 		void InitGame() {
 			BoardManager.Instance.SetupScene ();
 		}
-		
+		bool sunWentDown = false;
+		bool sunCameUp = false;
 		// Update is called once per frame
 		void Update () {
 
@@ -64,25 +98,25 @@ namespace SurviveTheNight {
 				
 			if(currentNormalTime < (sunUp) || currentNormalTime >= (sunDown))
 			{
-				if (!nightMusic.isPlaying)
+				if (!sunWentDown)
 				{
-
-					gameMusic.Stop();
-
+					sunWentDown = true;
+					sunCameUp = false;
 					nightMusic.Play();
+
+					StartCoroutine(AudioFadeOut.FadeOut (gameMusic, 5f));
 
 				}	
 
 			} 
 			else if (currentNormalTime >= (sunUp) && currentNormalTime < (sunDown))
 			{
-				if (!gameMusic.isPlaying)
+				if (!sunCameUp)
 				{
-
-					nightMusic.Stop();
-
-					gameMusic.Play();
-
+					sunCameUp = true;
+					sunWentDown = false;
+					StartCoroutine(AudioFadeIn.FadeIn (gameMusic, 5f));
+					StartCoroutine(AudioFadeOut.FadeOut (nightMusic, 5f));
 				}
 			}
 		}
