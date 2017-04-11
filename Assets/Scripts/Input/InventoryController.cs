@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SurviveTheNight {
 
@@ -8,11 +9,13 @@ namespace SurviveTheNight {
 
         GameObject player;
         Player playerScript;
+		GameObject[] beltButtons;
 
         // Use this for initialization
         void Start() {
             player = GameObject.FindGameObjectWithTag("Player");
             playerScript = (Player)player.GetComponent("Player");
+			beltButtons = GameObject.FindGameObjectsWithTag ("BeltButton");
         }
 
         // Update is called once per frame
@@ -35,8 +38,23 @@ namespace SurviveTheNight {
                 //
             } //etc.
         }
-
-        public void beltItemPressed(int button) {
+		Color notSelectedColor = new Color (1f, 1f, 1f, 1f);
+		Color selectedColor = new Color(0.0f, 0.75f, 1f, 1f);
+		public void beltItemPressed(Button b) {
+			foreach (GameObject g in beltButtons) {
+				Button btn = g.GetComponent<Button>();
+				ColorBlock block = btn.colors;
+				block.normalColor = notSelectedColor;
+				block.highlightedColor = notSelectedColor;
+				block.pressedColor = notSelectedColor;
+				btn.colors = block;
+			}
+			ColorBlock cb = b.colors;
+			cb.normalColor = selectedColor;
+			cb.highlightedColor = selectedColor;
+			cb.pressedColor = selectedColor;
+			b.colors = cb;
+			int button = int.Parse (b.name.Substring (10));
             playerScript.setActiveBeltItem(button);
         }
     }
