@@ -12,30 +12,25 @@ namespace SurviveTheNight
     {
         public GameObject player;
 
-        // *******************************************************************************************************
-        // HEALTH RELATED VARIABLES
-        // *******************************************************************************************************
+		#region Health Related Variables
         public float startingHealth = 100f;
         public float currentHealth;
-
-        // *******************************************************************************************************
-        //      STAMINA RELATED VARIABLES 
-        // *******************************************************************************************************
-        public float startingStamina = 100f;
+		#endregion
+		#region Staming Related Variables
+		public float startingStamina = 100f;
         public float currentStamina;
 
         public float staminaGain = 0.4f;
         public float staminaGainDelay = 0.03f;   // should update about 10 times a second
         private float staminaGainDelay_Cur;
-
-        // *******************************************************************************************************
-        // MOVEMENT VARIABLES
-        // *******************************************************************************************************
-        private float moveSpeed = 1.35f;
+		#endregion
+		#region Movement Variables
+		private float moveSpeed = 1.35f;
 
         public float walkStaminaLoss = 0.72f;
         public float walkStaminaDelay = 0.03f;
         private float walkStaminaDelay_Cur;
+		#endregion
 
         private float damage = 20f;
 		private float t = 0f;
@@ -45,6 +40,10 @@ namespace SurviveTheNight
 		public AudioClip attackSound;
 		private AudioSource audioSource;
 		private static float ATTACK_VOLUME = 1.0f;
+
+		public AudioClip hurtSound;
+		private AudioSource hurtSource;
+		private static float HURT_VOLUME = 1.0f;
 
         void Awake()
         {
@@ -305,7 +304,9 @@ namespace SurviveTheNight
 		}
 
         public void receiveDamage(float damage, Player dealer) {
-            currentHealth -= damage;
+			currentHealth -= damage;
+			print ("Zombie Hurt");
+			audioSource.PlayOneShot(hurtSound, HURT_VOLUME);
             if (currentHealth <= 0) {
                 //Debug.Log("Zombie defeated!");
 				Die(player.GetComponent<Player>());

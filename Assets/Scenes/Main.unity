@@ -1913,6 +1913,21 @@ Prefab:
       propertyPath: m_RootOrder
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 82351695329190732, guid: 6bafa327a61924feb92cf741c9573b49,
+        type: 2}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 494c12f19e709c749a0fa51d0fc0cb5f, type: 3}
+    - target: {fileID: 114837035872647316, guid: 6bafa327a61924feb92cf741c9573b49,
+        type: 2}
+      propertyPath: attackSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 58cc4c48e07d4dd4ba1a24756dc2f029, type: 3}
+    - target: {fileID: 114837035872647316, guid: 6bafa327a61924feb92cf741c9573b49,
+        type: 2}
+      propertyPath: hurtSound
+      value: 
+      objectReference: {fileID: 8300000, guid: ab1b87c8dbea2a942bb46673bad70142, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6bafa327a61924feb92cf741c9573b49, type: 2}
   m_IsPrefabParent: 0
