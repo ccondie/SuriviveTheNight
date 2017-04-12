@@ -88,7 +88,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: bd5536e412bacce4394b1a7c8a88d38a, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 494c12f19e709c749a0fa51d0fc0cb5f, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -204,6 +204,8 @@ MonoBehaviour:
   - serializedVersion: 2
     m_Bits: 16384
   isMoving: 0
+  isDead: 0
+  player: {fileID: 0}
   startingHealth: 100
   currentHealth: 0
   startingStamina: 100
@@ -212,7 +214,8 @@ MonoBehaviour:
   staminaGainDelay: 0.03
   walkStaminaLoss: 0.72
   walkStaminaDelay: 0.03
-  attackSound: {fileID: 8300000, guid: bd5536e412bacce4394b1a7c8a88d38a, type: 3}
+  attackSound: {fileID: 8300000, guid: 58cc4c48e07d4dd4ba1a24756dc2f029, type: 3}
+  hurtSound: {fileID: 8300000, guid: ab1b87c8dbea2a942bb46673bad70142, type: 3}
 --- !u!212 &212174581817048728
 SpriteRenderer:
   m_ObjectHideFlags: 1

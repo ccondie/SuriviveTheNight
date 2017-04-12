@@ -16,6 +16,13 @@ namespace SurviveTheNight {
             player = GameObject.FindGameObjectWithTag("Player");
             playerScript = (Player)player.GetComponent("Player");
 			beltButtons = GameObject.FindGameObjectsWithTag ("BeltButton");
+			//The pistol is #2 I don't know why but oh well it works
+			Button b = beltButtons[2].GetComponent<Button>();
+				ColorBlock cb = b.colors;
+				cb.normalColor = selectedColor;
+				cb.highlightedColor = selectedColor;
+				cb.pressedColor = selectedColor;
+			b.colors = cb;
         }
 
         // Update is called once per frame
