@@ -62,6 +62,9 @@ namespace SurviveTheNight {
 			cb.pressedColor = selectedColor;
 			b.colors = cb;
 			int button = int.Parse (b.name.Substring (10));
+			if (button != playerScript.getActiveBeltItem ()) {
+				playerScript.switchWeapons ();
+			}
             playerScript.setActiveBeltItem(button);
         }
     }

@@ -11,7 +11,7 @@ namespace SurviveTheNight {
 			if (other.gameObject.tag == "Enemy") {
 				AudioSource audioSource = other.GetComponent<AudioSource>();
 				Zombie z = other.GetComponent<Zombie> ();
-				if (!audioSource.isPlaying && !z.isDead && !z.player.GetComponent<Player>().isDead) {
+				if (!audioSource.isPlaying && !z.isDead && !z.player.GetComponent<Player>().isDead && z.squareDistToPlayer () < 10) {
 						audioSource.Play ();
 				}
 				Damage (1);

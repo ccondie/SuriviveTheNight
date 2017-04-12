@@ -2650,6 +2650,11 @@ Prefab:
       propertyPath: healSound
       value: 
       objectReference: {fileID: 8300000, guid: 7b305f437700863449a67799f9e383af, type: 3}
+    - target: {fileID: 114516899369553616, guid: 10a6d36ac80a34da8b123cea4e305d1f,
+        type: 2}
+      propertyPath: switchSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 91bea39f36b09d94a9df1da2419b281d, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 10a6d36ac80a34da8b123cea4e305d1f, type: 2}
   m_IsPrefabParent: 0

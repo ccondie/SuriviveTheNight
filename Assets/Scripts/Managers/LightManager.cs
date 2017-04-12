@@ -15,7 +15,7 @@ namespace SurviveTheNight {
 
 		private int sunUpHour = 6;
 		private int sunUpMin = 0;
-		private int sunDownHour = 22;
+		private int sunDownHour = 20;
 		private int sunDownMin = 0;
 
         private float sunUp;

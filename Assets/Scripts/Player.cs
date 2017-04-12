@@ -20,6 +20,9 @@ namespace SurviveTheNight {
 		public AudioClip healSound;
 		public int score;
 
+		public AudioClip switchSound;
+		private static float SWITCH_VOLUME = 1.0f;
+
         #region Health Related Variables
         public float startingHealth = 100f;
         public float currentHealth;
@@ -294,6 +297,10 @@ namespace SurviveTheNight {
             gameOverScreen.GetComponent<Canvas>().enabled = true;
         }
 
+		public void switchWeapons() {
+			audioSource.PlayOneShot(switchSound, SWITCH_VOLUME);
+		}
+
         private void DeltaStamina(float amount)
         {
             // Alter the current stamina by a delta
@@ -347,6 +354,10 @@ namespace SurviveTheNight {
         public void setActiveBeltItem(int index) {
             belt.activeBeltItem = index;
         }
+
+		public int getActiveBeltItem() {
+			return belt.activeBeltItem;
+		}
 
         public int getWeaponAmmoFull()
         {

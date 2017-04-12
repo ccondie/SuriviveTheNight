@@ -117,7 +117,7 @@ namespace SurviveTheNight
             }
         }
 
-        private double distToPlayer() {
+		public double distToPlayer() {
             return Math.Sqrt(
                 Math.Pow((double) player.transform.position.x - (double) transform.position.x, 2)
                 +
@@ -125,7 +125,7 @@ namespace SurviveTheNight
             );
 		}
 
-		private double squareDistToPlayer() {
+		public double squareDistToPlayer() {
 			float xDist = player.transform.position.x - transform.position.x;
 			float yDist = player.transform.position.y - transform.position.y;
 			return xDist * xDist + yDist * yDist;
@@ -306,7 +306,9 @@ namespace SurviveTheNight
         public void receiveDamage(float damage, Player dealer) {
 			currentHealth -= damage;
 			print ("Zombie Hurt");
-			audioSource.PlayOneShot(hurtSound, HURT_VOLUME);
+			if (distToPlayer () < 25) {
+				audioSource.PlayOneShot (hurtSound, HURT_VOLUME);
+			}
             if (currentHealth <= 0) {
                 //Debug.Log("Zombie defeated!");
 				Die(player.GetComponent<Player>());
