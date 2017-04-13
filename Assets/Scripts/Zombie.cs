@@ -70,6 +70,21 @@ namespace SurviveTheNight
         // Update is called once per frame
         void Update()
         {
+			float volume = 0;
+			if (squareDistToPlayer () <= 4) {
+				volume = 1f;
+				print ("In Range");
+			} else {
+				double d = 1 - ((4 - squareDistToPlayer ()) * -1 / 10.0);
+				if (d < 0) {
+					d = 0;
+				}
+				volume = (float) d;
+				print ("Out of range " + d);
+			}
+
+			audioSource.volume = (float) volume;
+				
 			if (isDead)
 				Countdown ();
 			else
@@ -309,10 +324,8 @@ namespace SurviveTheNight
         public void receiveDamage(float damage, Player dealer) {
 			currentHealth -= damage;
 			healthSlider.value = currentHealth;
-			if (squareDistToPlayer () < 25) {
-				audioSource.PlayOneShot (hurtSound, HURT_VOLUME);
-			}
-            if (currentHealth <= 0) {
+			audioSource.PlayOneShot (hurtSound, HURT_VOLUME);
+			if (currentHealth <= 0) {
                 //Debug.Log("Zombie defeated!");
 				Die(player.GetComponent<Player>());
             } else {
