@@ -341,8 +341,6 @@ namespace SurviveTheNight
 			Color c = sliderColor.GetColor ();
 			sliderColor.SetColor (new Color(c.r, c.g, c.b, 0f));
 			//animator.SetTrigger ("die");
-			SpriteRenderer sr = GetComponent<SpriteRenderer>();
-			sr.sortingLayerID = SortingLayer.NameToID("Floor");
 			animator.Play ("z_death");
 			//Debug.Log ("Die");
 			if(dtpCoroutine != null) StopCoroutine (dtpCoroutine);
