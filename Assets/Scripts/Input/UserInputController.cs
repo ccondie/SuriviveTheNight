@@ -70,6 +70,9 @@ namespace SurviveTheNight {
                 }
             }
 
+			if (leftClickHolding && !Input.GetMouseButton (0)) {
+				GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraMovement> ().EndShake ();
+			}
             //RIGHT CLICKS
             if (Input.GetMouseButtonDown(1)) {
                 //left click down
