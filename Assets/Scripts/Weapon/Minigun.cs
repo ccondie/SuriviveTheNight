@@ -21,14 +21,22 @@ namespace SurviveTheNight {
         }
 
         override public void weaponSpecificFire(UserInputController.Click c, Vector2 target) {
-            if (c == UserInputController.Click.LEFT_HOLD) {
-                target.x += Random.Range(-.1f, .1f);
-                target.y += Random.Range(-.1f, .1f);
-                Fire(target);
-                playSound(shotSound, .3f);
+			if (c == UserInputController.Click.LEFT_HOLD) {
+				target.x += Random.Range (-.1f, .1f);
+				target.y += Random.Range (-.1f, .1f);
+				Fire (target);
+				playSound (shotSound, .3f);
 
-                if (curAmmo == 1) playSound(casingSound, 1f);
-            }
+
+				if (curAmmo == 1) {
+					playSound (casingSound, 1f);
+					GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraMovement> ().EndShake ();
+				} else {
+					GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraMovement> ().BeginShake (.2f);
+				}
+			} else {
+				GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraMovement> ().EndShake ();			
+			}
         }
     }
 }

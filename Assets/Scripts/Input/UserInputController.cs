@@ -36,21 +36,21 @@ namespace SurviveTheNight {
         // Update is called once per frame
         void Update() {
             //LEFT CLICKS
-            if (Input.GetMouseButtonDown(0)) {
-                //left click down
-                if (!waitingOnClickTypeLeft) {
-                    waitingOnClickTypeLeft = true;
-                    previousClickLeft = DateTime.UtcNow;
-                    previousClickLeftLocation = Input.mousePosition;
-                } else {
-                    double gap = DateTime.UtcNow.Subtract(previousClickLeft).TotalMilliseconds;
-                    if (gap <= doubleClickThreshold) {
-                        waitingOnClickTypeLeft = false;
-                        assignClickToController(Click.LEFT_DOUBLE, previousClickLeftLocation);
-                    }
-                }
-            } else if (leftClickHolding && Input.GetMouseButton(0)) {
-                assignClickToController(Click.LEFT_HOLD, Input.mousePosition);
+			if (Input.GetMouseButtonDown (0)) {
+				//left click down
+				if (!waitingOnClickTypeLeft) {
+					waitingOnClickTypeLeft = true;
+					previousClickLeft = DateTime.UtcNow;
+					previousClickLeftLocation = Input.mousePosition;
+				} else {
+					double gap = DateTime.UtcNow.Subtract (previousClickLeft).TotalMilliseconds;
+					if (gap <= doubleClickThreshold) {
+						waitingOnClickTypeLeft = false;
+						assignClickToController (Click.LEFT_DOUBLE, previousClickLeftLocation);
+					}
+				}
+			} else if (leftClickHolding && Input.GetMouseButton (0)) {
+				assignClickToController (Click.LEFT_HOLD, Input.mousePosition);
             } else if (Input.GetMouseButtonUp(0)) {
                 //left click up
                 if (leftClickHolding) {

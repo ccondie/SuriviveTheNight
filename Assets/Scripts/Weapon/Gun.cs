@@ -66,6 +66,7 @@ namespace SurviveTheNight {
 
                 if(curAmmo == 0)
                 {
+					GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraMovement> ().EndShake ();
                     // if we hit zero ammo, initialize the reload cycle
                     reloading = true;
                     reloadTimeRemain = reloadTime;

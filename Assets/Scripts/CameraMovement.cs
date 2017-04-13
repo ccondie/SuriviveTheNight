@@ -8,7 +8,7 @@ public class CameraMovement : MonoBehaviour {
 	private Vector3 offset;
 	bool shakyCam;
 	private Vector3 shakyOffset;
-
+	bool shakyHold;
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag("Player");
@@ -17,7 +17,15 @@ public class CameraMovement : MonoBehaviour {
 
 	// Update is called once per frame
 	void LateUpdate () {
-		if (shakyCam) {
+		if (shakyHold) {
+			float x = UnityEngine.Random.value * 2.0f - 1.0f;
+			float y = UnityEngine.Random.value * 2.0f - 1.0f;
+			x *= mag;
+			y *= mag;
+			shakyOffset = new Vector3(x, y, 0);
+			shakyOffset = ((Vector3) orig) + shakyOffset;
+			transform.position = shakyOffset;
+		} else if (shakyCam) {
 			//float x = Random.Range(-1f, 1f);
 			//float y = Random.Range (-1f, 1f);
 			//Vector3 shakyOffset = new Vector3 (x, y, 0);
@@ -25,6 +33,18 @@ public class CameraMovement : MonoBehaviour {
 		} else {
 			transform.position = player.transform.position + offset;
 		}
+	}
+	float mag;
+	Vector3? orig = null;
+	public void BeginShake(float magnitude) {
+		if (orig == null) orig = transform.position;
+		mag = magnitude;
+		shakyHold = true;
+	}
+
+	public void EndShake() {
+		orig = null;
+		shakyHold = false;
 	}
 
 	public void Shake(float duration, float magnitude) {
@@ -47,9 +67,12 @@ public class CameraMovement : MonoBehaviour {
 			y *= magnitude* damper;
 			shakyOffset = new Vector3(x, y, 0);
 			shakyOffset = originalPos + shakyOffset;
+			transform.position = shakyOffset;
 			shakyCam = true;
 			yield return null;	
 		}
 		shakyCam = false;
+		transform.position = originalPos;
 	}
+
 }
