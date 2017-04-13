@@ -73,14 +73,12 @@ namespace SurviveTheNight
 			float volume = 0;
 			if (squareDistToPlayer () <= 4) {
 				volume = 1f;
-				print ("In Range");
 			} else {
 				double d = 1 - ((4 - squareDistToPlayer ()) * -1 / 10.0);
 				if (d < 0) {
 					d = 0;
 				}
 				volume = (float) d;
-				print ("Out of range " + d);
 			}
 
 			audioSource.volume = (float) volume;
@@ -343,6 +341,8 @@ namespace SurviveTheNight
 			Color c = sliderColor.GetColor ();
 			sliderColor.SetColor (new Color(c.r, c.g, c.b, 0f));
 			//animator.SetTrigger ("die");
+			SpriteRenderer sr = GetComponent<SpriteRenderer>();
+			sr.sortingLayerID = SortingLayer.NameToID("Floor");
 			animator.Play ("z_death");
 			//Debug.Log ("Die");
 			if(dtpCoroutine != null) StopCoroutine (dtpCoroutine);

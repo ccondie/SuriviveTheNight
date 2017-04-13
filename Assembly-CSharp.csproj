@@ -82,12 +82,14 @@
      <Compile Include="Assets\Scripts\Weapon\Buckshot.cs" />
      <Compile Include="Assets\Scripts\Weapon\Bullet.cs" />
      <Compile Include="Assets\Scripts\Weapon\Bullet_Minigun.cs" />
+     <Compile Include="Assets\Scripts\Weapon\Grenade.cs" />
      <Compile Include="Assets\Scripts\Weapon\Gun.cs" />
      <Compile Include="Assets\Scripts\Weapon\Handgun.cs" />
      <Compile Include="Assets\Scripts\Weapon\Minigun.cs" />
      <Compile Include="Assets\Scripts\Weapon\Projectile.cs" />
      <Compile Include="Assets\Scripts\Weapon\Rocket.cs" />
      <Compile Include="Assets\Scripts\Weapon\RocketLauncher.cs" />
+     <Compile Include="Assets\Scripts\Weapon\SMG.cs" />
      <Compile Include="Assets\Scripts\Weapon\Shotgun.cs" />
      <Compile Include="Assets\Scripts\Zombie.cs" />
      <None Include="Assets\Resources\suburbs.txt" />

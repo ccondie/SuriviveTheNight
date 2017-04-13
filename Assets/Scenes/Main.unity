@@ -1077,7 +1077,7 @@ GameObject:
   - component: {fileID: 723621019}
   - component: {fileID: 723621018}
   m_Layer: 5
-  m_Name: beltButton1
+  m_Name: beltButton2
   m_TagString: BeltButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1172,7 +1172,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 194b1f61e4316b74891620ddfb0dadf9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b29969d7b44b2a143a8713ecd8a153e9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1697,7 +1697,7 @@ GameObject:
   - component: {fileID: 1194689344}
   - component: {fileID: 1194689343}
   m_Layer: 5
-  m_Name: beltButton5
+  m_Name: beltButton3
   m_TagString: BeltButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1792,8 +1792,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 3475b3f1455c62b4ca0be673cc4ddb45, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1974,12 +1974,12 @@ Prefab:
     - target: {fileID: 224561465368552416, guid: 6cb55e83c4472f74384bc11fc44be87d,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224561465368552416, guid: 6cb55e83c4472f74384bc11fc44be87d,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6cb55e83c4472f74384bc11fc44be87d, type: 2}
@@ -2175,7 +2175,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 449bad215994ecc4f8a0ba68396dc148, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f380847b29d9f534e8d1463564f57187, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2489,7 +2489,7 @@ GameObject:
   - component: {fileID: 1666122334}
   - component: {fileID: 1666122333}
   m_Layer: 5
-  m_Name: beltButton3
+  m_Name: beltButton4
   m_TagString: BeltButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2584,7 +2584,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 3475b3f1455c62b4ca0be673cc4ddb45, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0111af68ada22904dba780d71cd800a2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2792,7 +2792,7 @@ GameObject:
   - component: {fileID: 1865386644}
   - component: {fileID: 1865386643}
   m_Layer: 5
-  m_Name: beltButton2
+  m_Name: beltButton5
   m_TagString: BeltButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2887,7 +2887,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: b29969d7b44b2a143a8713ecd8a153e9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 57d78da2fb110224b98891016b451273, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2998,7 +2998,7 @@ GameObject:
   - component: {fileID: 1905335159}
   - component: {fileID: 1905335158}
   m_Layer: 5
-  m_Name: beltButton4
+  m_Name: beltButton1
   m_TagString: BeltButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3093,8 +3093,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 194b1f61e4316b74891620ddfb0dadf9, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
