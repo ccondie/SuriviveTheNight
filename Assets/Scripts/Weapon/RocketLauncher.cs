@@ -25,7 +25,9 @@ namespace SurviveTheNight {
                 Fire(target);
                 playSound(shotSound, .5f);
                 playSound(casingSound, .5f);
+				GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraMovement> ().Shake(.4f, .4f);
             }
         }
+
     }
 }

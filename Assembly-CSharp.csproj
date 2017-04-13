@@ -3,9 +3,8 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.20506</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
     <ProjectGuid>{BFBAB9ED-0046-D701-99E3-812158DC7CF5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -34,84 +33,84 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.XML" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+      <HintPath>C:\Program Files\Unity\Editor\Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+      <HintPath>C:\Program Files\Unity\Editor\Data\Managed\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\CameraMovement.cs" />
-     <Compile Include="Assets\Scripts\Destructable\Destructable.cs" />
-     <Compile Include="Assets\Scripts\Destructable\Door.cs" />
-     <Compile Include="Assets\Scripts\Destructable\Hedge.cs" />
-     <Compile Include="Assets\Scripts\Destructable\Wall.cs" />
-     <Compile Include="Assets\Scripts\Destructable\Window.cs" />
-     <Compile Include="Assets\Scripts\FPSDisplay.cs" />
-     <Compile Include="Assets\Scripts\FirstAidKit.cs" />
-     <Compile Include="Assets\Scripts\GameOverScreen.cs" />
-     <Compile Include="Assets\Scripts\Input\InventoryController.cs" />
-     <Compile Include="Assets\Scripts\Input\MainMenuController.cs" />
-     <Compile Include="Assets\Scripts\Input\MapController.cs" />
-     <Compile Include="Assets\Scripts\Input\UserInputController.cs" />
-     <Compile Include="Assets\Scripts\Inventory\Belt.cs" />
-     <Compile Include="Assets\Scripts\Inventory\Item.cs" />
-     <Compile Include="Assets\Scripts\Loader.cs" />
-     <Compile Include="Assets\Scripts\Managers\BoardManager.cs" />
-     <Compile Include="Assets\Scripts\Managers\EnemyManager.cs" />
-     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
-     <Compile Include="Assets\Scripts\Managers\LightManager.cs" />
-     <Compile Include="Assets\Scripts\Managers\TimeManager.cs" />
-     <Compile Include="Assets\Scripts\Movement\AStar.cs" />
-     <Compile Include="Assets\Scripts\Movement\HeapPriorityQueue.cs" />
-     <Compile Include="Assets\Scripts\Movement\IPriorityQueue.cs" />
-     <Compile Include="Assets\Scripts\Movement\Path.cs" />
-     <Compile Include="Assets\Scripts\Movement\PriorityQueueNode.cs" />
-     <Compile Include="Assets\Scripts\MovingObject.cs" />
-     <Compile Include="Assets\Scripts\PlayAgainButton.cs" />
-     <Compile Include="Assets\Scripts\Player.cs" />
-     <Compile Include="Assets\Scripts\Prefabs.cs" />
-     <Compile Include="Assets\Scripts\Roof.cs" />
-     <Compile Include="Assets\Scripts\ScoreDisplay.cs" />
-     <Compile Include="Assets\Scripts\Singleton.cs" />
-     <Compile Include="Assets\Scripts\Weapon\Buckshot.cs" />
-     <Compile Include="Assets\Scripts\Weapon\Bullet.cs" />
-     <Compile Include="Assets\Scripts\Weapon\Bullet_Minigun.cs" />
-     <Compile Include="Assets\Scripts\Weapon\Grenade.cs" />
-     <Compile Include="Assets\Scripts\Weapon\Gun.cs" />
-     <Compile Include="Assets\Scripts\Weapon\Handgun.cs" />
-     <Compile Include="Assets\Scripts\Weapon\Minigun.cs" />
-     <Compile Include="Assets\Scripts\Weapon\Projectile.cs" />
-     <Compile Include="Assets\Scripts\Weapon\Rocket.cs" />
-     <Compile Include="Assets\Scripts\Weapon\RocketLauncher.cs" />
-     <Compile Include="Assets\Scripts\Weapon\SMG.cs" />
-     <Compile Include="Assets\Scripts\Weapon\Shotgun.cs" />
-     <Compile Include="Assets\Scripts\Zombie.cs" />
-     <None Include="Assets\Resources\suburbs.txt" />
-     <None Include="Assets\Resources\mansion.txt" />
- <Reference Include="UnityEngine.UI">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Networking">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.PlaymodeTestsRunner">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Analytics">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.HoloLens">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.VR">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
- </Reference>
+    <Compile Include="Assets\Scripts\CameraMovement.cs" />
+    <Compile Include="Assets\Scripts\Destructable\Destructable.cs" />
+    <Compile Include="Assets\Scripts\Destructable\Door.cs" />
+    <Compile Include="Assets\Scripts\Destructable\Hedge.cs" />
+    <Compile Include="Assets\Scripts\Destructable\Wall.cs" />
+    <Compile Include="Assets\Scripts\Destructable\Window.cs" />
+    <Compile Include="Assets\Scripts\FPSDisplay.cs" />
+    <Compile Include="Assets\Scripts\FirstAidKit.cs" />
+    <Compile Include="Assets\Scripts\GameOverScreen.cs" />
+    <Compile Include="Assets\Scripts\Input\InventoryController.cs" />
+    <Compile Include="Assets\Scripts\Input\MainMenuController.cs" />
+    <Compile Include="Assets\Scripts\Input\MapController.cs" />
+    <Compile Include="Assets\Scripts\Input\UserInputController.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Belt.cs" />
+    <Compile Include="Assets\Scripts\Inventory\Item.cs" />
+    <Compile Include="Assets\Scripts\Loader.cs" />
+    <Compile Include="Assets\Scripts\Managers\BoardManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\EnemyManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\LightManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\TimeManager.cs" />
+    <Compile Include="Assets\Scripts\Movement\AStar.cs" />
+    <Compile Include="Assets\Scripts\Movement\HeapPriorityQueue.cs" />
+    <Compile Include="Assets\Scripts\Movement\IPriorityQueue.cs" />
+    <Compile Include="Assets\Scripts\Movement\Path.cs" />
+    <Compile Include="Assets\Scripts\Movement\PriorityQueueNode.cs" />
+    <Compile Include="Assets\Scripts\MovingObject.cs" />
+    <Compile Include="Assets\Scripts\PlayAgainButton.cs" />
+    <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\Prefabs.cs" />
+    <Compile Include="Assets\Scripts\Roof.cs" />
+    <Compile Include="Assets\Scripts\ScoreDisplay.cs" />
+    <Compile Include="Assets\Scripts\Singleton.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Buckshot.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Bullet.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Bullet_Minigun.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Grenade.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Gun.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Handgun.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Minigun.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Projectile.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Rocket.cs" />
+    <Compile Include="Assets\Scripts\Weapon\RocketLauncher.cs" />
+    <Compile Include="Assets\Scripts\Weapon\SMG.cs" />
+    <Compile Include="Assets\Scripts\Weapon\Shotgun.cs" />
+    <Compile Include="Assets\Scripts\Zombie.cs" />
+    <None Include="Assets\Resources\suburbs.txt" />
+    <None Include="Assets\Resources\mansion.txt" />
+    <Reference Include="UnityEngine.UI">
+      <HintPath>C:\Program Files\Unity\Editor\Data\UnityExtensions\Unity\GUISystem\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>C:\Program Files\Unity\Editor\Data\UnityExtensions\Unity\Networking\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PlaymodeTestsRunner">
+      <HintPath>C:\Program Files\Unity\Editor\Data\UnityExtensions\Unity\PlaymodeTestsRunner\UnityEngine.PlaymodeTestsRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>C:\Program Files\Unity\Editor\Data\UnityExtensions\Unity\UnityAnalytics\UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HoloLens">
+      <HintPath>C:\Program Files\Unity\Editor\Data\UnityExtensions\Unity\UnityHoloLens\RuntimeEditor\UnityEngine.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.VR">
+      <HintPath>C:\Program Files\Unity\Editor\Data\UnityExtensions\Unity\UnityVR\RuntimeEditor\UnityEngine.VR.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -121,5 +120,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  
 </Project>
