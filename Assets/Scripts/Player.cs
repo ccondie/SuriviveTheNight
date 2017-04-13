@@ -270,16 +270,20 @@ namespace SurviveTheNight {
 		}
 
 
-        public void TakeDamage(float amount)
+		public void TakeDamage(float amount, Boolean? b = null)
         {
 			damaged = true;	// Set the damaged flag so the screen will flash.
             currentHealth -= amount;
             healthSlider.value = currentHealth;
             //playerAudio.Play ();
 			if (currentHealth <= 0 && !isDead) {
-				Death ();
+				Death (b);
 			} else {
-				audioSource.PlayOneShot(hurtSound, HURT_VOLUME);
+				AudioClip s = hurtSound;
+				if (b != null) {
+					s =  Resources.Load("hurtGrunt") as AudioClip;
+				}
+				audioSource.PlayOneShot(s, HURT_VOLUME);
 			}
         }
 
@@ -290,8 +294,12 @@ namespace SurviveTheNight {
 			healthSlider.value = currentHealth;
 		}
 
-        void Death()
+		void Death(Boolean? b = null)
         {
+			AudioClip s = deathSound;
+			if (b != null) {
+				s =  Resources.Load("hurtGrunt") as AudioClip;
+			}
             isDead = true;
             audioSource.PlayOneShot(deathSound, DEATH_VOLUME);
             gameOverScreen.GetComponent<Canvas>().enabled = true;
