@@ -15,6 +15,8 @@ namespace SurviveTheNight
 		#region Health Related Variables
         public float startingHealth = 100f;
         public float currentHealth;
+		public Slider healthSlider;
+		public CanvasRenderer sliderColor;
 		#endregion
 		#region Staming Related Variables
 		public float startingStamina = 100f;
@@ -47,9 +49,10 @@ namespace SurviveTheNight
 
         void Awake()
         {
-            player = GameObject.FindGameObjectWithTag("Player");
+          player = GameObject.FindGameObjectWithTag("Player");
             currentHealth = startingHealth;
             currentStamina = startingStamina;
+			healthSlider.value = currentHealth;
             staminaGainDelay_Cur = staminaGainDelay;
             walkStaminaDelay_Cur = walkStaminaDelay;
             InvokeRepeating("DecideNextAction", 0.0f, 4f);
@@ -305,8 +308,8 @@ namespace SurviveTheNight
 
         public void receiveDamage(float damage, Player dealer) {
 			currentHealth -= damage;
-			print ("Zombie Hurt");
-			if (distToPlayer () < 25) {
+			healthSlider.value = currentHealth;
+			if (squareDistToPlayer () < 25) {
 				audioSource.PlayOneShot (hurtSound, HURT_VOLUME);
 			}
             if (currentHealth <= 0) {
@@ -324,6 +327,8 @@ namespace SurviveTheNight
 
 		private void Die(Player killer) {
 			isDead = true;
+			Color c = sliderColor.GetColor ();
+			sliderColor.SetColor (new Color(c.r, c.g, c.b, 0f));
 			//animator.SetTrigger ("die");
 			animator.Play ("z_death");
 			//Debug.Log ("Die");

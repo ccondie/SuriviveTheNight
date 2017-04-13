@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerup: {fileID: 1609903013003372, guid: 954a5d8fe4ddd41a1a8fcdd7ce2eb67a, type: 2}
-  enemy: {fileID: 1095380027492598, guid: 6bafa327a61924feb92cf741c9573b49, type: 2}
+  enemy: {fileID: 1431508878600330, guid: 6cb55e83c4472f74384bc11fc44be87d, type: 2}
   enemies: []
 --- !u!114 &114616300664012932
 MonoBehaviour:
