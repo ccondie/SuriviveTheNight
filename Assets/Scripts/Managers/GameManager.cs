@@ -63,9 +63,9 @@ namespace SurviveTheNight {
 
 		// Use this for initialization
 		void Awake () {
-			music = GetComponents<AudioSource>();
-			gameMusic = music[0];
-			nightMusic = music[1];
+			// music = GetComponents<AudioSource>();
+			// gameMusic = music[0];
+			// nightMusic = music[1];
 
 			tm = TimeManager.Instance;
 
