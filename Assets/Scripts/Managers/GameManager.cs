@@ -102,7 +102,7 @@ namespace SurviveTheNight {
 				{
 					sunWentDown = true;
 					sunCameUp = false;
-					nightMusic.Play();
+					// nightMusic.Play();
 
 					StartCoroutine(AudioFadeOut.FadeOut (gameMusic, 5f));
 
@@ -115,7 +115,7 @@ namespace SurviveTheNight {
 				{
 					sunCameUp = true;
 					sunWentDown = false;
-					StartCoroutine(AudioFadeIn.FadeIn (gameMusic, 5f));
+					// StartCoroutine(AudioFadeIn.FadeIn (gameMusic, 5f));
 					StartCoroutine(AudioFadeOut.FadeOut (nightMusic, 5f));
 				}
 			}
