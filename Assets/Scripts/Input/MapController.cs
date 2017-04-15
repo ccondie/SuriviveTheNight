@@ -27,6 +27,12 @@ namespace SurviveTheNight {
             return true;
         }
 
+        public void processKey(KeyCode k) {
+            if (k == KeyCode.Space) {
+                playerScript.reloadActiveWeapon();
+            }
+        }
+
         public void processClick(UserInputController.Click c, Vector2 position) {
             //Debug.Log ("Click!");
             if (c >= UserInputController.Click.RIGHT_DOWN) {

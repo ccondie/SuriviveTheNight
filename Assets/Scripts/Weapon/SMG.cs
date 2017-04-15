@@ -21,7 +21,7 @@ namespace SurviveTheNight {
 		}
 
 		override public void weaponSpecificFire(UserInputController.Click c, Vector2 target) {
-			if (c == UserInputController.Click.LEFT_HOLD) {
+			if (c == UserInputController.Click.LEFT_DOWN || c == UserInputController.Click.LEFT_DOUBLE || c == UserInputController.Click.LEFT_HOLD) {
 				target.x += Random.Range(-.1f, .1f);
 				target.y += Random.Range(-.1f, .1f);
 				Fire(target);

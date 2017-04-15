@@ -102,7 +102,12 @@ namespace SurviveTheNight {
                     }
                 }
             }
+
             //TODO: checking key presses (as far as I know, only used for cycling through belt)
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                Debug.Log("space bar pressed");
+                mc.processKey(KeyCode.Space);
+            }
         }
 
         private void assignClickToController(Click c, Vector2 position) {

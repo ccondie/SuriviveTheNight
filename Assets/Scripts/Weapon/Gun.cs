@@ -128,6 +128,11 @@ namespace SurviveTheNight {
         {
             return reloadTimeRemain;
         }
+
+        public void userForceReload() {
+            reloading = true;
+            reloadTimeRemain = reloadTime;
+        }
 	}
 
 }

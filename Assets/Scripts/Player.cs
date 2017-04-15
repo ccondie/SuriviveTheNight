@@ -92,6 +92,8 @@ namespace SurviveTheNight {
             belt.addItem(gameObject.AddComponent<RocketLauncher>());
             belt.addItem(gameObject.AddComponent<Shotgun>());
             belt.addItem(gameObject.AddComponent<Minigun>());
+            belt.addItem(gameObject.AddComponent<Grenade>());
+            belt.addItem(gameObject.AddComponent<SMG>());
             audioSource = GetComponent<AudioSource>();
             score = 0;
         }
@@ -373,6 +375,10 @@ namespace SurviveTheNight {
         {
             Gun currentGun = (Gun)belt.getActiveItem();
             return currentGun.getFullAmmo();
+        }
+
+        public void reloadActiveWeapon() {
+            belt.userForceReload();
         }
 
         public void playFireAnimation(Vector2 target) {

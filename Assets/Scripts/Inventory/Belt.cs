@@ -51,5 +51,13 @@ namespace SurviveTheNight {
             }
             return 1f;
         }
+
+        public void userForceReload() {
+            if (items[activeBeltItem] != null) {
+                if (items[activeBeltItem] is Gun) {
+                    ((Gun)items[activeBeltItem]).userForceReload();
+                }
+            }
+        }
     }
 }
