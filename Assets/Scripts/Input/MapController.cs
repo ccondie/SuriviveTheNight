@@ -28,7 +28,7 @@ namespace SurviveTheNight {
         }
 
         public void processClick(UserInputController.Click c, Vector2 position) {
-			//Debug.Log ("Click!");
+            //Debug.Log ("Click!");
             if (c >= UserInputController.Click.RIGHT_DOWN) {
                 //MOVEMENT
                 playerScript.setRun(c == UserInputController.Click.RIGHT_DOUBLE);

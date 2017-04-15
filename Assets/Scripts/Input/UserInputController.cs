@@ -70,9 +70,6 @@ namespace SurviveTheNight {
                 }
             }
 
-			if (leftClickHolding && !Input.GetMouseButton (0)) {
-				GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraMovement> ().EndShake ();
-			}
             //RIGHT CLICKS
             if (Input.GetMouseButtonDown(1)) {
                 //left click down
@@ -109,7 +106,7 @@ namespace SurviveTheNight {
         }
 
         private void assignClickToController(Click c, Vector2 position) {
-            
+
             PointerEventData ped = new PointerEventData(EventSystem.current);
             if (c >= UserInputController.Click.RIGHT_DOWN ) {
                 ped.position = previousClickRightLocation;

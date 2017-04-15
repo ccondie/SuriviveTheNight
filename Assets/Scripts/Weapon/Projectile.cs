@@ -86,7 +86,7 @@ public abstract class Projectile : MonoBehaviour {
 
     public void playSound(AudioClip clip, float volume)
     {
-        Debug.Log("IMPACT!");
+        //Debug.Log("IMPACT!");
         if (clip != null)
         {
             AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position, volume);

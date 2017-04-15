@@ -30,13 +30,13 @@ namespace SurviveTheNight {
 
 				if (curAmmo == 1) {
 					playSound (casingSound, 1f);
-					GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraMovement> ().EndShake ();
 				} else {
-					GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraMovement> ().BeginShake (.2f);
+					GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraMovement> ().BeginShake (.05f);
 				}
 			} else {
-				GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraMovement> ().EndShake ();			
-			}
+				GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraMovement> ().EndShake ();
+                playSound(casingSound, 1f);
+            }
         }
     }
 }

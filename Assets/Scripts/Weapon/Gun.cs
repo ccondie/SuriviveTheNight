@@ -56,6 +56,9 @@ namespace SurviveTheNight {
             }
             else
             {
+                if (c == UserInputController.Click.LEFT_UP) {
+                    weaponSpecificFire(c, target);
+                }
                 return false;
             }
 
