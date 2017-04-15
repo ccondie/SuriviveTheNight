@@ -27,5 +27,9 @@ namespace SurviveTheNight {
 				playSound(casingSound, .5f);
 			}
 		}
-	}
+
+        public override float gunMovementRestriction() {
+            return 1f;
+        }
+    }
 }

@@ -29,5 +29,8 @@ namespace SurviveTheNight {
             }
         }
 
+        public override float gunMovementRestriction() {
+            return .6f;
+        }
     }
 }

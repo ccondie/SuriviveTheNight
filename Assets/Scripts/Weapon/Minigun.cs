@@ -6,6 +6,8 @@ using Random = UnityEngine.Random;
 
 namespace SurviveTheNight {
     public class Minigun : Gun {
+
+        private bool firing = false;
         void Start() {
             fullAmmo = 50;
             curAmmo = 50;
@@ -27,15 +29,24 @@ namespace SurviveTheNight {
 				Fire (target);
 				playSound (shotSound, .3f);
 
-
 				if (curAmmo == 1) {
 					playSound (casingSound, 1f);
 				} else {
 					GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraMovement> ().BeginShake (.05f);
 				}
+                firing = true;
 			} else {
 				GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<CameraMovement> ().EndShake ();
                 playSound(casingSound, 1f);
+                firing = false;
+            }
+        }
+
+        public override float gunMovementRestriction() {
+            if (firing) {
+                return 0f;
+            } else {
+                return .5f;
             }
         }
     }

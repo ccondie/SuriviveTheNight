@@ -38,5 +38,18 @@ namespace SurviveTheNight {
         {
             return items[activeBeltItem];
         }
+
+        public float gunMovementRestriction() {
+            //the float returned by this function is the percent of how fast the player should move
+            //i.e. 1f = full speed
+            // .7f = 70% speed
+            // 0f = can't move
+            if (items[activeBeltItem] != null) {
+                if (items[activeBeltItem] is Gun) {
+                    return ((Gun)items[activeBeltItem]).gunMovementRestriction();
+                }
+            }
+            return 1f;
+        }
     }
 }

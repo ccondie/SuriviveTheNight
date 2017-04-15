@@ -102,6 +102,8 @@ namespace SurviveTheNight {
 
         abstract public void weaponSpecificFire(UserInputController.Click c, Vector2 target);
 
+        abstract public float gunMovementRestriction();
+
         public int getFullAmmo()
         {
             return fullAmmo;

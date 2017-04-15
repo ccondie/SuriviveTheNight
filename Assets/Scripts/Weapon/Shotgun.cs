@@ -41,5 +41,9 @@ namespace SurviveTheNight {
             shell[4] = new Vector2(target.x + .07f, target.y + .2f);
             return shell;
         }
+
+        public override float gunMovementRestriction() {
+            return .8f;
+        }
     }
 }

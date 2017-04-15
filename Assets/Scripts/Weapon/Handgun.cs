@@ -7,8 +7,6 @@ namespace SurviveTheNight
 {
     public class Handgun : Gun
     {
-        
-
         void Start()
         {
             fullAmmo = 7;
@@ -32,6 +30,8 @@ namespace SurviveTheNight
             }
         }
 
-        
+        public override float gunMovementRestriction() {
+            return 1f;
+        }
     }
 }

@@ -30,5 +30,9 @@ namespace SurviveTheNight {
 				if (curAmmo == 1) playSound(casingSound, 1f);
 			}
 		}
-	}
+
+        public override float gunMovementRestriction() {
+            return .9f;
+        }
+    }
 }

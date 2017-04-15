@@ -174,11 +174,13 @@ namespace SurviveTheNight {
 		}
 
         public void moveTo(Vector2 target) {
-            if (coroutine != null)
-                StopCoroutine(coroutine);
-            //path = null;
-            //navigatingPath = false;
-            AttemptMoveAStar<Wall>(target);
+            if (belt.gunMovementRestriction() > 0) {
+                if (coroutine != null)
+                    StopCoroutine(coroutine);
+                //path = null;
+                //navigatingPath = false;
+                AttemptMoveAStar<Wall>(target);
+            }
         }
 
         public void setRun(bool run) {
@@ -206,7 +208,7 @@ namespace SurviveTheNight {
                 moveState = "walk";
             }
 
-            this.moveTime = moveSpeedMap[moveState];
+            this.moveTime = moveSpeedMap[moveState] * belt.gunMovementRestriction();
 
 			if (!isMoving) {
                 moveState = "none";
